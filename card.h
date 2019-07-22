@@ -1,5 +1,5 @@
-#ifndef card_h
-#define card_h
+#ifndef CARD_H
+#define CARD_H
 #include "allCard.h"
 #include <memory>
 #include <string>
@@ -10,7 +10,7 @@ class Card{
     std::string description;
     int magic;
 public:
-    Card(std::string name, std::string description, int magic);
+    Card(std::string name = "", std::string description = "", int magic = 0);
 };
 
 #endif
