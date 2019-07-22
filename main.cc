@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <string>
 #include "board.h"
 
 using namespace std;
