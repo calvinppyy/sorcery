@@ -53,7 +53,6 @@ int main(int argc, char *argv[]){
             i++;
         }
         if(argv[i] == "-init"){
-            char c;
             string source = argv[i+1];
             string cmd;
             ifstream fs{source};
@@ -62,5 +61,9 @@ int main(int argc, char *argv[]){
             }
             i++;
         }
+        if(argv[i] == "-testing"){
+            boardPtr->enterTesting();
+        }
+        
     }
 }
