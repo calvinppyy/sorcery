@@ -15,6 +15,8 @@ class Player{
     int magicCap;
 public:
     Player(std::string name = "", std::unique_ptr<Deck> notOut = nullptr);
+    void giveName(std::string name);
+    void giveDeck(std::unique_ptr<Deck> &deck, std::string what);
 };
 
 #endif
