@@ -40,6 +40,7 @@ int main(int argc, char *argv[]){
     unique_ptr<Player> player1 = std::make_unique<Player>(Player{});
     unique_ptr<Player> player2 = std::make_unique<Player>(Player{});
     unique_ptr<Board> boardPtr = std::make_unique<Board>(Board{});
+    vector<string> preInitArguments;
     for(int i = 1; i<argc; i++){
         if(argv[i] == "-deck1"){
             notOutDeck(deck1, argv[i+1]);
@@ -52,7 +53,14 @@ int main(int argc, char *argv[]){
             i++;
         }
         if(argv[i] == "-init"){
-            
+            char c;
+            string source = argv[i+1];
+            string cmd;
+            ifstream fs{source};
+            while(getline(fs, cmd)) {
+                preInitArguments.emplace_back(cmd);
+            }
+            i++;
         }
     }
 }
