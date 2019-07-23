@@ -60,7 +60,7 @@ int main(int argc, char *argv[]){
             while(getline(fs, cmd)) {
                 preInitArguments.emplace_back(cmd);
             }
-            i+=2;
+            i++;
         }
     }
 }
