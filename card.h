@@ -6,11 +6,13 @@
 #include <vector>
 
 class Card{
-    std::string name;
-    std::string description;
-    int magic;
-public:
-    Card(std::string name = "", std::string description = "", int magic = 0);
+    protected:
+        std::string name;
+        std::string description;
+        int magic;
+    public:
+        Card(std::string name = "", std::string description = "", int magic = 0);
+        virtual void playCard(Player) = 0; 
 };
 
 #endif
