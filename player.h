@@ -12,16 +12,20 @@ class Player{
     vector<unique_ptr<Card>> graveyard;
     vector<unique_ptr<Card>> notOut;
     int health;
-    int healthCap;
     int magic;
     int magicCap;
 public:
-    Player(string name = "", vector<unique_ptr<Deck>> notOut);
     void giveName(string name);
-    void giveDeck(unique_ptr<Deck> &deck, string what);
+    void giveDeck(vector<unique_ptr<Card>> &deck, string what);
     bool died();
     unique_ptr<Card> getIthMinion();
     void playCard(int i);
+    void playCard(integer, Player_ptr, integer);
+    void useAbility(integer);
+    void useAbility(integer, Player_ptr, integer);
+    void draw();
+    void discard();
+    void inspect(integer);
 };
 
 #endif
