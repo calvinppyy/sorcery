@@ -10,12 +10,6 @@
 #include "state.h"
 
 class Card: public Subject<Info, State>, public Observer<Info, State> {
-protected:
-    std::string name;
-    std::string description;
-    int magic;
-    Info info;
-    State state;
 public:
     Card(std::string name = "", std::string description = "", int magic = 0);
     virtual void playCard(Player* player) = 0;
