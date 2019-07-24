@@ -9,34 +9,9 @@ int Board::getRound()
     return this->round;
 }
 
-unique_ptr<Player> Board::getPlayer1()
-{
-    return this->player1;
-}
-
-unique_ptr<Player> Board::getPlayer2()
-{
-    return this->player2;
-}
-
-unique_ptr<Player> Board::getCurrentPlayer()
-{
-    return this->currentPlayer;
-}
-
 void Board::setCurrentPlayer(unique_ptr<Player> nextPlayer)
 {
     this->currentPlayer = nextPlayer;
-}
-
-bool Board::getTestingStatus()
-{
-    return this->testing;
-}
-
-bool Board::getGraphicsStatus()
-{
-    return this->graphics;
 }
 
 void Board::enterTesting()
@@ -54,70 +29,71 @@ bool Board::isOver()
     return player1->died() || player2->died();
 }
 
-unique_ptr<Player> Board::winner()
+string Board::winner()
 {
     if (player1->died())
-        return this->player2;
-    return this->player1;
+        return this->player2->getName();
+    return this->player1->getName();
 }
 
 void Board::attack(int myMinion, int enemy)
 {
     try
     {
+        this->currentPlayer->attack(myMinion, enemy);
     }
     catch (const out_of_range &e)
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
     }
-    this->currentPlayer->attack(myMinion, enemy);
 }
 
 void Board::attack(int myMinion)
 {
     try
     {
+        this->currentPlayer->attack(myMinion);
     }
     catch (const out_of_range &e)
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
     }
-    this->currentPlayer->attack(myMinion);
 }
 
 void Board::play(int cardIndex)
 {
     try
     {
+        this->currentPlayer->play(cardIndex);
     }
     catch (const out_of_range &e)
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
     }
-    this->currentPlayer->play(cardIndex);
 }
 
 void Board::play(int cardIndex, unique_ptr<Player> targetPlayer, int targetCard)
 {
     try
     {
+        this->currentPlayer->Play(cardIndex, targetPlayer, targetCard);
     }
     catch (const out_of_range &e)
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
     }
-    this->currentPlayer->Play(cardIndex, targetPlayer, targetCard);
 }
 
 void Board::useAbility(int cardIndex)
 {
     try
-    {this->currentPlayer->useAbility(cardIndex);
+    {
+        this->currentPlayer->useAbility(cardIndex);
     }
     catch (const out_of_range &e)
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
-    }    
+    }
 }
 
 void Board::useAbility(int cardIndex, unique_ptr<Player> targetPlayer, int targetCard)
@@ -159,8 +135,14 @@ void Board::discard(int cardIndex)
     throw InvalidCommandException("discard");
 }
 
-void Board::inspect(int)
+void Board::inspect(int cardIndex)
 {
+    try {
+        this->currentPlayer->inspect(cardIndex);
+    }
+    catch (const out_of_range &e) {
+        cerr << "Index exceeds the amount of minions the active player holds" << endl;
+    }
 }
 
 Board::~Board() {}
