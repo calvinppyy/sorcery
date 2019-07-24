@@ -8,7 +8,7 @@ class Player{
     string name;
     vector<unique_ptr<Card>> hand;
     vector<unique_ptr<Card>> minions;
-    vector<unique_ptr<Card>> rituals;
+    unique_ptr<Card>i ritual;
     vector<unique_ptr<Card>> graveyard;
     vector<unique_ptr<Card>> notOut;
     int health;

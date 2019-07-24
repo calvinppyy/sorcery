@@ -10,7 +10,7 @@ class Board: public Observer<Info, State>{
     int round;
     std::unique_ptr<Player> player1;
     std::unique_ptr<Player> player2;
-    std::unique_ptr<Player> currentPlayer;
+    std::unique_ptr<Player> &currentPlayer;
     bool testing;
     bool graphics;
 public:
