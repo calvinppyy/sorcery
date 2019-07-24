@@ -1,55 +1,52 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "board.h"
 
 using namespace std;
 
-void notOutDeck(unique_ptr<Deck> &deck ,std::string filename){
-    deck->Empty();
+vector<unique_ptr<Card>> loadDeck(std::string filename){
+    vector<unique_ptr<Card>> deck;
     ifstream deckfile {filename};
     string cardName;
     while (getline(deckfile, cardName)) {
-        if(cardName == "Air Elemental") deck->pushCard({});
-        if(cardName == "Earth Elemental") deck->pushCard({});
-        if(cardName == "Bone Golem") deck->pushCard({});
-        if(cardName == "Fire Elemental") deck->pushCard({});
-        if(cardName == "Potion Seller") deck->pushCard({});
-        if(cardName == "Novice Pyromancer") deck->pushCard({});
-        if(cardName == "Apprentice Summoner") deck->pushCard({});
-        if(cardName == "Master Summoner") deck->pushCard({});
-        if(cardName == "Banish") deck->pushCard({});
-        if(cardName == "Unsummon") deck->pushCard({});
-        if(cardName == "Recharge") deck->pushCard({});
-        if(cardName == "Disenchant") deck->pushCard({});
-        if(cardName == "Raise Dead") deck->pushCard({});
-        if(cardName == "Blizzard") deck->pushCard({});
-        if(cardName == "Giant Strength") deck->pushCard({});
-        if(cardName == "Enrage") deck->pushCard({});
-        if(cardName == "Haste") deck->pushCard({});
-        if(cardName == "Magic Fatigue") deck->pushCard({});
-        if(cardName == "Silence") deck->pushCard({});
-        if(cardName == "Dark Ritual") deck->pushCard({});
-        if(cardName == "Aura of Power") deck->pushCard({});
-        if(cardName == "Standstill") deck->pushCard({});
+        if(cardName == "Air Elemental") deck.push_back({});
+        if(cardName == "Earth Elemental") deck.push_back({});
+        if(cardName == "Bone Golem") deck.push_back({});
+        if(cardName == "Fire Elemental") deck.push_back({});
+        if(cardName == "Potion Seller") deck.push_back({});
+        if(cardName == "Novice Pyromancer") deck.push_back({});
+        if(cardName == "Apprentice Summoner") deck.push_back({});
+        if(cardName == "Master Summoner") deck.push_back({});
+        if(cardName == "Banish") deck.push_back({});
+        if(cardName == "Unsummon") deck.push_back({});
+        if(cardName == "Recharge") deck.push_back({});
+        if(cardName == "Disenchant") deck.push_back({});
+        if(cardName == "Raise Dead") deck.push_back({});
+        if(cardName == "Blizzard") deck.push_back({});
+        if(cardName == "Giant Strength") deck.push_back({});
+        if(cardName == "Enrage") deck.push_back({});
+        if(cardName == "Haste") deck.push_back({});
+        if(cardName == "Magic Fatigue") deck.push_back({});
+        if(cardName == "Silence") deck.push_back({});
+        if(cardName == "Dark Ritual") deck.push_back({});
+        if(cardName == "Aura of Power") deck.push_back({});
+        if(cardName == "Standstill") deck.push_back({});
     }
 }
 
 int main(int argc, char *argv[]){
-    unique_ptr<Deck> deck1 = std::make_unique<Deck>(Deck{});
-    unique_ptr<Deck> deck2 = std::make_unique<Deck>(Deck{});
     unique_ptr<Player> player1 = std::make_unique<Player>(Player{});
     unique_ptr<Player> player2 = std::make_unique<Player>(Player{});
     unique_ptr<Board> boardPtr = std::make_unique<Board>(Board{});
     vector<string> preInitArguments;
     for(int i = 1; i<argc; i++){
         if(argv[i] == "-deck1"){
-            notOutDeck(deck1, argv[i+1]);
-            player1->giveDeck(deck1, "notOut");
+            player1->giveDeck(loadDeck(argv[i+1]), "notOut");
             i++;
         }
         if(argv[i] == "-deck2"){
-            notOutDeck(deck2, argv[i+1]);
-            player2->giveDeck(deck2, "notOut");
+            player2->giveDeck(loadDeck(argv[i+1]), "notOut");
             i++;
         }
         if(argv[i] == "-init"){
@@ -64,6 +61,34 @@ int main(int argc, char *argv[]){
         if(argv[i] == "-testing"){
             boardPtr->enterTesting();
         }
-        
+        if(argv[i] = "-graphics"){
+            boardPtr->enterGraphics();
+        }
+    }
+    if(!preInitArguments.empty()){
+        int temp = 0;
+        int turn = 0;
+        while(temp<preInitArguments.size()){
+            if(temp == 0){
+                player1->giveName(preInitArguments.at(temp));
+                temp++;
+                continue;
+            }
+            if(temp == 1){
+                player1->giveName(preInitArguments.at(temp));
+                temp++;
+                continue;
+            }
+            istringstream iss{preInitArguments.at(temp)};
+            int num;
+            string arg;
+            iss>>arg;
+            if(arg == "play"){
+                iss>>num;
+                if(turn%2 == 0){
+                    player1->playCard(num);
+                }
+            }
+        }
     }
 }

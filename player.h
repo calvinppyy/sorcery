@@ -1,23 +1,27 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-#include "deck.h"
+#include "card.h"
+
+using namespace std;
 
 class Player{
-    std::string name;
-    std::unique_ptr<Deck> hand;
-    std::unique_ptr<Deck> minions;
-    std::unique_ptr<Deck> rituals;
-    std::unique_ptr<Deck> graveyard;
-    std::unique_ptr<Deck> notOut;
+    string name;
+    vector<unique_ptr<Card>> hand;
+    vector<unique_ptr<Card>> minions;
+    vector<unique_ptr<Card>> rituals;
+    vector<unique_ptr<Card>> graveyard;
+    vector<unique_ptr<Card>> notOut;
     int health;
     int healthCap;
     int magic;
     int magicCap;
 public:
-    Player(std::string name = "", std::unique_ptr<Deck> notOut = nullptr);
-    void giveName(std::string name);
-    void giveDeck(std::unique_ptr<Deck> &deck, std::string what);
+    Player(string name = "", vector<unique_ptr<Deck>> notOut);
+    void giveName(string name);
+    void giveDeck(unique_ptr<Deck> &deck, string what);
     bool died();
+    unique_ptr<Card> getIthMinion();
+    void playCard(int i);
 };
 
 #endif

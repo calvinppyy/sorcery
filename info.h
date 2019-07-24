@@ -4,9 +4,10 @@
 #include "state.h"
 
 struct Info {
-    Player player;
+    std::string player;
     std::string name;
     LocationType location;
+    int numInLocation;
     CardType cType;
 };
 
