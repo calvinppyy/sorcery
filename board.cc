@@ -2,7 +2,15 @@
 
 using namespace std;
 
-Board::Board(unique_ptr<Player> player1, unique_ptr<Player> player2) : round{0}, player1{player1}, player2{player2}, currentPlayer{player1}, testing{false} {}
+Board::Board(unique_ptr<Player> player1, unique_ptr<Player> player2):
+round{0}, player1{player1}, player2{player2}, currentPlayer{player1}, testing{false}, graphics{false} {}
+
+void Board::init(std::string name1, std::string name2) {
+    this->player1->giveName(name1);
+    this->player2->giveName(name2);
+    this->player1->shuffle();
+    this->player2->shuffle();
+}
 
 int Board::getRound()
 {

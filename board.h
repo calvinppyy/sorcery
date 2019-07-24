@@ -15,6 +15,7 @@ class Board: public Observer<Info, State>{
     bool graphics;
 public:
     Board(std::unique_ptr<Player> player1 = nullptr, std::unique_ptr<Player> player2 = nullptr);
+    void init(std::string, std::string);
     int getRound();
     void setCurrentPlayer(std::unique_ptr<Player>);
     bool isOver();
