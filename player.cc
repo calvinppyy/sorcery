@@ -15,3 +15,7 @@ void Player::giveDeck(std::unique_ptr<Deck> &deck, std::string what){
     if(what == "graveyard") graveyard = std::move(deck);
     if(what == "notOut") notOut = std::move(deck);
 }
+
+bool Player::died(){
+    return health<=0;
+}
