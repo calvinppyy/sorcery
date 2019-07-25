@@ -16,7 +16,13 @@ void Minion::editHealth(int i){
 
 
 void Minion::cast(std::unique_ptr<Player> &player, std::unique_ptr<Card> &card){
-    if(name == "Bone Golem"){
+    if(name == "Novice Pyromancer"){
+        card->editHealth(-1);
+    }
+    if(name == "Apprentice Summoner"){
+        
+    }
+    if(name == "Master Summoner"){
         
     }
 }
@@ -26,7 +32,13 @@ void Minion::startCast(std::unique_ptr<Player> &player, std::unique_ptr<Card> &c
 }
 
 void Minion::endCast(std::unique_ptr<Player> &player, std::unique_ptr<Card> &card){
-    
+    if(name == "Potion Seller"){
+        
+    }
+}
+
+void Minion::addEnchantment(std::unique_ptr<Enchantment> &enchantment){
+    enchantments.emplace_back(enchantment);
 }
 
 void Minion::inspect(){
@@ -38,7 +50,12 @@ void Minion::print(boolean){
 }
 
 std::string Minion::getDescription(){
-    
+    if(name == "Bone Golem") return "Gain +1/+1 whenever a minion leaves play.";
+    if(name == "Fire Elemental") return "Whenever an opponent's minion enters play, deal 1 damage to it.";
+    if(name == "Potion Seller") return "At the end of your turn, all your minions gain +0/+1.";
+    if(name == "Novice Pyromancer") return "Deal 1 damage to target minion";
+    if(name == "Apprentice Summoner") return "Summon a 1/1 air elemental";
+    if(name == "Master Summoner") return "Summon up to three 1/1 air elementals";
 }
 
 int Minion::getHealth(){
