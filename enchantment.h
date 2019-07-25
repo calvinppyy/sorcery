@@ -24,6 +24,7 @@ public:
     virtual void editUsage(int) = 0;
     virtual Info getInfo() = 0;
     virtual bool died() = 0;
+    void notify() override;
 };
 
 #endif
