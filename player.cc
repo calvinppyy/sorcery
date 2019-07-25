@@ -28,12 +28,13 @@ void Player::playCard(int i){
     hand.at(i).playCard(std::make_unique(*this));
 }
 
-void playCard(int i, std::unique_ptr<Player> me, int j){
+void Player::playCard(int i, std::unique_ptr<Player> me, int j){
     hand.at(i).playCard()
 }
 
-void useAbility(integer);
-void useAbility(integer, Player_ptr, integer);
-void draw();
-void discard();
-void inspect(integer);
+void Player::useAbility(integer);
+void Player::useAbility(integer, Player_ptr, integer);
+void Player::draw();
+void Player::discard();
+void Player::inspect(integer);
+void Player::shuffle();
