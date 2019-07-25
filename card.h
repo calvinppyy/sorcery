@@ -19,7 +19,7 @@ class Card
     State state;
     Info info;
     TriggerType triggerType;
-    std::string owner;
+    std::unique_ptr<Player> &owner;
     int indexInLocation;
 
 public:
@@ -42,6 +42,7 @@ public:
     virtual int getUsage() = 0;
     virtual void editUsage(int) = 0;
     virtual Info getInfo() = 0;
+    virtual bool died() = 0;
 
     //methods as subject
     void setState(State );
@@ -50,7 +51,7 @@ public:
     State getState() const;
 
     //method as observer
-    void notify(<std::unique_ptr<Card> &whoFrom);
+    virtual void notify(<std::unique_ptr<Card> &whoFrom) = 0;
 };
 
 #endif
