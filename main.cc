@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include "board.h"
+#include "allCard.h"
 
 using namespace std;
 

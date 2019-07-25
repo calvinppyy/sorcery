@@ -14,7 +14,7 @@ class Minion:public Card{
     
 public:
     Minion(std::string name, std::string owner, LocationType location,
-           int numInLocation, int attack, int health, int magic, int cost);
+    int numInLocation, int attack, int health, int magic, int cost);
     void playCard() override;
     void editAttack(int) override;
     void editHealth(int) override;
