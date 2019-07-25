@@ -20,6 +20,7 @@ class Card
     Info info;
     TriggerType triggerType;
     std::string owner;
+    int indexInLocation;
 
 public:
     virtual void playCard() = 0;
