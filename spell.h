@@ -3,7 +3,7 @@
 #include "card.h"
 
 class Spell:public Card{
-    int magic;
+    int playCost;
 public:
     void playCard(&std::unique_ptr<Player>) override;
     void editAttack(int) override;

@@ -3,7 +3,7 @@
 #include "card.h"
 
 class Ritual:public Card{
-    int magic, cost, usage;
+    int playCost, usage, usageCap;
 public:
     void playCard(&std::unique_ptr<Player>) override;
     void editAttack(int) override;

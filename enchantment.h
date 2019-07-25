@@ -3,6 +3,12 @@
 #include "card.h"
 
 class Enchantment : public Card{
+    int attack;
+    int defense;
+    int abilityCost;
+    bool silence;
+    int action;
+    std::shared_ptr<Card> target;
 public:
     virtual void playCard() = 0;
     virtual void editAttack(int) = 0;

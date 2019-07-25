@@ -6,18 +6,16 @@
 #include "invalidCommandException.h"
 
 
-class Board: public Observer<Info, State>{
-    int round;
-    std::unique_ptr<Player> player1;
-    std::unique_ptr<Player> player2;
-    std::unique_ptr<Player> &currentPlayer;
+class Board {
+    std::shared_ptr<Player> player1;
+    std::shared_ptr<Player> player2;
+    std::shared_ptr<Player> &currentPlayer;
     bool testing;
     bool graphics;
 public:
-    Board(std::unique_ptr<Player> &player1, std::unique_ptr<Player> &player2);
+    Board(std::shared_ptr<Player> player1, std::shared_ptr<Player> player2);
     void init(std::string, std::string);
-    int getRound();
-    void setCurrentPlayer(std::unique_ptr<Player>);
+    void setCurrentPlayer(std::shared_ptr<Player>);
     bool isOver();
     std::string winner();
     void enterTesting();
@@ -25,13 +23,15 @@ public:
     void attack(int, int);
     void attack(int);
     void play(int);
-    void play(int, unique_ptr<Player>, int);
+    void play(int, shared_ptr<Player>, int);
     void useAbility(int);
-    void useAbility(int, unique_ptr<Player>, int);
+    void useAbility(int, shared_ptr<Player>, int);
     void draw();
     void discard(int);
     void inspect(int);
     void print();
+    void endRound();
+    void startRound();
     ~Board();
 };
 
