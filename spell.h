@@ -3,7 +3,6 @@
 #include "card.h"
 
 class Spell:public Card{
-    std::string name;
     int magic;
 public:
     void playCard(&std::unique_ptr<Player>) override;
