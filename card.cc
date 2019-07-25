@@ -21,5 +21,8 @@ State Card::getState() const {
 
 //method as observer
 void Card::notify(Card & whoFrom) {
-
+    State = whoFrom.getState();
+    if (state.type == StateType::PlayCard) {
+        if (this->triggerType == TriggerType::minionEnter) this->cast()
+    }
 }

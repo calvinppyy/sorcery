@@ -31,6 +31,7 @@ public:
     void draw();
     void discard(int);
     void inspect(int);
+    void print();
     ~Board();
 };
 

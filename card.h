@@ -9,6 +9,7 @@
 #include "info.h"
 #include "state.h"
 #include "rng.h"
+#include "trigger.h"
 
 class Card
 {      
@@ -17,14 +18,15 @@ class Card
     std::vector<std::unique_ptr<Card>> observers;
     State state;
     Info info;
+    TriggerType triggerType;
+    std::string owner;
 
 public:
-    virtual void playCard(&std::unique_ptr<Player>) = 0;
+    virtual void playCard() = 0;
     virtual void editAttack(int) = 0;
     virtual void editHealth(int) = 0;
-    virtual void addEnchantment(&std::unique_ptr<Enchantment>) = 0;
-    virtual void cast(&std::unique_ptr<Player>, &std::unique_ptr<Card>) = 0;
-    virtual void addEnchantment(&std::unique_ptr<Enchantment>) = 0;
+    virtual void addEnchantment(std::unique_ptr<Enchantment> &) = 0;
+    virtual void cast(std::unique_ptr<Player> &, int ) = 0;
     virtual void inspect() = 0;
     virtual void print(boolean) = 0;
     virtual std::string getDescription() = 0;

@@ -1,0 +1,1 @@
+enum class TriggerType { noTrigger, startOfTurn, endOfTurn, minionEnter, minionLeave };

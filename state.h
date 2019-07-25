@@ -10,7 +10,6 @@ struct State {
     StateType type;
     LocationType location;
     int numInLocation;
-    CardType cType;
 };
 
 #endif
