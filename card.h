@@ -19,6 +19,7 @@ class Card
     Info info;
 
 public:
+<<<<<<< HEAD
     virtual void playCard(&std::unique_ptr<Player>) = 0;
     virtual void editAttack(int) = 0;
     virtual void editHealth(int) = 0;
@@ -48,6 +49,30 @@ public:
 
     //method as observer
     void notify(<std::unique_ptr<Card> &whoFrom);
+=======
+    virtual void playCard(&std::unique_ptr<Player>)=0;
+    virtual void editAttack(int)=0;
+    virtual void editHealth(int)=0;
+    virtual void addEnchantment(&std::unique_ptr<Enchantment>)=0;
+    virtual void cast(&std::unique_ptr<Player>, &std::unique_ptr<Card>)=0;
+    virtual void startCast(&std::unique_ptr<Player>, &std::unique_ptr<Card>)=0;
+    virtual void endCast(&std::unique_ptr<Player>, &std::unique_ptr<Card>)=0;
+    virtual void addEnchantment(&std::unique_ptr<Enchantment>)=0;
+    virtual void inspect()=0;
+    virtual void print(boolean)=0;
+    virtual std::string getDescription()=0;
+    virtual int getHealth()=0;
+    virtual void editHealth(int)=0;
+    virtual int getMagic()=0;
+    virtual void editMagic(int)=0;
+    virtual int getAttack()=0;
+    virtual void editAttack(int)=0;
+    virtual int getCost()=0;
+    virtual void editCost(int)=0;
+    virtual int getUsage()=0;
+    virtual void editUsage(int)=0;
+    virtual Info getInfo()=0;
+>>>>>>> 31f177a28100c0ffdd97fa6d8f3320d573ca5c57
 };
 
 #endif
