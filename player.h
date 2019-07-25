@@ -6,6 +6,7 @@ using namespace std;
 
 class Player{
     string name;
+    std::unique_ptr<Player> &opponent;
     vector<unique_ptr<Card>> hand;
     vector<unique_ptr<Card>> minions;
     unique_ptr<Card>i ritual;

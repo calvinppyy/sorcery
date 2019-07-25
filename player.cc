@@ -27,3 +27,13 @@ unique_ptr<Card> &Player::getIthMinion(int i){
 void Player::playCard(int i){
     hand.at(i).playCard(std::make_unique(*this));
 }
+
+void playCard(int i, std::unique_ptr<Player> me, int j){
+    hand.at(i).playCard()
+}
+
+void useAbility(integer);
+void useAbility(integer, Player_ptr, integer);
+void draw();
+void discard();
+void inspect(integer);
