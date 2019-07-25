@@ -9,6 +9,10 @@ struct Info {
     LocationType location;
     int numInLocation;
     CardType cType;
+    Info(std::string player, std::string name, LocationType location, int numInLocation, CardType cType);
 };
+
+Info::Info(std::string player, std::string name, LocationType location, int numInLocation, CardType cType):
+player{player}, name{name}, location{location}, numInLocation{numInLocation}, cType{cType}{}
 
 #endif
