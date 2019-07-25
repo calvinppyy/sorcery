@@ -17,16 +17,17 @@ class Player{
     int magicCap;
 public:
     void giveName(string name);
+    void setOpponent(std::unique_ptr<Player> &);
     void giveDeck(vector<unique_ptr<Card>> &deck, string what);
     bool died();
     unique_ptr<Card> getIthMinion();
-    void playCard(int i);
-    void playCard(integer, Player_ptr, integer);
-    void useAbility(integer);
-    void useAbility(integer, Player_ptr, integer);
+    void playCard(int, bool);
+    void playCard(int, unique_ptr<Player>, int, bool);
+    void useAbility(int, bool);
+    void useAbility(int, unique_ptr<Player>, int, bool);
     void draw();
     void discard();
-    void inspect(integer);
+    void inspect(int);
 };
 
 #endif
