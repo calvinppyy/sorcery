@@ -28,6 +28,7 @@ public:
     void draw();
     void discard();
     void inspect(int);
+    void shuffle();
 };
 
 #endif
