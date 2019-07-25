@@ -19,7 +19,7 @@ State Card::getState() const {
     return this->state;
 }
 
-//method as observer
+//method as observer, need to be moved to subclasses, specific case
 void Card::notify(Card & whoFrom) {
     State subjectState = whoFrom.getState();
     if (subjectState.type == StateType::PlayCard && this->triggerType == TriggerType::minionEnter) {

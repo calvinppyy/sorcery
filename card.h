@@ -51,7 +51,7 @@ public:
     State getState() const;
 
     //method as observer
-    void notify(<std::unique_ptr<Card> &whoFrom);
+    virtual void notify(<std::unique_ptr<Card> &whoFrom) = 0;
 };
 
 #endif
