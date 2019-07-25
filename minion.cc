@@ -2,27 +2,30 @@
 
 void Minion::playCard(std::unique_ptr<Player> &player){
     setState({StateType::PlayCard, LocationType::Hand, 1, CardType::Minion});
-    player
     this->notifyObservers();
 }
 
-void Minion::editAttack(int){
+void Minion::editAttack(int i){
+    attack+=i;
+}
+
+void Minion::editHealth(int i){
+    health+=i;
+}
+
+
+
+void Minion::cast(std::unique_ptr<Player> &player, std::unique_ptr<Card> &card){
+    if(name == "Bone Golem"){
+        
+    }
+}
+
+void Minion::startCast(std::unique_ptr<Player> &player, std::unique_ptr<Card> &card){
     
 }
 
-void Minion::editHealth(int){
-
-}
-
-void Minion::addEnchantment(&std::unique_ptr<Enchantment>){
-    
-}
-
-void Minion::cast(&std::unique_ptr<Player>, &std::unique_ptr<Card>){
-
-}
-
-void Minion::addEnchantment(&std::unique_ptr<Enchantment>){
+void Minion::endCast(std::unique_ptr<Player> &player, std::unique_ptr<Card> &card){
     
 }
 
@@ -79,5 +82,9 @@ void Minion::editUsage(int){
 }
 
 Info Minion::getInfo(){
+    
+}
+
+void Minion::notify(){
     
 }

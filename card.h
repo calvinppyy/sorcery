@@ -17,6 +17,8 @@ public:
     virtual void editHealth(int)=0;
     virtual void addEnchantment(&std::unique_ptr<Enchantment>)=0;
     virtual void cast(&std::unique_ptr<Player>, &std::unique_ptr<Card>)=0;
+    virtual void startCast(&std::unique_ptr<Player>, &std::unique_ptr<Card>)=0;
+    virtual void endCast(&std::unique_ptr<Player>, &std::unique_ptr<Card>)=0;
     virtual void addEnchantment(&std::unique_ptr<Enchantment>)=0;
     virtual void inspect()=0;
     virtual void print(boolean)=0;
