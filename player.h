@@ -29,6 +29,11 @@ public:
     void discard();
     void inspect(int);
     void shuffle();
+    void killMinion(int );
+    void adjustMinionIndex();
+    void adjustGraveyardIndex();
+    void adjustHandIndex();
+    void adjustNotoutIndex();
 };
 
 #endif

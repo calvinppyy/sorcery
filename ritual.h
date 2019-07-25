@@ -25,7 +25,7 @@ public:
     void editUsage(int) override;
     Info getInfo() override;
     bool die() override;
-    void notify() override;
+    void notify(<std::unique_ptr<Card> &whoFrom) override;
 };
 
 #endif

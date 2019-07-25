@@ -1,6 +1,6 @@
 #include "minion.h"
 
-Minion::Minion(std::string name, std::string owner, LocationType location,
+Minion::Minion(std::string name, std::unique_ptr<Player> & owner, LocationType location,
                int numInLocation, int attack, int health, int magic, int cost):
 name{name}, owner{owner}, locaton{location}, numInLocation{numInLocation},
 attack{attack}, health{health}, magic{magic}, cost{cost}, action{0}, actionLimit{1},
@@ -125,4 +125,27 @@ Info Minion::getInfo(){
 
 void Minion::notify(std::unique_ptr<Card> &whoFrom){
     
+}
+
+void Minion::notify(Card & whoFrom) {
+    State subjectState = whoFrom.getState();
+    if (subjectState.type == StateType::PlayCard && this->triggerType == TriggerType::minionEnter) {
+        this->cast(nullptr, 0);
+        return;
+    } else if ((subjectState.type == StateType::Dying || subjectState.type == StateType::Dying) &&
+    this->triggerType == TriggerType::minionLeave) {
+        this->cast(nullptr, 0);
+        return;
+    } else if (subjectState.type == StateType::Attack) {
+        if (subjectState.location == this->getInfo().location && subjectState.numInLocation == this->indexInLocation) {
+            whoFrom.editHealth(-1*this->getAttack());
+            if(this->died()) {
+                State newState = {false, StateType::Dying, LocationType::Graveyard, this->owner->graveyard.size()};
+                this->setState(newState);
+                this->notifyObservers();
+                this->owner->killMinion(this->indexInLocation);
+                this->owner->adjustMinionIndex();
+            } 
+        }
+    }
 }

@@ -35,7 +35,7 @@ public:
     int getCost() override;
     void editCost(int) override;
     Info getInfo() override;
-    void notify();
+    void notify(<std::unique_ptr<Card> &whoFrom) override;
     void attack();
     void attack(std::unique_ptr<Player>&, int);
 };
