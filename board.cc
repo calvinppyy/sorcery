@@ -153,7 +153,7 @@ void Board::inspect(int cardIndex)
 {
     try
     {
-        this->currentPlayer->inspect(cardIndex);
+        this->currentPlayer->inspect(cardIndex, testing);
     }
     catch (const out_of_range &e)
     {

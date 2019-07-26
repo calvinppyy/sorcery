@@ -2,9 +2,13 @@
 
 using namespace std;
 
-Player::Player(vector<shared_ptr<Card>> notOut, string name = ""):
-name{name}, minions{vector<shared_ptr<Card>>}, rituals{vector<shared_ptr<Card>>}, graveyard{vector<shared_ptr<Card>>}, notOut{notOut},
-health{20}, magic{1}, magicCap{1} {}
+Player::Player(vector<shared_ptr<Card>> notOut, string name){
+    this->name = name;
+    this->notOut = notOut;
+    health = 20;
+    magic = 1;
+    magicCap = 1;
+}
 
 Player::~Player() {}
 
@@ -37,21 +41,21 @@ void Player::playCard(int index, bool testing) {
         if (this->magic < this->hand.at((index - 1))->getPlayCost()) return;
         else this->editMagic(-1*this->hand.at((index - 1))->getPlayCost());
     }       
-    this->hand.at((index - 1))->playCard();
-        if (dynamic_cast<shared_ptr<Enchantment>>(this->hand.at((index - 1))) == nullptr &&
-            dynamic_cast<shared_ptr<Spell>>(this->hand.at((index - 1))) == nullptr) {
-            if (dynamic_cast<shared_ptr<Ritual>>(this->hand.at((index - 1))) == nullptr) {
+    this->hand.at((index - 1))->playCard();//give two arguments for playCard()
+        if (dynamic_cast<shared_ptr<Enchantment>>(this->hand.at((index - 1))) == nullptr && //bug
+            dynamic_cast<shared_ptr<Spell>>(this->hand.at((index - 1))) == nullptr) { //bug
+            if (dynamic_cast<shared_ptr<Ritual>>(this->hand.at((index - 1))) == nullptr) { //bug
                 if (this->minions.size() < 5) {
                     this->minions.emplace_back(this->hand.at((index - 1)));
-                    this->minions.erase(this->minions.begin() + (index - 1);
-                    this->checkTrigger(TriggerType::minionEnter);
-                    this->opponent->checkTrigger(TriggerType::minionEnter);
+                    this->minions.erase(this->minions.begin() + (index - 1));
+                    this->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
+                    this->opponent->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
                 }
             } else {
                 if (this->ritual == nullptr) this->ritual = this->hand.at((index - 1));
-                this->minions.erase(this->minions.begin() + (index - 1);
+                this->minions.erase(this->minions.begin() + (index - 1));
             }
-        } else this->hand.at((index - 1))->playCard(this, 0);
+        } else this->hand.at((index - 1))->playCard(make_shared<Player>(*this), 0);
 } //bool is for testing mode
 
 void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, bool testing) {
@@ -63,14 +67,14 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
         else this->editMagic(-1*this->hand.at((index - 1))->getPlayCost());
     }       
     this->hand.at((index - 1))->playCard(target, targetIndex);
-        if (dynamic_cast<shared_ptr<Enchantment>>(this->hand.at((index - 1))) == nullptr &&
-            dynamic_cast<shared_ptr<Spell>>(this->hand.at((index - 1))) == nullptr) {
-            if (dynamic_cast<shared_ptr<Ritual>>(this->hand.at((index - 1))) == nullptr) {
+        if (dynamic_cast<shared_ptr<Enchantment>>(this->hand.at((index - 1))) == nullptr && //'shared_ptr<Enchantment> is not a reference or pointer
+            dynamic_cast<shared_ptr<Spell>>(this->hand.at((index - 1))) == nullptr) { //same as above
+            if (dynamic_cast<shared_ptr<Ritual>>(this->hand.at((index - 1))) == nullptr) { //same as above
                 if (this->minions.size() < 5) {
                     this->minions.emplace_back(this->hand.at((index - 1)));
-                    this->minions.erase(this->minions.begin() + (index - 1);
-                    this->checkTrigger(TriggerType::minionEnter, this, this->minion.size());
-                    this->opponent->checkTrigger(TriggerType::minionEnter, this, this->minion.size());
+                    this->minions.erase(this->minions.begin() + (index - 1));
+                    this->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
+                    this->opponent->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
                 }
             } else {
                 if (this->ritual == nullptr) this->ritual = this->hand.at((index - 1));
@@ -87,7 +91,7 @@ void Player::useAbility(int index, bool testing) {
         if (this->magic < this->hand.at((index - 1))->getPlayCost()) return;
         else this->editMagic(-1*this->hand.at((index - 1))->getPlayCost());
     }   
-    this->minions.at((index - 1))->cast(this, 0);
+    this->minions.at((index - 1))->cast(make_shared<Player>(*this), 0);
 } //bool is for testing mode
 
 void Player::useAbility(int index, shared_ptr<Player> target, int targetIndex, bool testing) {
@@ -112,8 +116,8 @@ void Player::discard(int index) {
     this->hand.erase(this->hand.begin()+(index-1));
 }
 
-void Player::inspect(int index) {
-    this->minion.at(index - 1)->inspect();
+void Player::inspect(int index,bool testing) {
+    this->minions.at(index - 1)->inspect(testing);
 } 
 
 void Player::shuffle() {
@@ -130,16 +134,16 @@ void Player::attack(int index) {
 
 void Player::takeAttack(int enemyIndex, int damage, int index, int attackType) {
     this->minions.at(index - 1)->editDefence(-1*damage);
-    if (this->minions.at(index - 1)->getDefense() <= 0) {
+    if (this->minions.at(index - 1)->getDefence() <= 0) {
         this->killMinion((index - 1));
-        this->checkTrigger(TriggerType::minionLeave);
+        this->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
     }
     if (attackType == 0) {
         this->attack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, 1);
     }
 } // against minion, attackType indicates if the minion is actively attacking or counter-attack
 
-void Player::attack(int index, int enemyIndex, int attackType) {
+void Player::attack(int index,int damage, int enemyIndex, int attackType) {
     this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, 0);
 }                             // against minion, the 3rd int indicates if the minion is actively attacking or counter-attack
 
@@ -151,7 +155,7 @@ void Player::killMinion(int index) {
 void Player::reviveMinion() {
     if (this->minions.size() < 5) {
         this->minions.emplace_back(this->graveyard.back());
-        this->minions.back()->editDefence((-1)*this->minions.back()->getDefence())
+        this->minions.back()->editDefence((-1)*this->minions.back()->getDefence());
         this->minions.back()->editDefence(1);
     }
     this->graveyard.pop_back();
@@ -163,11 +167,11 @@ void Player::allEditDefence(int value) {
     }
 }
 
-void Player::checkTrigger(TriggerType type) {
+void Player::checkTrigger(TriggerType type, std::shared_ptr<Player> player, int index) {
     for (int i = 0; i < this->minions.size(); i++) {
-        this->minions.at(i)->checkTrigger(type);
+        this->minions.at(i)->checkTrigger(type,player,index);
     }
-    this->ritual->checkTrigger(type);
+    this->ritual->checkTrigger(type,player,index);
 }
 
 void Player::summonCard(int count, string name) {

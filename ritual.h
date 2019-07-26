@@ -1,6 +1,7 @@
 #ifndef RITUAL_H
 #define RITUAL_H
 #include "card.h"
+#include "player.h"
 
 class Ritual: public Card{
     int playCost, usage, usageCap;

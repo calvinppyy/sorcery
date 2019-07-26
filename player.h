@@ -2,6 +2,8 @@
 #define PLAYER_H
 #include "card.h"
 
+class Card;
+
 class Player{
     std::string name;
     std::shared_ptr<Player> opponent;
@@ -27,16 +29,16 @@ public:
     void useAbility(int, std::shared_ptr<Player>, int, bool);
     void draw();
     void discard(int);
-    void inspect(int);
+    void inspect(int,bool);
     void shuffle();
     void takeAttack(int ); //agianst player
     void attack(int ); // against player
-    void takeAttack(int , int , int ); // against minion, attackType indicates if the minion is actively attacking or counter-attack
-    void attack(int, int, int); // against minion, the 3rd int indicates if the minion is actively attacking or counter-attack
+    void takeAttack(int ,int, int , int ); // against minion, attackType indicates if the minion is actively attacking or counter-attack
+    void attack(int, int, int, int); // against minion, the 3rd int indicates if the minion is actively attacking or counter-attack
     void killMinion(int );
     void reviveMinion( );
-    void allEditDefense(int );
-    void checkTrigger(TriggerType );
+    void allEditDefence(int );
+    void checkTrigger(TriggerType, std::shared_ptr<Player>, int);
     void summonCard(int , std::string );
     std::shared_ptr<Player> getOpponent();
     void editMagic(int );

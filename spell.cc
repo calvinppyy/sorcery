@@ -15,9 +15,9 @@ void Spell::playCard(std::shared_ptr<Player> target, int index){
     if (name == "Recharge"){
         target->getIthMinion(6)->editUsage(3);
     } else if (name =="Disenchant"){
-        target->getIthMinion->popEnchantment();
+        target->getIthMinion(index)->popEnchantment();
     } else if(name == "Unsummon"){
-        target->unsummon(index);
+        target->unsummonCard(index);
     } else if (name == "Raise Dead"){
         target->reviveMinion();
     } else if (name == "Blizzard"){
@@ -39,31 +39,31 @@ void Spell::print(bool graphicsEnabled){
     
 }
 
-int Spell::getDefence(){}
+int Spell::getDefence(){return 0;}
 
 void Spell::editDefence(int defence){}
 
-int Spell::getPlayCost(){}
+int Spell::getPlayCost(){return 0;}
 
 void Spell::editPlayCost(int playCost){}
 
-int Spell::getAttack(){}
+int Spell::getAttack(){return 0;}
 
 void Spell::editAttack(int attack){}
 
-int Spell::getAbilityCost(){}
+int Spell::getAbilityCost(){return 0;}
 
 void Spell::editAbilityCost(int ac){}
 
-int Spell::getUsage(){}
+int Spell::getUsage(){return 0;}
 
 void Spell::editUsage(int){}
 
-int Spell::getAction(){}
+int Spell::getAction(){return 0;}
 
 void Spell::editAction(int action){}
 
-bool Spell::died(){}
+bool Spell::died(){return false;}
 
 std::string Spell::getDescription() {
     if (name == "Banish") {return "Distroy target minion or ritual";}
@@ -72,6 +72,7 @@ std::string Spell::getDescription() {
     if (name =="Disenchant") {return "Distroy the top enchantment on target minion";}
     if (name == "Raise Dead") {return "Resurrect the top minion in your graveyard and set its defence to 1";}
     if (name == "Blizzard") {return "Deal 2 damages to all minions";}
+    else return "";
 }
 
-void Enchantment::checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index){}
+void Spell::checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index){}

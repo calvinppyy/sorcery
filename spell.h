@@ -1,9 +1,9 @@
 #ifndef SPELL_H
 #define SPELL_H
 #include "card.h"
+#include "player.h"
 
 class Enchantment;
-class Card;
 
 class Spell:public Card{
     int playCost;

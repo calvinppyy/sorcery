@@ -30,8 +30,8 @@ void Ritual::clearEnchantment(){}
 
 void Ritual::cast(std::shared_ptr<Player> opponent, int index){
     if(name == "Aura of Power"){
-        opponent->getIthMinion->editAttack(1);
-        opponent->getIthMinion->editDefence(1);
+        opponent->getIthMinion(index)->editAttack(1);
+        opponent->getIthMinion(index)->editDefence(1);
         usage-=usageCap;
     } else if(name == "Dark Ritual"){
         opponent->editMagic(1);
@@ -48,7 +48,7 @@ void Ritual::print(bool graphicsEnabled){
     
 }
 
-int Ritual::getDefence(){}
+int Ritual::getDefence(){return 0;}
 
 void Ritual::editDefence(int defence){}
 
@@ -60,11 +60,11 @@ void Ritual::editPlayCost(int playCost){
     this->playCost+=playCost;
 }
 
-int Ritual::getAttack(){}
+int Ritual::getAttack(){return 0;}
 
 void Ritual::editAttack(int attack){}
 
-int Ritual::getAbilityCost(){}
+int Ritual::getAbilityCost(){return 0;}
 
 void Ritual::editAbilityCost(int ac){}
 
@@ -76,16 +76,17 @@ void Ritual::editUsage(int uc){
     usage+=uc;
 }
 
-int Ritual::getAction(){}
+int Ritual::getAction(){return 0;}
 
 void Ritual::editAction(int action){}
 
-bool Ritual::died(){}
+bool Ritual::died(){return false;}
 
 std::string Ritual::getDescription() {
     if (name == "Dark Ritual") {return "At the start of your turn, gain 1 mana";}
     if (name == "Aura of Power") {return "Whenever a minion enters play under your control, it gains +1/+1";}
     if (name == "Standstill") {return "Whenever a minion enters play, destroy it";}
+    else return "";
 }
 
 void Ritual::checkTrigger(TriggerType trigger, std::shared_ptr<Player> opponent, int index){

@@ -91,7 +91,7 @@ void Minion::silence(bool silenced){
 
 void Minion::cast(std::shared_ptr<Player> opponent, int index){
     if(name == "Novice Pyromancer"){
-        opponent->takeAttack(1, index, 1);
+        opponent->takeAttack(1,1, index, 1);
     } else if(name == "Apprentice Summoner"){
         opponent->summonCard(1, "Air Elemental");
     } else if(name == "Master Summoner"){
@@ -140,7 +140,7 @@ int Minion::getPlayCost(){
 }
      
 void Minion::editPlayCost(int playCost){
-    this->playCost+=playCost
+    this->playCost+=playCost;
 }
      
 int Minion::getAttack(){
@@ -155,7 +155,7 @@ void Minion::editAttack(int attack){
     this->attack += attack;
 }
      
-int Minion::getAbilityCost()(){
+int Minion::getAbilityCost(){
     int abilityCost = this->abilityCost;
     for(int i = 0; i<enchantments.size(); i++){
         abilityCost += enchantments.at(i)->getAbilityCost();
@@ -163,11 +163,13 @@ int Minion::getAbilityCost()(){
     return abilityCost;
 }
      
-void Minion::editAbilityCost()(int ac){
+void Minion::editAbilityCost(int ac){
     this->abilityCost += ac;
 }
      
-int Minion::getUsage(){}
+int Minion::getUsage(){
+    return 0;
+}
 
 void Minion::editUsage(int){}
 
@@ -194,6 +196,7 @@ std::string Minion::getDescription(){
     if(name == "Novice Pyromancer") return "Deal 1 damage to target minion";
     if(name == "Apprentice Summoner") return "Summon a 1/1 air elemental";
     if(name == "Master Summoner") return "Summon up to three 1/1 air elementals";
+    else return "";
 }
 
 void Minion::checkTrigger(TriggerType trigger, std::shared_ptr<Player> opponent, int index){

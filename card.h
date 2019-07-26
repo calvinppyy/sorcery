@@ -9,6 +9,9 @@
 
 class Player;
 class Enchantment;
+class Minion;
+class Spell;
+class Ritual;
 
 class Card{
     protected:
@@ -19,12 +22,10 @@ class Card{
 public:
     Card(std::string, std::shared_ptr<Player>);
     virtual void silence(bool);
-    virtual void playCard(std::shared_ptr<Card> target);
     virtual void playCard(std::shared_ptr<Player> target, int index);
     virtual void addEnchantment(std::shared_ptr<Enchantment>) = 0;
     virtual void popEnchantment() = 0;
     virtual void clearEnchantment() = 0;
-    virtual void cast(std::shared_ptr<Card>) = 0;
     virtual void cast(std::shared_ptr<Player>, int ) = 0;
     virtual void inspect(bool) = 0;
     virtual void print(bool) = 0;

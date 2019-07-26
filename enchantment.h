@@ -1,6 +1,7 @@
 #ifndef ENCHANTMENT_H
 #define ENCHANTMENT_H
 #include "card.h"
+#include "player.h"
 
 class Enchantment : public Card{
     int attack;

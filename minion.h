@@ -1,10 +1,10 @@
 #ifndef MINION_H
 #define MINION_H
 #include "card.h"
+#include "player.h"
+#include "enchantment.h"
 
 class Enchantment;
-class Card;
-class Player;
 
 class Minion : public Card{
     int attack, defence, playCost, abilityCost, action, actionCap;
