@@ -13,12 +13,10 @@ class Spell:public Card{
 public:
     Spell(std::string name, std::shared_ptr<Player> owner);
     void silence(bool);
-    void playCard(std::shared_ptr<Card> target);
     void playCard(std::shared_ptr<Player> target, int index);
     void addEnchantment(std::shared_ptr<Enchantment> echantment);
     void popEnchantment();
     void clearEnchantment();
-    void cast(std::shared_ptr<Card> target);
     void cast(std::shared_ptr<Player> opponent, int index);
     void inspect(bool graphicsEnabled);
     void print(bool graphicsEnabled);
@@ -36,6 +34,7 @@ public:
     int getAction();
     void editAction(int action);
     bool died();
+    void checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index);
 };
 
 #endif

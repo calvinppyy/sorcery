@@ -6,6 +6,5 @@
 #include "ritual.h"
 #include "enchantment.h"
 
-unique_ptr<Card> AirElemental = 
 
 #endif

@@ -43,6 +43,7 @@ public:
     virtual int getAction() = 0;
     virtual void editAction(int) = 0;
     virtual bool died() = 0;
+    virtual void checkTrigger(TriggerType, std::shared_ptr<Player>, int) = 0;
 };
 
 #endif
