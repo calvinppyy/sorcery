@@ -1,36 +1,46 @@
 #ifndef ENCHANTMENT_H
 #define ENCHANTMENT_H
 #include "card.h"
+#include <memory>
+#include <string>
+#include <vector>
+
+class Card;
 
 class Enchantment : public Card{
     int attack;
     int defense;
     int abilityCost;
-    bool silence;
+    bool silenced;
     int action;
+    int playCost;
     std::shared_ptr<Card> target;
 public:
-    virtual void playCard() = 0;
-    virtual void editAttack(int) = 0;
-    virtual void editHealth(int) = 0;
-    virtual void addEnchantment(std::unique_ptr<Enchantment> &) = 0;
-    virtual void cast(std::unique_ptr<Player> &, int ) = 0;
-    virtual void inspect() = 0;
-    virtual void print(boolean) = 0;
-    virtual std::string getDescription() = 0;
-    virtual int getHealth() = 0;
-    virtual void editHealth(int) = 0;
-    virtual int getMagic() = 0;
-    virtual void editMagic(int) = 0;
-    virtual int getAttack() = 0;
-    virtual void editAttack(int) = 0;
-    virtual int getCost() = 0;
-    virtual void editCost(int) = 0;
-    virtual int getUsage() = 0;
-    virtual void editUsage(int) = 0;
-    virtual Info getInfo() = 0;
-    virtual bool died() = 0;
-    void notify() override;
+    Enchantment(std::string name, std::shared_ptr<Player> owner);
+    void silence(bool);
+    void playCard(std::shared_ptr<Card> target);
+    void playCard(std::shared_ptr<Player> target, int index);
+    void addEnchantment(std::shared_ptr<Enchantment> echantment);
+    void popEnchantment();
+    void clearEnchantment();
+    void cast(std::shared_ptr<Card> target);
+    void cast(std::shared_ptr<Player> opponent, int index);
+    void inspect(bool graphicsEnabled);
+    void print(bool graphicsEnabled);
+    std::string getDescription();
+    int getDefence();
+    void editDefence(int defence);
+    int getPlayCost();
+    void editPlayCost(int playCost);
+    int getAttack();
+    void editAttack(int attack);
+    int getAbilityCost(); //ritual, minion
+    void editAbilityCost(int ac); //ritual minion
+    int getUsage(); //for ritual
+    void editUsage(int); //for ritual
+    int getAction();
+    void editAction(int action);
+    bool died();
 };
 
 #endif

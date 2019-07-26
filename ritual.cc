@@ -1,19 +1,89 @@
 #include "ritual.h"
-Ritual::Ritual():{}
+Ritual::Ritual(std::string name, std::shared_ptr<Player> owner):Card{name,owner}{
+    if(name == "Dark Ritual"){
+        playCost = 0;
+        usage = 5;
+        usageCap = 1;
+    } else if(name == "Aura of Power"){
+        playCost = 1;
+        usage = 4;
+        usageCap = 1;
+    } else if(name == "Standstill"){
+        playCost = 3;
+        usage = 4;
+        usageCap = 2;
+    }
+}
 
-void Ritual::playCard() ;
+void Ritual::silence(bool silence){}
 
-void Ritual::editAttack(int i) {}
+void Ritual::playCard(std::shared_ptr<Card> target){}
 
-void Ritual::editHealth(int i) {}
+void Ritual::playCard(std::shared_ptr<Player> target, int index){}
 
-void Ritual::addEnchantment(std::unique_ptr<Enchantment> &enchantment) {}
+void Ritual::addEnchantment(std::shared_ptr<Enchantment> echantment){}
 
-void Ritual::cast(std::unique_ptr<Player> &player, int i) ;
+void Ritual::popEnchantment(){}
 
-void Ritual::inspect() ;
+void Ritual::clearEnchantment(){}
 
-void Ritual::print(bool);
+void Ritual::cast(std::shared_ptr<Card> target){
+    if(name == "Aura of Power"){
+        target->editAttack(1);
+        target->editDefence(1);
+        usage-=usageCap;
+    }
+}
+
+void Ritual::cast(std::shared_ptr<Player> opponent, int index){
+    if(name == "Dark Ritual"){
+        opponent->editMagic(1);
+        usage-=usageCap;
+    } else if(name == "Standstill"){
+        opponent->killMinion(index);
+        usage-=usageCap;
+    }
+}
+
+void Ritual::inspect(bool graphicsEnabled){}
+
+void Ritual::print(bool graphicsEnabled){
+    
+}
+
+int Ritual::getDefence(){}
+
+void Ritual::editDefence(int defence){}
+
+int Ritual::getPlayCost(){
+    return playCost;
+}
+
+void Ritual::editPlayCost(int playCost){
+    this->playCost+=playCost;
+}
+
+int Ritual::getAttack(){}
+
+void Ritual::editAttack(int attack){}
+
+int Ritual::getAbilityCost(){}
+
+void Ritual::editAbilityCost(int ac){}
+
+int Ritual::getUsage(){
+    return usage;
+}
+
+void Ritual::editUsage(int uc){
+    usage+=uc;
+}
+
+int Ritual::getAction(){}
+
+void Ritual::editAction(int action){}
+
+bool Ritual::died(){}
 
 std::string Ritual::getDescription() {
     if (name == "Dark Ritual") {return "At the start of your turn, gain 1 mana";}
@@ -21,42 +91,3 @@ std::string Ritual::getDescription() {
     if (name == "Standstill") {return "Whenever a minion enters play, destroy it";}
     
 }
-
-int Ritual::getHealth() {return 0;}
-
-void Ritual::editHealth(int i) {}
-
-int Ritual::getMagic() {
-    return magic;
-}
-
-void Ritual::editMagic(int i) {
-    magic += i
-}
-
-int Ritual::getAttack() {return 0;}
-
-void Ritual::editAttack(int i) {}
-
-int Ritual::getCost() {
-    return cost;
-}
-
-void Ritual::editCost(int i) {
-    cost += i;
-}
-
-int Ritual::getUsage() {
-    return usage;
-}
-
-void Ritual::editUsage(int i) {
-    usage += i;
-}
-
-Info Ritual::getInfo() ;
-
-bool Ritual::died() ;
-
-void Ritual::notify();
-

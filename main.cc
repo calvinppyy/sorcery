@@ -10,7 +10,7 @@ void loadDeck(vector<shared_ptr<Card>> &deck, std::string filename){
     ifstream deckfile {filename};
     string cardName;
     while (getline(deckfile, cardName)) {
-        if(cardName == "Air Elemental") deck.push_back(make_shared<Minion>("Air Elemental", 1, 1));
+        if(cardName == "Air Elemental") deck.push_back();
         if(cardName == "Earth Elemental") deck.push_back({});
         if(cardName == "Bone Golem") deck.push_back({});
         if(cardName == "Fire Elemental") deck.push_back({});
