@@ -1,31 +1,41 @@
 #ifndef SPELL_H
 #define SPELL_H
 #include "card.h"
+#include <memory>
+#include <string>
+#include <vector>
+
+class Enchantment;
+class Card;
 
 class Spell:public Card{
     int playCost;
 public:
-    void playCard(&std::unique_ptr<Player>) override;
-    void editAttack(int) override;
-    void editHealth(int) override;
-    void addEnchantment(std::unique_ptr<Enchantment> &) override;
-    void cast(std::unique_ptr<Player>&, int) override;
-    void inspect() override;
-    void print(bool) override;
-    std::string getDescription() override;
-    int getHealth() override;
-    void editHealth(int) override;
-    int getMagic() override;
-    void editMagic(int) override;
-    int getAttack() override;
-    void editAttack(int) override;
-    int getCost() override;
-    void editCost(int) override;
-    int getUsage() override;
-    void editUsage(int) override;
-    Info getInfo() override;
-    bool die() override;
-    void notify(<std::unique_ptr<Card> &whoFrom) override;
+    Spell(std::string name, std::shared_ptr<Player> owner);
+    void silence(bool);
+    void playCard(std::shared_ptr<Card> target);
+    void playCard(std::shared_ptr<Player> target, int index);
+    void addEnchantment(std::shared_ptr<Enchantment> echantment);
+    void popEnchantment();
+    void clearEnchantment();
+    void cast(std::shared_ptr<Card> target);
+    void cast(std::shared_ptr<Player> opponent, int index);
+    void inspect(bool graphicsEnabled);
+    void print(bool graphicsEnabled);
+    std::string getDescription();
+    int getDefence();
+    void editDefence(int defence);
+    int getPlayCost();
+    void editPlayCost(int playCost);
+    int getAttack();
+    void editAttack(int attack);
+    int getAbilityCost(); //ritual, minion
+    void editAbilityCost(int ac); //ritual minion
+    int getUsage(); //for ritual
+    void editUsage(int); //for ritual
+    int getAction();
+    void editAction(int action);
+    bool died();
 };
 
 #endif

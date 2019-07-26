@@ -1,20 +1,77 @@
 #include "spell.h"
 
-Spell::Spell():{}
+Spell::Spell(std::string name, std::shared_ptr<Player> owner):Card{name,owner}{
+    if (name == "Banish") {playCost = 2;}
+    else if (name == "Unsummon") {playCost = 1;}
+    else if (name == "Recharge") {playCost = 1;}
+    else if (name =="Disenchant") {playCost = 1;}
+    else if (name == "Raise Dead") {playCost = 1;}
+    else if (name == "Blizzard") {playCost = 3;}
+}
 
-void Spell::playCard();
+void Spell::silence(bool silence){}
 
-void Spell::editAttack(int i) {}
+void Spell::playCard(std::shared_ptr<Card> target){
+    if (name == "Banish"){
+        target->editUsage(-1*target->getUsage());
+    } else if (name == "Recharge"){
+        target->editUsage(3);
+    } else if (name =="Disenchant"){
+        target->popEnchantment();
+    }
+}
 
-void Spell::editHealth(int i) {}
+void Spell::playCard(std::shared_ptr<Player> target, int index){
+    if(name == "Unsummon"){
+        target->unsummon(index);
+    } else if (name == "Raise Dead"){
+        target->reviveMinion();
+    } else if (name == "Blizzard"){
+        target->allEditDefence(-1);
+    }
+}
 
-void Spell::addEnchantment(std::unique_ptr<Enchantment> &enchantment) {}
+void Spell::addEnchantment(std::shared_ptr<Enchantment> echantment){}
 
-void Spell::cast(std::unique_ptr<Player> &player, int i);
+void Spell::popEnchantment(){}
 
-void Spell::inspect();
+void Spell::clearEnchantment(){}
 
-void Spell::print(bool);
+void Spell::cast(std::shared_ptr<Card> target){}
+
+void Spell::cast(std::shared_ptr<Player> opponent, int index){}
+
+void Spell::inspect(bool graphicsEnabled){}
+
+void Spell::print(bool graphicsEnabled){
+    
+}
+
+int Spell::getDefence(){}
+
+void Spell::editDefence(int defence){}
+
+int Spell::getPlayCost(){}
+
+void Spell::editPlayCost(int playCost){}
+
+int Spell::getAttack(){}
+
+void Spell::editAttack(int attack){}
+
+int Spell::getAbilityCost(){}
+
+void Spell::editAbilityCost(int ac){}
+
+int Spell::getUsage(){}
+
+void Spell::editUsage(int){}
+
+int Spell::getAction(){}
+
+void Spell::editAction(int action){}
+
+bool Spell::died(){}
 
 std::string Spell::getDescription() {
     if (name == "Banish") {return "Distroy target minion or ritual";}
@@ -24,33 +81,3 @@ std::string Spell::getDescription() {
     if (name == "Raise Dead") {return "Resurrect the top minion in your graveyard and set its defence to 1";}
     if (name == "Blizzard") {return "Deal 2 damages to all minions";}
 }
-
-int Spell::getHealth() {return 0;}
-
-void Spell::editHealth(int i) {}
-
-int Spell::getMagic() {
-    return magic;
-}
-
-void Spell::editMagic(int i) {
-    magic += i;
-}
-
-int Spell::getAttack() {return 0;}
-
-void Spell::editAttack(int i) {}
-
-int Spell::getCost() {return 0;}
-
-void Spell::editCost(int i) {}
-
-int Spell::getUsage() {return 0;}
-
-void Spell::editUsage(int i) {}
-
-Info Spell::getInfo() ;
-
-bool Spell::die();
-
-void Spell::notify();

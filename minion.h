@@ -1,40 +1,45 @@
 #ifndef MINION_H
 #define MINION_H
 #include "card.h"
+#include <memory>
+#include <string>
+#include <vector>
 
-class Enchantment, Card;
+class Enchantment;
+class Card;
+class Player;
 
-class Minion:public Card{
-    int attack, health, playCost, abilityCost, action, actionCap;
+class Minion : public Card{
+    int attack, defence, playCost, abilityCost, action, actionCap;
     bool silenced;
     std::vector<std::shared_ptr<Enchantment>> enchantments;
     
 public:
-    Minion(std::string name, std::string owner, LocationType location,
-    int numInLocation, int attack, int health, int magic, int cost);
-    void playCard() override;
-    void editAttack(int) override;
-    void editHealth(int) override;
-    void addEnchantment(std::shared_ptr<Enchantment>&) override;
-    void startCast(std::shared_ptr<Player>&, std::shared_ptr<Card>&) override;
-    void endCast(std::shared_ptr<Player>&, std::shared_ptr<Card>&) override;
-    void cast(std::shared_ptr<Player>&, std::shared_ptr<Card>&) override;
-    void addEnchantment(std::shared_ptr<Enchantment>&) override;
-    void inspect() override;
-    void print(boolean) override;
-    std::string getDescription() override;
-    int getHealth() override;
-    void editHealth(int) override;
-    int getMagic() override;
-    void editMagic(int) override;
-    int getAttack() override;
-    void editAttack(int) override;
-    int getCost() override;
-    void editCost(int) override;
-    Info getInfo() override;
-    void notify(<std::shared_ptr<Card> &whoFrom) override;
-    void attack();
-    void attack(std::shared_ptr<Player>&, int);
+    Minion(std::string name, std::shared_ptr<Player> owner);
+    void silence(bool);
+    void playCard(std::shared_ptr<Card> target);
+    void playCard(std::shared_ptr<Player> target, int index);
+    void addEnchantment(std::shared_ptr<Enchantment> echantment);
+    void popEnchantment();
+    void clearEnchantment();
+    void cast(std::shared_ptr<Card> target);
+    void cast(std::shared_ptr<Player> opponent, int index);
+    void inspect(bool graphicsEnabled);
+    void print(bool graphicsEnabled);
+    std::string getDescription();
+    int getDefence();
+    void editDefence(int defence);
+    int getPlayCost();
+    void editPlayCost(int playCost);
+    int getAttack();
+    void editAttack(int attack);
+    int getAbilityCost(); //ritual, minion
+    void editAbilityCost(int ac); //ritual minion
+    int getUsage(); //for ritual
+    void editUsage(int); //for ritual
+    int getAction();
+    void editAction(int action);
+    bool died();
 };
 
 #endif

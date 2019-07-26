@@ -29,11 +29,11 @@ public:
     void shuffle();
     void takeAttack(int damage); //agianst player
     void attack(int index); // against player
-    void takeAttack(int damage,int index); // against minion
-    void attack(int, int); // against minion
-    void killMinion(int );
-    void reviveMinion(int );
-    void allEditDefense(int );
+    void takeAttack(int damage,int index, int mark); // against minion
+    void attack(int damage, int index, int mark); // against minion
+    void killMinion(int index);
+    void reviveMinion();
+    void allEditDefense(int defence);
     void checkTrigger(TriggerType );
     void summonCard(int count, std::string name);
     std::shared_ptr<Player> getOpponent();
