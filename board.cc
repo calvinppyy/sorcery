@@ -2,7 +2,8 @@
 
 using namespace std;
 
-Board::Board(unique_ptr<Player> &player1, unique_ptr<Player> &player2) : round{0}, player1{player1}, player2{player2}, currentPlayer{player1}, testing{false}, graphics{false} {}
+Board::Board(shared_ptr<Player> player1, shared_ptr<Player> player2):
+player1{player1}, player2{player2}, currentPlayer{player1}, testing{false}, graphics{false} {}
 
 void Board::init(std::string name1, std::string name2)
 {
@@ -17,12 +18,7 @@ void Board::init(std::string name1, std::string name2)
     }
 }
 
-int Board::getRound()
-{
-    return this->round;
-}
-
-void Board::setCurrentPlayer(unique_ptr<Player> nextPlayer)
+void Board::setCurrentPlayer(shared_ptr<Player> nextPlayer)
 {
     this->currentPlayer = nextPlayer;
 }
@@ -42,22 +38,22 @@ bool Board::isOver()
     return player1->died() || player2->died();
 }
 
-string Board::winner()
-{
-    if (player1->died())
-        return this->player2->getName();
-    return this->player1->getName();
+shared_ptr<Player> Board::winner()
+{   
+    if (!this->isOver()) return nullptr;
+    if (player1->died()) return this->player2;
+    return this->player1;
 }
 
 void Board::attack(int myMinion, int enemy)
 {
     try
     {
-        this->currentPlayer->attack(myMinion, enemy);
+        this->currentPlayer->attack(myMinion, enemy，0);
     }
     catch (const out_of_range &e)
     {
-        cerr << "Index exceeds the amount of cards the active player holds" << endl;
+        cerr << "Index exceeds the amount of minions the active player holds" << endl;
     }
 }
 
@@ -85,7 +81,7 @@ void Board::play(int cardIndex)
     }
 }
 
-void Board::play(int cardIndex, unique_ptr<Player> targetPlayer, int targetCard)
+void Board::play(int cardIndex, shared_ptr<Player> targetPlayer, int targetCard)
 {
     try
     {
@@ -109,7 +105,7 @@ void Board::useAbility(int cardIndex)
     }
 }
 
-void Board::useAbility(int cardIndex, unique_ptr<Player> targetPlayer, int targetCard)
+void Board::useAbility(int cardIndex, shared_ptr<Player> targetPlayer, int targetCard)
 {
     try
     {

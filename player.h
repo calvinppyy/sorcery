@@ -5,38 +5,42 @@
 class Player{
     std::string name;
     std::shared_ptr<Player> opponent;
-    vector<std::shared_ptr<Card>> hand;
-    vector<std::shared_ptr<Card>> minions;
+    std::vector<std::shared_ptr<Card>> hand;
+    std::vector<std::shared_ptr<Card>> minions;
     std::shared_ptr<Card> ritual;
-    vector<std::shared_ptr<Card>> graveyard;
-    vector<std::shared_ptr<Card>> notOut;
+    std::vector<std::shared_ptr<Card>> graveyard;
+    std::vector<std::shared_ptr<Card>> notOut;
     int health;
     int magic;
     int magicCap;
 public:
-    void giveName(string name);
-    void setOpponent(std::shared_ptr<Player> &);
-    void giveDeck(vector<std::shared_ptr<Card>> deck);
+    Player(std::vector<std::shared_ptr<Card>>, std::string name = "");
+    ~Player();
+    void giveName(std::string );
+    void setOpponent(std::shared_ptr<Player> );
+    void giveDeck(std::vector<std::shared_ptr<Card>> );
     bool died();
-    std::shared_ptr<Card> getIthMinion();
-    void playCard(int, bool);
+    std::shared_ptr<Card> getIthMinion(int );
+    void playCard(int, bool); //bool is for testing mode
     void playCard(int, std::shared_ptr<Player>, int, bool);
-    void useAbility(int, bool);
+    void useAbility(int, bool); //bool is for testing mode
     void useAbility(int, std::shared_ptr<Player>, int, bool);
     void draw();
-    void discard();
+    void discard(int);
     void inspect(int);
     void shuffle();
-    void takeAttack(int damage); //agianst player
-    void attack(int index); // against player
-    void takeAttack(int damage,int index); // against minion
-    void attack(int, int); // against minion
+    void takeAttack(int ); //agianst player
+    void attack(int ); // against player
+    void takeAttack(int , int , int ); // against minion, attackType indicates if the minion is actively attacking or counter-attack
+    void attack(int, int, int); // against minion, the 3rd int indicates if the minion is actively attacking or counter-attack
     void killMinion(int );
     void reviveMinion(int );
     void allEditDefense(int );
     void checkTrigger(TriggerType );
-    void summonCard(int count, std::string name);
+    void summonCard(int , std::string );
     std::shared_ptr<Player> getOpponent();
+    void editMagic(int );
+    void unsummonCard(int );
 };
 
 #endif

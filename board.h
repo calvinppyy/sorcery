@@ -9,7 +9,7 @@
 class Board {
     std::shared_ptr<Player> player1;
     std::shared_ptr<Player> player2;
-    std::shared_ptr<Player> &currentPlayer;
+    std::shared_ptr<Player> currentPlayer;
     bool testing;
     bool graphics;
 public:
@@ -17,15 +17,15 @@ public:
     void init(std::string, std::string);
     void setCurrentPlayer(std::shared_ptr<Player>);
     bool isOver();
-    std::string winner();
+    std::shared_ptr<Player> winner();
     void enterTesting();
     void enterGraphics();
     void attack(int, int);
     void attack(int);
     void play(int);
-    void play(int, shared_ptr<Player>, int);
+    void play(int, std::shared_ptr<Player>, int);
     void useAbility(int);
-    void useAbility(int, shared_ptr<Player>, int);
+    void useAbility(int, std::shared_ptr<Player>, int);
     void draw();
     void discard(int);
     void inspect(int);
