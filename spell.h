@@ -1,9 +1,6 @@
 #ifndef SPELL_H
 #define SPELL_H
 #include "card.h"
-#include <memory>
-#include <string>
-#include <vector>
 
 class Enchantment;
 class Card;

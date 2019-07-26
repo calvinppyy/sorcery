@@ -1,17 +1,16 @@
 #ifndef CARD_H
 #define CARD_H
 #include "allCard.h"
+#include "rng.h"
+#include "trigger.h"
 #include <memory>
 #include <string>
 #include <vector>
-#include "rng.h"
-#include "trigger.h"
-#include "enchantment.h"
-#include "minion.h"
-#include "spell.h"
-#include "ritual.h"
 
-class Card{      
+class Player;
+class Enchantment;
+
+class Card{
     protected:
     std::string name;
     TriggerType triggerType;

@@ -1,9 +1,6 @@
 #ifndef MINION_H
 #define MINION_H
 #include "card.h"
-#include <memory>
-#include <string>
-#include <vector>
 
 class Enchantment;
 class Card;

@@ -1,13 +1,6 @@
 #ifndef RITUAL_H
 #define RITUAL_H
 #include "card.h"
-#include <memory>
-#include <string>
-#include <vector>
-#include "trigger.h"
-
-class Enchantment;
-class Card;
 
 class Ritual: public Card{
     int playCost, usage, usageCap;

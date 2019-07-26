@@ -1,11 +1,6 @@
 #ifndef ENCHANTMENT_H
 #define ENCHANTMENT_H
 #include "card.h"
-#include <memory>
-#include <string>
-#include <vector>
-
-class Card;
 
 class Enchantment : public Card{
     int attack;
