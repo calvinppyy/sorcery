@@ -121,7 +121,12 @@ void Board::draw()
 {
     if (this->testing)
     {
-        this->currentPlayer->draw();
+        try {
+            this->currentPlayer->draw();
+        }
+        catch(string e) {
+            cout << e << endl;
+        }
         return;
     }
     throw InvalidCommandException("draw");
@@ -154,6 +159,10 @@ void Board::inspect(int cardIndex)
     {
         cerr << "Index exceeds the amount of minions the active player holds" << endl;
     }
+}
+
+void Board::checkTrigger(TriggerType type) {
+    this->currentPlayer->checkTrigger(type);
 }
 
 Board::~Board() {}

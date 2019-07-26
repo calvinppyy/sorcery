@@ -32,6 +32,7 @@ public:
     void print();
     void endRound();
     void startRound();
+    void checkTrigger(TriggerType );
     ~Board();
 };
 

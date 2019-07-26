@@ -34,13 +34,14 @@ public:
     void takeAttack(int , int , int ); // against minion, attackType indicates if the minion is actively attacking or counter-attack
     void attack(int, int, int); // against minion, the 3rd int indicates if the minion is actively attacking or counter-attack
     void killMinion(int );
-    void reviveMinion(int );
+    void reviveMinion( );
     void allEditDefense(int );
     void checkTrigger(TriggerType );
     void summonCard(int , std::string );
     std::shared_ptr<Player> getOpponent();
     void editMagic(int );
     void unsummonCard(int );
+    void editRitualUsage(int );
 };
 
 #endif
