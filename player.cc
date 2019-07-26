@@ -121,7 +121,8 @@ void Player::inspect(int index,bool testing) {
 } 
 
 void Player::shuffle() {
-
+    auto rng = default_random_engine {};
+    shuffle(this->notOut.begin(), this->notOut.end(), rng); //DELETE THE RNG CLASS IF THIS WORKS, USED <algorithm> && <random>, INCLUDED IN player.h
 }
 
 void Player::takeAttack(int damage) {
@@ -177,7 +178,7 @@ void Player::checkTrigger(TriggerType type, std::shared_ptr<Player> player, int 
 void Player::summonCard(int count, string name) {
     for (int i = 0; i < count ; i++) {
         if (this->minions.size() == 5) return;
-
+        this->minions.emplace_back(make_shared<Minion>(name, this));
     }
 }
 
@@ -191,7 +192,8 @@ void Player::editMagic(int value) {
 }
 
 void Player::unsummonCard(int index) {
-
+    this->hand.emplace_back(this->minions.at(index - 1));
+    this->minions.erase(this->minions.begin() + (index - 1));
 }
 
 void Player::editRitualUsage(int value) {
@@ -199,4 +201,3 @@ void Player::editRitualUsage(int value) {
     this->ritual->editUsage(value);
 }
 
-////////////////////////////////shuffle and summon and unsummon are not finished
