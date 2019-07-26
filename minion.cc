@@ -71,8 +71,6 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
     }
 }
 
-void Minion::playCard(std::shared_ptr<Card> target){}
-
 void Minion::playCard(std::shared_ptr<Player> target, int index){}
 
 void Minion::addEnchantment(std::shared_ptr<Enchantment> enchantment){
@@ -90,8 +88,6 @@ void Minion::clearEnchantment(){
 void Minion::silence(bool silenced){
     this->silenced = silenced;
 }
-
-void Minion::cast(std::shared_ptr<Card> target){}
 
 void Minion::cast(std::shared_ptr<Player> opponent, int index){
     if(name == "Novice Pyromancer"){
@@ -198,4 +194,10 @@ std::string Minion::getDescription(){
     if(name == "Novice Pyromancer") return "Deal 1 damage to target minion";
     if(name == "Apprentice Summoner") return "Summon a 1/1 air elemental";
     if(name == "Master Summoner") return "Summon up to three 1/1 air elementals";
+}
+
+void Minion::checkTrigger(TriggerType trigger, std::shared_ptr<Player> opponent, int index){
+    if(trigger == triggerType){
+        cast(opponent,index);
+    }
 }

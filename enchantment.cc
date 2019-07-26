@@ -48,26 +48,22 @@ void Enchantment::silence(bool silenced){
     this->silenced = silenced;
 }
 
-void Enchantment::playCard(std::shared_ptr<Card> target){
+void Enchantment::playCard(std::shared_ptr<Player> target, int index){
     if(name == "Enrage"){
-        attack = target->getAttack();
-        defense = target->getDefence();
+        attack = target->getIthMinion(index)->getAttack();
+        defense = target->getIthMinion(index)->getDefence();
     } else if(name == "Silence"){
-        target->silence(true);
+        target->getIthMinion->silence(true);
     }
-    target->addEnchantment(std::make_shared<Enchantment>(*this));
-    this->target = target;
+    target->getIthMinion->addEnchantment(std::make_shared<Enchantment>(*this));
+    this->target = target->getIthMinion(index);
 }
-
-void Enchantment::playCard(std::shared_ptr<Player> target, int index){}
 
 void Enchantment::addEnchantment(std::shared_ptr<Enchantment> echantment){}
 
 void Enchantment::popEnchantment(){}
 
 void Enchantment::clearEnchantment(){}
-
-void Enchantment::cast(std::shared_ptr<Card> target){}
 
 void Enchantment::cast(std::shared_ptr<Player> opponent, int index){}
 
@@ -130,3 +126,5 @@ std::string Enchantment::getDescription() {
     if (name == "Magic Fatigue") {return "Enchanted minion's activated ability costs 2 more"};
     if (name == "Silence") {return "Enchanted minion cannot use abilities"};
 }
+
+void Enchantment::checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index){}
