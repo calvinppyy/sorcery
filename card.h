@@ -32,12 +32,12 @@ public:
     virtual std::string getDescription() = 0;
     virtual int getDefence() = 0;
     virtual void editDefence(int) = 0;
-    virtual int getMagic() = 0;
-    virtual void editMagic(int) = 0;
+    virtual int getAbilityCost() = 0;
+    virtual void editAbilityCost(int) = 0;
     virtual int getAttack() = 0;
     virtual void editAttack(int) = 0;
-    virtual int getCost() = 0; //ritual, minion
-    virtual void editCost(int) = 0; //ritual minion
+    virtual int getPlayCost() = 0; //ritual, minion
+    virtual void editPlayCost(int) = 0; //ritual minion
     virtual int getUsage() = 0; //for ritual
     virtual void editUsage(int) = 0; //for ritual
     virtual int getAction() = 0;
