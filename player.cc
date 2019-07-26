@@ -85,8 +85,15 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
 
 void Player::useAbility(int index, bool testing) {
     if (testing) {
-        if (this->magic < this->hand.at((index - 1))->getPlayCost()) this->editMagic(0);
-        else this->editMagic(-1*this->hand.at((index - 1))->getPlayCost());
+        int tmp;
+        if (this->magic < this->hand.at((index - 1))->getPlayCost()) {
+            tmp = this->magic;
+            this->editMagic(0);
+        }
+        else {
+            tmp = this->hand.at((index - 1))->getPlayCost();
+            this->editMagic(-1*this->hand.at((index - 1))->getPlayCost());
+        }
     } else {
         if (this->magic < this->hand.at((index - 1))->getPlayCost()) return;
         else this->editMagic(-1*this->hand.at((index - 1))->getPlayCost());
@@ -95,7 +102,8 @@ void Player::useAbility(int index, bool testing) {
         this->minions.at((index - 1))->cast(make_shared<Player>(*this), 0); 
     }
     catch(string e) {
-        this->editMagic(this->hand.at((index - 1))->getPlayCost());
+        if (testing) this->editMagic(tmp);
+        else this->editMagic(this->hand.at((index - 1))->getPlayCost());
     }
 } //bool is for testing mode
 
