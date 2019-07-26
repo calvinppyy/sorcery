@@ -46,6 +46,7 @@ public:
     void editMagic(int );
     void unsummonCard(int );
     void editRitualUsage(int );
+    int countMinions();
 };
 
 #endif

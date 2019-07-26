@@ -90,8 +90,13 @@ void Player::useAbility(int index, bool testing) {
     } else {
         if (this->magic < this->hand.at((index - 1))->getPlayCost()) return;
         else this->editMagic(-1*this->hand.at((index - 1))->getPlayCost());
-    }   
-    this->minions.at((index - 1))->cast(make_shared<Player>(*this), 0);
+    }
+    try {
+        this->minions.at((index - 1))->cast(make_shared<Player>(*this), 0); 
+    }
+    catch(string e) {
+        this->editMagic(this->hand.at((index - 1))->getPlayCost());
+    }
 } //bool is for testing mode
 
 void Player::useAbility(int index, shared_ptr<Player> target, int targetIndex, bool testing) {
@@ -199,5 +204,9 @@ void Player::unsummonCard(int index) {
 void Player::editRitualUsage(int value) {
     if (this->ritual == nullptr) return;
     this->ritual->editUsage(value);
+}
+
+int Player::countMinions() {
+    return this->minions.size();
 }
 

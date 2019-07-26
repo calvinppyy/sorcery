@@ -93,8 +93,10 @@ void Minion::cast(std::shared_ptr<Player> opponent, int index){
     if(name == "Novice Pyromancer"){
         opponent->takeAttack(1,1, index, 1);
     } else if(name == "Apprentice Summoner"){
+        if (opponent->countMinions() == 5) throw "no minion spot"; // when there are already 5 minions
         opponent->summonCard(1, "Air Elemental");
     } else if(name == "Master Summoner"){
+        if (opponent->countMinions() == 5) throw "no minion spot"; //when there are already 5 minions
         opponent->summonCard(3, "Air Elemental");
     }
 }
