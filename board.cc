@@ -24,14 +24,7 @@ void Board::setCurrentPlayer(shared_ptr<Player> nextPlayer)
 
 void Board::switchCurrentPlayer()
 {
-    if (currentPlayer == player1)
-    {
-        currentPlayer = player2;
-    }
-    else
-    {
-        currentPlayer = player1;
-    }
+    currentPlayer = currentPlayer->getOpponent();
 }
 
 void Board::enterTesting()

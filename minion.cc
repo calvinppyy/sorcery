@@ -97,20 +97,38 @@ void Minion::silence(bool silenced){
     this->silenced = silenced;
 }
 
-void Minion::cast(std::shared_ptr<Player> opponent, int index){
+void Minion::cast(Player& opponent, int index){
     if(name == "Novice Pyromancer"){
-        opponent->takeAttack(1,1, index, 1);
+        opponent.takeAttack(1,1, index, 1);
     } else if(name == "Apprentice Summoner"){
-        if (opponent->countMinions() == 5) throw "no minion spot"; // when there are already 5 minions
-        opponent->summonCard(1, "Air Elemental");
+        if (opponent.countMinions() == 5) throw "no minion spot"; // when there are already 5 minions
+        opponent.summonCard(1, "Air Elemental");
     } else if(name == "Master Summoner"){
-        if (opponent->countMinions() == 5) throw "no minion spot"; //when there are already 5 minions
-        opponent->summonCard(3, "Air Elemental");
+        if (opponent.countMinions() == 5) throw "no minion spot"; //when there are already 5 minions
+        opponent.summonCard(3, "Air Elemental");
     }
 }
      
 void Minion::inspect(bool graphicsEnabled){
     if(!graphicsEnabled){
+        card_template_t temp = whichFunc(std::make_shared<Minion>(*this));
+        std::vector<card_template_t> ents;
+        for(int i = 0; i<enchantments.size();i++){
+            ents.push_back(whichFunc(enchantments.at(i)));
+        }
+        for(auto ss: temp) std::cout << ss << std::endl;
+        int n = ents.size();
+        while (n > 0) {
+            for (int j = 0; j < ents.at(0).size(); ++j) {
+                for (int i = 0; i < n && i < 5; ++i) {
+                    std::cout << ents.at(i).at(j);
+                }
+                std::cout << std::endl;
+            }
+            n -= 5;
+            std::cout << std::endl;
+        }
+    } else {
         
     }
 }
@@ -127,7 +145,7 @@ void Minion::editDefence(int damage){
     int temp = damage;
     for(int i = enchantments.size()-1; i>=0; i--){
         if(temp == 0) break;
-        if(temp>=enchantments.at(i)->getDefence()){
+        if(abs(temp)>=enchantments.at(i)->getDefence()){
             temp += enchantments.at(i)->getDefence();
             enchantments.at(i)->editDefence(-1*enchantments.at(i)->getDefence());
         } else {
@@ -208,7 +226,7 @@ std::string Minion::getDescription(){
     else return "";
 }
 
-void Minion::checkTrigger(TriggerType trigger, std::shared_ptr<Player> opponent, int index){
+void Minion::checkTrigger(TriggerType trigger,Player& opponent, int index){
     if(trigger == triggerType){
         cast(opponent,index);
     }

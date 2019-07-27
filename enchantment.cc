@@ -65,7 +65,7 @@ void Enchantment::popEnchantment(){}
 
 void Enchantment::clearEnchantment(){}
 
-void Enchantment::cast(std::shared_ptr<Player> opponent, int index){}
+void Enchantment::cast(Player&  opponent, int index){}
 
 void Enchantment::inspect(bool graphicsEnabled){}
 
@@ -74,7 +74,7 @@ int Enchantment::getDefence(){
 }
 
 void Enchantment::editDefence(int defence){
-    this->defense+=defense;
+    this->defense+=defence;
 }
 
 int Enchantment::getPlayCost(){
@@ -128,7 +128,7 @@ std::string Enchantment::getDescription() {
     return "";
 }
 
-void Enchantment::checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index){}
+void Enchantment::checkTrigger(TriggerType trigger,Player&  opponent, int index){}
 
 int Enchantment::getDefenceCap(){
     return 0;

@@ -292,22 +292,22 @@ int main(int argc, char *argv[]){
             if(temp == "attack"){
                 int attacker = 0,player = 0,defender = 0;
                 iss>>attacker;
-                bool i = (bool)iss>>player;
-                bool j = (bool)iss>>defender;
-                if(i&&j){
+                iss>>player;
+                iss>>defender;
+                if(player&&defender){
                     board->attack(attacker, defender);
-                } else if(i){
+                } else if(player){
                     cerr<<"Invalid number/type of Commands. Type \"-help\" for more help on Commands"<<endl;
                 } else {
                     board->attack(attacker);
                 }
             } else if(temp == "play"){
-                int cardNum = 0, playerNum = -1, targetNum = -1;
+                int cardNum = 0, playerNum = 0, targetNum = 0;
                 iss>>cardNum;
-                bool i = (bool)iss>>playerNum;
-                bool j = (bool)iss>>targetNum;
-                cout<<i<<j<<((!i)&&(!j))<<endl;
-                if(i&&j){
+                iss>>playerNum;
+                iss>>targetNum;
+                cout<<playerNum<<targetNum<<endl;
+                if(playerNum&&targetNum){
                     try{
                         if(playerNum == 1){
                             board->play(cardNum, player1, targetNum);
@@ -318,11 +318,11 @@ int main(int argc, char *argv[]){
                     catch(InvalidCommandException e){
                         e.prettyprint();
                     }
-                } else if(i){
+                } else if(playerNum){
                     cerr<<"Invalid number/type of Commands. Type \"-help\" for more help on Commands"<<endl;
                 } else {
+                    cout<<"here"<<endl;
                     try{
-                        cout<<"here"<<endl;
                         board->play(cardNum);
                     }
                     catch(InvalidCommandException e){
@@ -332,15 +332,15 @@ int main(int argc, char *argv[]){
             } else if(temp == "use"){
                 int cardNum = 0, playerNum = 0, targetNum = 0;
                 iss>>cardNum;
-                bool i = (bool)iss>>playerNum;
-                bool j = (bool)iss>>targetNum;
-                if(i&&j){
+                iss>>playerNum;
+                iss>>targetNum;
+                if(playerNum&&targetNum){
                     if(playerNum == 1){
                         board->useAbility(cardNum, player1, targetNum);
                     } else {
                         board->useAbility(cardNum, player2, targetNum);
                     }
-                } else if(i){
+                } else if(playerNum){
                     cerr<<"Invalid number/type of Commands. Type \"-help\" for more help on Commands"<<endl;
                 } else {
                     board->useAbility(cardNum);

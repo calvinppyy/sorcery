@@ -18,7 +18,7 @@ public:
     void addEnchantment(std::shared_ptr<Enchantment> echantment);
     void popEnchantment();
     void clearEnchantment();
-    void cast(std::shared_ptr<Player> opponent, int index);
+    void cast(Player& opponent, int index);
     void inspect(bool graphicsEnabled);
     std::string getDescription();
     int getDefence();
@@ -35,7 +35,7 @@ public:
     void editAction(int action);
     int getUsageCap();
     bool died();
-    void checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index);
+    void checkTrigger(TriggerType trigger,Player& opponent, int index);
     int getDefenceCap();
     ~Enchantment(){}
 };
