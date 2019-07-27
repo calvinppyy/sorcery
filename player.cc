@@ -147,18 +147,19 @@ void Player::useAbility(int index, bool testing)
         if (this->magic < this->hand.at((index - 1))->getPlayCost())
             throw "Not Enough Magic!";
         else
-            this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
+            this->editMagic(-1 * this->minions.at((index - 1))->getPlayCost());
     }
     try
     {
-        this->minions.at((index - 1))->cast(make_shared<Player>(*this), 0);
+        this->minions.at((index - 1))->cast(*this, 0);
     }
-    catch (string e) f
+    catch (string e)
     {
         if (testing)
             this->editMagic(tmp);
-        else
+        else{
             this->editMagic(this->hand.at((index - 1))->getPlayCost());
+        }
     }
 } //bool is for testing mode
 
@@ -178,7 +179,7 @@ void Player::useAbility(int index, shared_ptr<Player> target, int targetIndex, b
         else
             this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
     }
-    this->minions.at((index - 1))->cast(target, targetIndex);
+    this->minions.at((index - 1))->cast(*target, targetIndex);
 }
 
 void Player::draw()
@@ -220,25 +221,25 @@ void Player::attack(int index)
 void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
 {
     this->minions.at(index - 1)->editDefence(-1 * damage);
-    if (this->minions.at(index - 1)->getDefence() <= 0)
-    {
-        this->killMinion((index - 1));
-        this->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
-    }
     if (attackType == 0)
     {
         this->attack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, 1);
+    }
+    if (this->minions.at(index - 1)->getDefence() <= 0)
+    {
+        this->killMinion((index));
+        this->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
     }
 } // against minion, attackType indicates if the minion is actively attacking or counter-attack
 
 void Player::attack(int index, int damage, int enemyIndex, int attackType)
 {
-    this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, 0);
+    this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, attackType);
 } // against minion, the 3rd int indicates if the minion is actively attacking or counter-attack
 
 void Player::killMinion(int index)
 {
-    minions.at(index - 1)->editDefence(minion.at(index - 1)->getDefenceCap());
+    minions.at(index - 1)->editDefence(-1*minions.at(index-1)->getDefence()+minions.at(index - 1)->getDefenceCap());
     this->graveyard.emplace_back(this->minions.at(index - 1));
     this->minions.erase(this->minions.begin() + (index - 1));
 }
@@ -271,11 +272,11 @@ void Player::checkTrigger(TriggerType type, std::shared_ptr<Player> player, int 
 {
     for (int i = 0; i < this->minions.size(); i++)
     {
-        this->minions.at(i)->checkTrigger(type, player, index);
+        this->minions.at(i)->checkTrigger(type, *player, index);
     }
     if (this->ritual)
     {
-        this->ritual->checkTrigger(type, player, index);
+        this->ritual->checkTrigger(type, *player, index);
     }
 }
 

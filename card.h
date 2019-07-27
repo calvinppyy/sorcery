@@ -26,7 +26,7 @@ public:
     virtual void addEnchantment(std::shared_ptr<Enchantment>) = 0;
     virtual void popEnchantment() = 0;
     virtual void clearEnchantment() = 0;
-    virtual void cast(std::shared_ptr<Player>, int ) = 0;
+    virtual void cast(Player&, int ) = 0;
     virtual void inspect(bool) = 0;
     virtual std::string getDescription() = 0;
     virtual int getDefence() = 0;
@@ -43,7 +43,7 @@ public:
     virtual void editAction(int) = 0;
     virtual int getUsageCap() = 0;
     virtual bool died() = 0;
-    virtual void checkTrigger(TriggerType, std::shared_ptr<Player>, int) = 0;
+    virtual void checkTrigger(TriggerType, Player&, int) = 0;
     virtual int getDefenceCap() = 0;
     virtual ~Card(){}
     std::string getName();

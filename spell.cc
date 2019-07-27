@@ -32,7 +32,7 @@ void Spell::popEnchantment(){}
 
 void Spell::clearEnchantment(){}
 
-void Spell::cast(std::shared_ptr<Player> opponent, int index){}
+void Spell::cast(Player& opponent, int index){}
 
 void Spell::inspect(bool graphicsEnabled){}
 
@@ -76,6 +76,6 @@ std::string Spell::getDescription() {
     else return "";
 }
 
-void Spell::checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index){}
+void Spell::checkTrigger(TriggerType trigger,Player& opponent, int index){}
 
 int Spell::getDefenceCap(){return 0;}

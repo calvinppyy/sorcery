@@ -28,16 +28,16 @@ void Ritual::popEnchantment(){}
 
 void Ritual::clearEnchantment(){}
 
-void Ritual::cast(std::shared_ptr<Player> opponent, int index){
+void Ritual::cast(Player& opponent, int index){
     if(name == "Aura of Power"){
-        opponent->getIthMinion(index)->editAttack(1);
-        opponent->getIthMinion(index)->editDefence(1);
+        opponent.getIthMinion(index)->editAttack(1);
+        opponent.getIthMinion(index)->editDefence(1);
         usage-=usageCap;
     } else if(name == "Dark Ritual"){
-        opponent->editMagic(1);
+        opponent.editMagic(1);
         usage-=usageCap;
     } else if(name == "Standstill"){
-        opponent->killMinion(index);
+        opponent.killMinion(index);
         usage-=usageCap;
     }
 }
@@ -89,7 +89,7 @@ std::string Ritual::getDescription() {
     else return "";
 }
 
-void Ritual::checkTrigger(TriggerType trigger, std::shared_ptr<Player> opponent, int index){
+void Ritual::checkTrigger(TriggerType trigger, Player& opponent, int index){
     if(trigger == triggerType){
         cast(opponent,index);
     }
