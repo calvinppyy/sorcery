@@ -302,3 +302,9 @@ int Player::countMinions()
 {
     return this->minions.size();
 }
+
+void Player::printHand(bool graphics){
+    for(int i = 0; i<hand.size(); i++){
+        hand[i]->print(graphics);
+    }
+}

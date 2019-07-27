@@ -51,6 +51,7 @@ public:
     void unsummonCard(int );
     void editRitualUsage(int );
     int countMinions();
+    void printHand(bool);
 };
 
 #endif

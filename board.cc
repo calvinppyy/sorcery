@@ -23,6 +23,14 @@ void Board::setCurrentPlayer(shared_ptr<Player> nextPlayer)
     this->currentPlayer = nextPlayer;
 }
 
+void Board::switchCurrentPlayer(){
+    if(currentPlayer == player1){
+        currentPlayer = player2;
+    } else {
+        currentPlayer = player1;
+    }
+}
+
 void Board::enterTesting()
 {
     testing = true;
@@ -164,6 +172,14 @@ void Board::inspect(int cardIndex)
 
 void Board::checkTrigger(TriggerType type) {
     this->currentPlayer->checkTrigger(type, this->currentPlayer, this->currentPlayer->countMinions());
+}
+
+void Board::printHand(){
+    this->currentPlayer->printHand(graphics);
+}
+
+void Board::print(){
+    
 }
 
 Board::~Board() {}

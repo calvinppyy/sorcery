@@ -17,6 +17,7 @@ public:
     Board(std::shared_ptr<Player> player1, std::shared_ptr<Player> player2);
     void init(std::string, std::string);
     void setCurrentPlayer(std::shared_ptr<Player>);
+    void switchCurrentPlayer();
     bool isOver();
     std::shared_ptr<Player> winner();
     void enterTesting();
@@ -34,6 +35,7 @@ public:
     void endRound();
     void startRound();
     void checkTrigger(TriggerType );
+    void printHand();
     ~Board();
 };
 

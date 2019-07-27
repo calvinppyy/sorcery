@@ -3,107 +3,219 @@
 #include <sstream>
 #include "board.h"
 #include "trigger.h"
-#include "allCard.h"
 
 using namespace std;
 
-/*void loadDeck(shared_ptr<Player> player, vector<shared_ptr<Card>> &deck, std::string filename){
+void loadDeck(shared_ptr<Player> player, vector<shared_ptr<Card>> &deck, std::string filename){
+    vector<shared_ptr<Card>> temp;
     ifstream deckfile {filename};
     string cardName;
     while (getline(deckfile, cardName)) {
-        if(cardName == "Air Elemental") deck.push_back();
-        if(cardName == "Earth Elemental") deck.push_back();
-        if(cardName == "Bone Golem") deck.push_back({});
-        if(cardName == "Fire Elemental") deck.push_back({});
-        if(cardName == "Potion Seller") deck.push_back({});
-        if(cardName == "Novice Pyromancer") deck.push_back({});
-        if(cardName == "Apprentice Summoner") deck.push_back({});
-        if(cardName == "Master Summoner") deck.push_back({});
-        if(cardName == "Banish") deck.push_back({});
-        if(cardName == "Unsummon") deck.push_back({});
-        if(cardName == "Recharge") deck.push_back({});
-        if(cardName == "Disenchant") deck.push_back({});
-        if(cardName == "Raise Dead") deck.push_back({});
-        if(cardName == "Blizzard") deck.push_back({});
-        if(cardName == "Giant Strength") deck.push_back({});
-        if(cardName == "Enrage") deck.push_back({});
-        if(cardName == "Haste") deck.push_back({});
-        if(cardName == "Magic Fatigue") deck.push_back({});
-        if(cardName == "Silence") deck.push_back({});
-        if(cardName == "Dark Ritual") deck.push_back({});
-        if(cardName == "Aura of Power") deck.push_back({});
-        if(cardName == "Standstill") deck.push_back({});
+        if(cardName == "Air Elemental") temp.emplace_back(make_shared<Minion>(Minion{"Air Elemental", player}));
+        if(cardName == "Earth Elemental") temp.emplace_back(make_shared<Minion>(Minion{"Earth Elemental", player}));
+        if(cardName == "Bone Golem") temp.emplace_back(make_shared<Minion>(Minion{"Bone Golem", player}));
+        if(cardName == "Fire Elemental") temp.emplace_back(make_shared<Minion>(Minion{"Fire Elemental", player}));
+        if(cardName == "Potion Seller") temp.emplace_back(make_shared<Minion>(Minion{"Potion Seller", player}));
+        if(cardName == "Novice Pyromancer") temp.emplace_back(make_shared<Minion>(Minion{"Novice Pyromancer", player}));
+        if(cardName == "Apprentice Summoner") temp.emplace_back(make_shared<Minion>(Minion{"Apprentice Summoner", player}));
+        if(cardName == "Master Summoner") temp.emplace_back(make_shared<Minion>(Minion{"Master Summoner", player}));
+        if(cardName == "Banish") temp.emplace_back(make_shared<Spell>(Spell{"Banish", player}));
+        if(cardName == "Unsummon") temp.emplace_back(make_shared<Spell>(Spell{"Unsummon", player}));
+        if(cardName == "Recharge") temp.emplace_back(make_shared<Spell>(Spell{"Recharge", player}));
+        if(cardName == "Disenchant") temp.emplace_back(make_shared<Spell>(Spell{"Disenchant", player}));
+        if(cardName == "Raise Dead") temp.emplace_back(make_shared<Spell>(Spell{"Raise Dead", player}));
+        if(cardName == "Blizzard") temp.emplace_back(make_shared<Spell>(Spell{"Blizzard", player}));
+        if(cardName == "Giant Strength") temp.emplace_back(make_shared<Enchantment>(Enchantment{"Giant Strength", player}));
+        if(cardName == "Enrage") temp.emplace_back(make_shared<Enchantment>(Enchantment{"Enrage", player}));
+        if(cardName == "Haste") temp.emplace_back(make_shared<Enchantment>(Enchantment{"Haste", player}));
+        if(cardName == "Magic Fatigue") temp.emplace_back(make_shared<Enchantment>(Enchantment{"Magic Fatigue", player}));
+        if(cardName == "Silence") temp.emplace_back(make_shared<Enchantment>(Enchantment{"Silence", player}));
+        if(cardName == "Dark Ritual") temp.emplace_back(make_shared<Ritual>(Ritual{"Dark Ritual", player}));
+        if(cardName == "Aura of Power") temp.emplace_back(make_shared<Ritual>(Ritual{"Aura of Power", player}));
+        if(cardName == "Standstill") temp.emplace_back(make_shared<Ritual>(Ritual{"Standstill", player}));
+    }
+    while(!temp.empty()){
+        deck.emplace_back(temp.back());
+        temp.pop_back();
     }
 }
-*/
+
 int main(int argc, char *argv[]){
     vector<shared_ptr<Card>> deck1;
     vector<shared_ptr<Card>> deck2;
-    shared_ptr<Player> player1 = make_shared<Player>(Player{deck1, "player1"});
-    shared_ptr<Player> player2 = make_shared<Player>(Player{deck2, "player2"});
+    shared_ptr<Player> player1 = make_shared<Player>(Player{deck1, ""});
+    shared_ptr<Player> player2 = make_shared<Player>(Player{deck2, ""});
     shared_ptr<Board> board = make_shared<Board>(Board{player1, player2});
     vector<string> preInitArguments;
     for(int i = 1; i<argc; i++){
         if(argv[i] == "-deck1"){
             cout<<"Loading deck from: "<<argv[i+1]<<endl;
-            //loadDeck(player1, )
-            cout<<argv[i]<<endl;
+            loadDeck(player1, deck1, argv[i+1]);
             i++;
         }
         if(argv[i] == "-deck2"){
             cout<<"Loading deck from: "<<argv[i+1]<<endl;
-            //player2->giveDeck(loadDeck(argv[i+1]), "notOut");
-            cout<<argv[i]<<endl;
+            loadDeck(player2, deck2, argv[i+1]);
             i++;
         }
         if(argv[i] == "-init"){
-            cout<<"Initializing from: "<<argv[i+1]<<endl;
-            /*string source = argv[i+1];
-             string cmd;
-             ifstream fs{source};
-             while(getline(fs, cmd)) {
-             preInitArguments.emplace_back(cmd);
-             }*/
-            cout<<argv[i]<<endl;
+            string source = argv[i+1];
+            cout<<"Initializing from: "<<source<<endl;
+            string cmd;
+            ifstream fs{source};
+            vector<string> temp;
+            while(getline(fs, cmd)) {
+                temp.emplace_back(cmd);
+            }
+            while(!temp.empty()){
+                preInitArguments.emplace_back(temp.back());
+                temp.pop_back();
+            }
             i++;
         }
         if(argv[i] == "-testing"){
-            //boardPtr->enterTesting();
-            cout<<argv[i]<<endl;
+            board->enterTesting();
         }
-        if(argv[i] = "-graphics"){
-            //boardPtr->enterGraphics();
-            cout<<argv[i]<<endl;
+        if(argv[i] == "-graphics"){
+            board->enterGraphics();
         }
     }
-    /*if(!preInitArguments.empty()){
-     int temp = 0;
-     int turn = 0;
-     while(temp<preInitArguments.size()){
-     if(temp == 0){
-     player1->giveName(preInitArguments.at(temp));
-     temp++;
-     continue;
-     }
-     if(temp == 1){
-     player1->giveName(preInitArguments.at(temp));
-     temp++;
-     continue;
-     }
-     istringstream iss{preInitArguments.at(temp)};
-     int num;
-     string arg;
-     iss>>arg;
-     if(arg == "play"){
-     iss>>num;
-     if(turn%2 == 0){
-     //player1->playCard(num);
-     }
-     }
-     }
-     }*/
     string cmd;
+    int start = 0;
+    while(!preInitArguments.empty()){
+        if(start == 0){
+            player1->giveName(preInitArguments.back());
+            preInitArguments.pop_back();
+            start++;
+            continue;
+        } else if(start == 1){
+            player2->giveName(preInitArguments.back());
+            preInitArguments.pop_back();
+            start++;
+            continue;
+        } else {
+            board->checkTrigger(TriggerType::startOfTurn);
+            string cmd = preInitArguments.back();
+            if(start == 0){
+                player1->giveName(cmd);
+                start++;
+                continue;
+            } else if(start == 1){
+                player2->giveName(cmd);
+                start++;
+                continue;
+            }
+            if (cmd == "help") {
+                cout << "Commands: help -- Display this message." << endl;
+                cout << "          end  -- End the current player's turn." << endl;
+                cout << "          quit -- End the game." << endl;
+                cout << "          attack minion other-minion -- Orders minion to attack other-minion." << endl;
+                cout << "          attack minion -- Orders minion to attack the opponent." << endl;
+                cout << "          play card [target-player target-card] -- Play card, optionally targing" << endl;
+                cout << "                                              target-card owned by target-player" << endl;
+                cout << "          use minion [target-player target-card] -- Use minion's special ability," << endl;
+                cout << "                          optionally targeting target-card owned by target-player" << endl;
+                cout << "          inspect minion -- View a minion's card and all enchantments on that minion" << endl;
+                cout << "          hand -- Describe all cards in your hand." << endl;
+                cout << "          board -- Describe all cards on the board." << endl;
+            }else if(cmd == "end"){
+                board->checkTrigger(TriggerType::endOfTurn);
+                board->switchCurrentPlayer();
+                board->print();
+            } else if(cmd == "quit"){
+                cout<<"That's a TIE!"<<endl;
+                return 0;
+            } else if(cmd == "draw"){
+                try{
+                    board->draw();
+                }
+                catch(InvalidCommandException e) {
+                    e.prettyprint();
+                }
+            } else if(cmd == "hand"){
+                board->printHand();
+            } else if(cmd == "board"){
+                board->print();
+            } else {
+                istringstream iss {cmd};
+                string temp;
+                iss>>temp;
+                if(temp == "attack"){
+                    int attacker = 0,player = 0,defender = 0;
+                    iss>>attacker;
+                    bool i = (bool)iss>>player;
+                    bool j = (bool)iss>>defender;
+                    if(i&&j){
+                        board->attack(attacker, defender);
+                    } else if(i){
+                        cerr<<"Invalid number/type of Commands. Type \"-help\" for more help on Commands"<<endl;
+                    } else {
+                        board->attack(attacker);
+                    }
+                } else if(temp == "play"){
+                    int cardNum = 0, playerNum = 0, targetNum = 0;
+                    iss>>cardNum;
+                    bool i = (bool)iss>>playerNum;
+                    bool j = (bool)iss>>targetNum;
+                    if(i&&j){
+                        if(playerNum == 1){
+                            board->play(cardNum, player1, targetNum);
+                        } else {
+                            board->play(cardNum, player2, targetNum);
+                        }
+                    } else if(i){
+                        cerr<<"Invalid number/type of Commands. Type \"-help\" for more help on Commands"<<endl;
+                    } else {
+                        board->play(cardNum);
+                    }
+                } else if(temp == "use"){
+                    int cardNum = 0, playerNum = 0, targetNum = 0;
+                    iss>>cardNum;
+                    bool i = (bool)iss>>playerNum;
+                    bool j = (bool)iss>>targetNum;
+                    if(i&&j){
+                        if(playerNum == 1){
+                            board->useAbility(cardNum, player1, targetNum);
+                        } else {
+                            board->useAbility(cardNum, player2, targetNum);
+                        }
+                    } else if(i){
+                        cerr<<"Invalid number/type of Commands. Type \"-help\" for more help on Commands"<<endl;
+                    } else {
+                        board->useAbility(cardNum);
+                    }
+                } else if(temp == "inspect"){
+                    int cardNum;
+                    iss>>cardNum;
+                    board->inspect(cardNum);
+                } else if(temp == "discard"){
+                    int cardNum;
+                    iss>>cardNum;
+                    try{
+                        board->discard(cardNum);
+                    }
+                    catch(InvalidCommandException e){
+                        e.prettyprint();
+                    }
+                } else {
+                    cerr << "Invalid command, too see command help page please type \"help\"" << endl;
+                    continue;
+                }
+            }
+            preInitArguments.pop_back();
+        }
+    }
     while(getline(cin,cmd)){
+        if(start == 0){
+            player1->giveName(cmd);
+            start++;
+            continue;
+        } else if(start == 1){
+            player2->giveName(cmd);
+            start++;
+            continue;
+        }
+        board->checkTrigger(TriggerType::startOfTurn);
         if (cmd == "help") {
             cout << "Commands: help -- Display this message." << endl;
             cout << "          end  -- End the current player's turn." << endl;
@@ -118,53 +230,86 @@ int main(int argc, char *argv[]){
             cout << "          hand -- Describe all cards in your hand." << endl;
             cout << "          board -- Describe all cards on the board." << endl;
         }else if(cmd == "end"){
-            cout<<"end"<<endl;
+            board->checkTrigger(TriggerType::endOfTurn);
+            board->switchCurrentPlayer();
+            board->print();
         } else if(cmd == "quit"){
-            cout<<cmd<<endl;
+            cout<<"That's a TIE!"<<endl;
+            return 0;
         } else if(cmd == "draw"){
-            cout<<"this has to be testing "<< cmd <<endl;
+            try{
+                board->draw();
+            }
+            catch(InvalidCommandException e) {
+                e.prettyprint();
+            }
         } else if(cmd == "hand"){
-            cout<<cmd<<endl;
+            board->printHand();
         } else if(cmd == "board"){
-            cout<<cmd<<endl;
+            board->print();
         } else {
             istringstream iss {cmd};
             string temp;
             iss>>temp;
             if(temp == "attack"){
-                int attacker, defender;
+                int attacker = 0,player = 0,defender = 0;
                 iss>>attacker;
-                if(iss>>defender){
-                    cout<<"attack between "<<attacker<<"and "<<defender<<endl;
+                bool i = (bool)iss>>player;
+                bool j = (bool)iss>>defender;
+                if(i&&j){
+                    board->attack(attacker, defender);
+                } else if(i){
+                    cerr<<"Invalid number/type of Commands. Type \"-help\" for more help on Commands"<<endl;
                 } else {
-                    cout<<"attack from "<<attacker<<endl;
+                    board->attack(attacker);
                 }
             } else if(temp == "play"){
-                int cardNum, playerNum, targetNum;
+                int cardNum = 0, playerNum = 0, targetNum = 0;
                 iss>>cardNum;
-                if(iss>>playerNum&&iss>>targetNum){
-                    cout<<temp<<" "<<cardNum<<"to player"<<playerNum<<"'s "<<targetNum<<endl;
+                bool i = (bool)iss>>playerNum;
+                bool j = (bool)iss>>targetNum;
+                if(i&&j){
+                    if(playerNum == 1){
+                        board->play(cardNum, player1, targetNum);
+                    } else {
+                        board->play(cardNum, player2, targetNum);
+                    }
+                } else if(i){
+                    cerr<<"Invalid number/type of Commands. Type \"-help\" for more help on Commands"<<endl;
                 } else {
-                    cout<<temp<<" "<<cardNum<<"to player"<<endl;
+                    board->play(cardNum);
                 }
             } else if(temp == "use"){
-                int cardNum, playerNum, targetNum;
+                int cardNum = 0, playerNum = 0, targetNum = 0;
                 iss>>cardNum;
-                if(iss>>playerNum&&iss>>targetNum){
-                    cout<<temp<< " "<<cardNum<<"to player"<<playerNum<<"'s "<<targetNum<<endl;
+                bool i = (bool)iss>>playerNum;
+                bool j = (bool)iss>>targetNum;
+                if(i&&j){
+                    if(playerNum == 1){
+                        board->useAbility(cardNum, player1, targetNum);
+                    } else {
+                        board->useAbility(cardNum, player2, targetNum);
+                    }
+                } else if(i){
+                    cerr<<"Invalid number/type of Commands. Type \"-help\" for more help on Commands"<<endl;
                 } else {
-                    cout<<temp<< " "<<cardNum<<"to player"<<endl;
+                    board->useAbility(cardNum);
                 }
             } else if(temp == "inspect"){
                 int cardNum;
                 iss>>cardNum;
-                cout << "Inspecting minion " << cardNum << endl;
+                board->inspect(cardNum);
             } else if(temp == "discard"){
                 int cardNum;
                 iss>>cardNum;
-                cout << "discarding card number "<< cardNum << endl;
+                try{
+                    board->discard(cardNum);
+                }
+                catch(InvalidCommandException e){
+                    e.prettyprint();
+                }
             } else {
-                cout << "Invalid command, too see command help page please type \"help\"" << endl;
+                cerr << "Invalid command, too see command help page please type \"help\"" << endl;
                 continue;
             }
         }
