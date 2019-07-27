@@ -1,10 +1,11 @@
 #ifndef BOARD_H
 #define BOARD_H
-#include "player.h"
 #include <memory>
+#include <iostream>
+#include "player.h"
 #include "ascii_graphics.h"
 #include "invalidCommandException.h"
-#include <iostream>
+
 
 
 class Board {
