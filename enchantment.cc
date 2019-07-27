@@ -129,3 +129,7 @@ std::string Enchantment::getDescription() {
 }
 
 void Enchantment::checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index){}
+
+int Enchantment::getDefenceCap(){
+    return 0;
+}

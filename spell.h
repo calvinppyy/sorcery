@@ -30,6 +30,7 @@ public:
     int getAction();
     void editAction(int action);
     int getUsageCap();
+    int getDefenceCap();
     bool died();
     void checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index);
     ~Spell(){}

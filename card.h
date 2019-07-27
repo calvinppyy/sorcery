@@ -44,7 +44,7 @@ public:
     virtual int getUsageCap() = 0;
     virtual bool died() = 0;
     virtual void checkTrigger(TriggerType, std::shared_ptr<Player>, int) = 0;
-    virtual void getDefenceCap() = 0;
+    virtual int getDefenceCap() = 0;
     virtual ~Card(){}
     std::string getName();
 };

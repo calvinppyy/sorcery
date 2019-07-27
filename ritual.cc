@@ -94,3 +94,7 @@ void Ritual::checkTrigger(TriggerType trigger, std::shared_ptr<Player> opponent,
         cast(opponent,index);
     }
 }
+
+int Ritual::getDefenceCap(){
+    return 0;
+}

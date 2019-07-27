@@ -77,3 +77,5 @@ std::string Spell::getDescription() {
 }
 
 void Spell::checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index){}
+
+int Spell::getDefenceCap(){return 0;}

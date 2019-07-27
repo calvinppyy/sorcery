@@ -36,7 +36,7 @@ public:
     int getUsageCap();
     bool died();
     void checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index);
-    void getDefenceCap();
+    int getDefenceCap();
     ~Minion(){}
 };
 

@@ -8,6 +8,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         abilityCost = 0;
         action = 0;
         actionCap = 1;
+        defenceCap = 1;
         silenced = false;
     } else if(name == "Earth Elemental"){
         attack = 4;
@@ -16,6 +17,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         abilityCost = 0;
         action = 0;
         actionCap = 1;
+        defenceCap = 4;
         silenced = false;
     } else if(name == "Bone Golem"){
         triggerType = TriggerType::minionLeave;
@@ -25,6 +27,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         abilityCost = 0;
         action = 0;
         actionCap = 1;
+        defenceCap = 3;
         silenced = false;
     } else if(name == "Fire Elemental"){
         triggerType = TriggerType::minionEnter;
@@ -34,6 +37,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         abilityCost = 0;
         action = 0;
         actionCap = 1;
+        defenceCap = 2;
         silenced = false;
     } else if(name == "Potion Seller"){
         triggerType = TriggerType::endOfTurn;
@@ -43,6 +47,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         abilityCost = 0;
         action = 0;
         actionCap = 1;
+        defenceCap = 3;
         silenced = false;
     } else if(name == "Novice Pyromancer"){
         attack = 0;
@@ -51,6 +56,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         abilityCost = 1;
         action = 0;
         actionCap = 1;
+        defenceCap = 1;
         silenced = false;
     } else if(name == "Apprentice Summoner"){
         attack = 1;
@@ -59,6 +65,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         abilityCost = 1;
         action = 0;
         actionCap = 1;
+        defenceCap = 1;
         silenced = false;
     } else if(name == "Master Summoner"){
         attack = 2;
@@ -67,6 +74,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         abilityCost = 2;
         action = 0;
         actionCap = 1;
+        defenceCap = 3;
         silenced = false;
     }
 }
@@ -204,4 +212,8 @@ void Minion::checkTrigger(TriggerType trigger, std::shared_ptr<Player> opponent,
     if(trigger == triggerType){
         cast(opponent,index);
     }
+}
+
+int Minion::getDefenceCap(){
+    return defenceCap;
 }
