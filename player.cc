@@ -56,15 +56,15 @@ void Player::playCard(int index, bool testing)
         else
             this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
     }
-    if (dynamic_pointer_cast<Enchantment>(this->hand.at((index - 1))) == nullptr && //bug
+    if (dynamic_pointer_cast<Enchantment>(this->hand.at((index - 1))) == nullptr &&
         dynamic_pointer_cast<Spell>(this->hand.at((index - 1))) == nullptr)
-    { //bug
+    {
         if (dynamic_pointer_cast<Ritual>(this->hand.at((index - 1))) == nullptr)
-        { //bug
+        {
             if (this->minions.size() < 5)
             {
                 this->minions.emplace_back(this->hand.at((index - 1)));
-                this->minions.erase(this->minions.begin() + (index - 1));
+                this->hand.erase(this->hand.begin() + (index - 1));
                 this->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
                 this->opponent->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
             }
@@ -73,7 +73,7 @@ void Player::playCard(int index, bool testing)
         {
             if (this->ritual == nullptr)
                 this->ritual = this->hand.at((index - 1));
-            this->minions.erase(this->minions.begin() + (index - 1));
+            this->hand.erase(this->hand.begin() + (index - 1));
         }
     }
     else
@@ -306,72 +306,121 @@ int Player::countMinions()
 }
 
 void Player::printCards(bool graphics, std::string w){
-    std::map<std::string, int> cardNameToFunc = whichFunc();
-    vector<card_template_t> temp;
-    std::vector<std::shared_ptr<Card>> what;
-    if(w == "hand"){
-        what = hand;
+    if(!graphics){
+        vector<card_template_t> temp;
+        std::vector<std::shared_ptr<Card>> what;
+        if(w == "hand"){
+            what = hand;
+        } else {
+            what = minions;
+        }
+        for(int i = 0; i<what.size(); i++){
+            std::shared_ptr<Card> temp2 = what.at(i);
+            temp.push_back(whichFunc(temp2));
+        }
+        for (int j = 0; j < CARD_TEMPLATE_BORDER.size(); ++j) {
+            if(w!="hand") std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+            for (int i = 0; i < 5; ++i) {
+                if (i < temp.size()) {
+                    std::cout << temp.at(i).at(j);
+                } else {
+                    std::cout << CARD_TEMPLATE_BORDER.at(j);
+                }
+            }
+            if(w!="hand") std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+            std::cout << std::endl;
+        }
     } else {
-        what = minions;
-    }
-    for(int i = 0; i<what.size(); i++){
-        std::shared_ptr<Card> temp2 = what.at(i);
-        int g = cardNameToFunc[what.at(i)->getName()];
-        if(g == 0) temp.push_back(display_minion_triggered_ability(temp2->getName(), temp2->getPlayCost(),
-                                                                  temp2->getAttack(), temp2->getDefence(),
-                                                                  temp2->getDescription()));
-        if(g == 1) temp.push_back(display_minion_activated_ability(temp2->getName(), temp2->getPlayCost(),
-                                                                   temp2->getAttack(), temp2->getDefence(), temp2->getAbilityCost(),
-                                                                   temp2->getDescription()));
-        if(g == 2) temp.push_back(display_spell(temp2->getName(), temp2->getPlayCost(), temp2->getDescription()));
-        if(g == 5) temp.push_back(display_ritual(temp2->getName(), temp2->getPlayCost(), temp2->getUsageCap(),
-                                                 temp2->getDescription(), temp2->getUsage()));
-        if(g == 3){
-            if(temp2->getName() == "Giant Strength"){
-                temp.push_back(display_enchantment_attack_defence(temp2->getName(), temp2->getPlayCost(), temp2->getDescription(),"+2", "+2"));
-            } else {
-                temp.push_back(display_enchantment_attack_defence(temp2->getName(), temp2->getPlayCost(), temp2->getDescription(),"*2", "*2"));
-            }
-        }
-        if(g==4) temp.push_back(display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription()));
-    }
-    for (int j = 0; j < temp.at(0).size(); ++j) {
-        std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
-        for (int i = 0; i < 5; ++i) {
-            if (i < temp.size()) {
-                std::cout << temp.at(i).at(j);
-            } else {
-                std::cout << CARD_TEMPLATE_BORDER.at(j);
-            }
-        }
-        std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
-        std::cout << std::endl;
+        
     }
 }
 
-std::map<std::string, int> whichFunc(){
-    std::map<std::string, int> cardNameToFunc;
-    cardNameToFunc["Air Elemental"] = 0;
-    cardNameToFunc["Earth Elemental"] = 0;
-    cardNameToFunc["Bone Golem"] = 0;
-    cardNameToFunc["Fire Elemental"] = 0;
-    cardNameToFunc["Potion Seller"] = 0;
-    cardNameToFunc["Novice Pyromancer"] = 1;
-    cardNameToFunc["Apprentice Summoner"] = 1;
-    cardNameToFunc["Master Summoner"] = 1;
-    cardNameToFunc["Banish"] = 2;
-    cardNameToFunc["Unsummon"] = 2;
-    cardNameToFunc["Recharge"] = 2;
-    cardNameToFunc["Disenchant"] = 2;
-    cardNameToFunc["Raise Dead"] = 2;
-    cardNameToFunc["Blizzard"] = 2;
-    cardNameToFunc["Dark Ritual"] = 5;
-    cardNameToFunc["Aura of Power"] = 5;
-    cardNameToFunc["Standstill"] = 5;
-    cardNameToFunc["Giant Strength"] = 3;
-    cardNameToFunc["Enrage"] = 3;
-    cardNameToFunc["Haste"] = 4;
-    cardNameToFunc["Magic Fatigue"] = 4;
-    cardNameToFunc["Silence"] = 4;
-    return cardNameToFunc;
+std::string Player::getName(){
+    return name;
+}
+
+
+void Player::printPlayer(bool graphics,bool current){
+    if(!graphics){
+        std::vector<card_template_t> temp;
+        if(ritual){
+            temp.push_back(display_ritual(ritual->getName(), ritual->getPlayCost(), ritual->getUsageCap(),
+                                          ritual->getDescription(), ritual->getUsage()));
+        } else {
+            temp.push_back(CARD_TEMPLATE_BORDER);
+        }
+        temp.push_back(CARD_TEMPLATE_EMPTY);
+        if(current){
+            temp.push_back(display_player_card(2, name, health, magic));
+        } else {
+            temp.push_back(display_player_card(1, name, health, magic));
+        }
+        temp.push_back(CARD_TEMPLATE_EMPTY);
+        if(graveyard.size()>0){
+            temp.push_back(whichFunc(graveyard.back()));
+        } else {
+            temp.push_back(CARD_TEMPLATE_BORDER);
+        }
+        for (int j = 0; j < CARD_TEMPLATE_BORDER.size(); ++j) {
+            std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+            for (int i = 0; i < 5; ++i) {
+                if (i < temp.size()) {
+                    std::cout << temp.at(i).at(j);
+                } else {
+                    std::cout << CARD_TEMPLATE_BORDER.at(j);
+                }
+            }
+            std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+            std::cout << std::endl;
+        }
+    } else {
+        
+    }
+}
+
+card_template_t whichFunc(std::shared_ptr<Card> temp2){
+    std::map<std::string, card_template_t> cardNameToFunc;
+    cardNameToFunc["Air Elemental"] = display_minion_triggered_ability(temp2->getName(), temp2->getPlayCost(),
+                                                                       temp2->getAttack(), temp2->getDefence(),
+                                                                       temp2->getDescription());
+    cardNameToFunc["Earth Elemental"] = display_minion_triggered_ability(temp2->getName(), temp2->getPlayCost(),
+                                                                         temp2->getAttack(), temp2->getDefence(),
+                                                                         temp2->getDescription());
+    cardNameToFunc["Bone Golem"] = display_minion_triggered_ability(temp2->getName(), temp2->getPlayCost(),
+                                                                    temp2->getAttack(), temp2->getDefence(),
+                                                                    temp2->getDescription());
+    cardNameToFunc["Fire Elemental"] = display_minion_triggered_ability(temp2->getName(), temp2->getPlayCost(),
+                                                                        temp2->getAttack(), temp2->getDefence(),
+                                                                        temp2->getDescription());
+    cardNameToFunc["Potion Seller"] = display_minion_triggered_ability(temp2->getName(), temp2->getPlayCost(),
+                                                                       temp2->getAttack(), temp2->getDefence(),
+                                                                       temp2->getDescription());
+    cardNameToFunc["Novice Pyromancer"] = display_minion_activated_ability(temp2->getName(), temp2->getPlayCost(),
+                                                                           temp2->getAttack(), temp2->getDefence(), temp2->getAbilityCost(),
+                                                                           temp2->getDescription());
+    cardNameToFunc["Apprentice Summoner"] = display_minion_activated_ability(temp2->getName(), temp2->getPlayCost(),
+                                                                             temp2->getAttack(), temp2->getDefence(), temp2->getAbilityCost(),
+                                                                             temp2->getDescription());
+    cardNameToFunc["Master Summoner"] = display_minion_activated_ability(temp2->getName(), temp2->getPlayCost(),
+                                                                         temp2->getAttack(), temp2->getDefence(), temp2->getAbilityCost(),
+                                                                         temp2->getDescription());
+    cardNameToFunc["Banish"] = display_spell(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
+    cardNameToFunc["Unsummon"] = display_spell(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
+    cardNameToFunc["Recharge"] = display_spell(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
+    cardNameToFunc["Disenchant"] = display_spell(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
+    cardNameToFunc["Raise Dead"] = display_spell(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
+    cardNameToFunc["Blizzard"] = display_spell(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
+    cardNameToFunc["Dark Ritual"] = display_ritual(temp2->getName(), temp2->getPlayCost(), temp2->getUsageCap(),
+                                                   temp2->getDescription(), temp2->getUsage());
+    cardNameToFunc["Aura of Power"] = display_ritual(temp2->getName(), temp2->getPlayCost(), temp2->getUsageCap(),
+                                                     temp2->getDescription(), temp2->getUsage());
+    cardNameToFunc["Standstill"] = display_ritual(temp2->getName(), temp2->getPlayCost(), temp2->getUsageCap(),
+                                                  temp2->getDescription(), temp2->getUsage());
+    cardNameToFunc["Giant Strength"] = display_enchantment_attack_defence(temp2->getName(), temp2->getPlayCost(),
+                                                                          temp2->getDescription(),"+2", "+2");
+    cardNameToFunc["Enrage"] = display_enchantment_attack_defence(temp2->getName(), temp2->getPlayCost(), temp2->getDescription(),"*2", "*2");
+    cardNameToFunc["Haste"] = display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
+    cardNameToFunc["Magic Fatigue"] = display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
+    cardNameToFunc["Silence"] = display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
+    return cardNameToFunc[temp2->getName()];
 }

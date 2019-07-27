@@ -57,6 +57,8 @@ int main(int argc, char *argv[]){
     deck2.emplace_back(make_shared<Minion>(Minion{"Apprentice Summoner", player2}));//hard code
     player2->giveDeck(deck2);
     shared_ptr<Board> board = make_shared<Board>(Board{player1, player2});
+    player1->setOpponent(player2);
+    player2->setOpponent(player1);
     vector<string> preInitArguments;
     for(int i = 1; i<argc; i++){
         if(argv[i] == "-deck1"){
@@ -95,6 +97,7 @@ int main(int argc, char *argv[]){
     }
     string cmd;
     int start = 0;
+    board->setCurrentPlayer(player1);
     while(!preInitArguments.empty()){
         if(start == 0){
             player1->giveName(preInitArguments.back());
@@ -218,22 +221,27 @@ int main(int argc, char *argv[]){
             preInitArguments.pop_back();
         }
     }
+    if(start == 0){
+        cout<<"please enter player1's name: ";
+        getline(cin,cmd);
+        player1->giveName(cmd);
+        start++;
+    }
+    if(start == 1){
+        cout<<"please enter player2's name: ";
+        getline(cin, cmd);
+        player2->giveName(cmd);
+        start++;
+        player1->draw();
+        player1->draw();
+        player1->draw();
+        player2->draw();
+        player2->draw();
+        player2->draw();
+    }
+    cout<<player1->getName()<< ": ";
+    shared_ptr<Player> current = player1;
     while(getline(cin,cmd)){
-        if(start == 0){
-            player1->giveName(cmd);
-            start++;
-            continue;
-        } else if(start == 1){
-            player2->giveName(cmd);
-            start++;
-            player1->draw();
-            player1->draw();
-            player1->draw();
-            player2->draw();
-            player2->draw();
-            player2->draw();
-            continue;
-        }
         if (cmd == "help") {
             cout << "Commands: help -- Display this message." << endl;
             cout << "          end  -- End the current player's turn." << endl;
@@ -250,8 +258,12 @@ int main(int argc, char *argv[]){
         }else if(cmd == "end"){
             board->checkTrigger(TriggerType::endOfTurn);
             board->switchCurrentPlayer();
-            board->print();
+            for (int i = 0; i < (CENTRE_GRAPHIC.at(0).length()/EXTERNAL_BORDER_CHAR_LEFT_RIGHT.size()); ++i) {
+                cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
+            }
+            cout<<endl;
             board->checkTrigger(TriggerType::startOfTurn);
+            current = current->getOpponent();
         } else if(cmd == "quit"){
             cout<<"That's a TIE!"<<endl;
             return 0;
@@ -283,20 +295,32 @@ int main(int argc, char *argv[]){
                     board->attack(attacker);
                 }
             } else if(temp == "play"){
-                int cardNum = 0, playerNum = 0, targetNum = 0;
+                int cardNum = 0, playerNum = -1, targetNum = -1;
                 iss>>cardNum;
                 bool i = (bool)iss>>playerNum;
                 bool j = (bool)iss>>targetNum;
+                cout<<i<<j<<((!i)&&(!j))<<endl;
                 if(i&&j){
-                    if(playerNum == 1){
-                        board->play(cardNum, player1, targetNum);
-                    } else {
-                        board->play(cardNum, player2, targetNum);
+                    try{
+                        if(playerNum == 1){
+                            board->play(cardNum, player1, targetNum);
+                        } else {
+                            board->play(cardNum, player2, targetNum);
+                        }
+                    }
+                    catch(InvalidCommandException e){
+                        e.prettyprint();
                     }
                 } else if(i){
                     cerr<<"Invalid number/type of Commands. Type \"-help\" for more help on Commands"<<endl;
                 } else {
-                    board->play(cardNum);
+                    try{
+                        cout<<"here"<<endl;
+                        board->play(cardNum);
+                    }
+                    catch(InvalidCommandException e){
+                        e.prettyprint();
+                    }
                 }
             } else if(temp == "use"){
                 int cardNum = 0, playerNum = 0, targetNum = 0;
@@ -329,8 +353,8 @@ int main(int argc, char *argv[]){
                 }
             } else {
                 cerr << "Invalid command, too see command help page please type \"help\"" << endl;
-                continue;
             }
         }
+        cout<<current->getName()<<": ";
     }
 }

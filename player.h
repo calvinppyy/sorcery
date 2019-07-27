@@ -51,10 +51,12 @@ public:
     void editMagic(int );
     void unsummonCard(int );
     void editRitualUsage(int );
+    std::string getName();
     int countMinions();
     void printCards(bool graphics, std::string w);
+    void printPlayer(bool graphics, bool current);
 };
 
-std::map<std::string, int> whichFunc();
+card_template_t whichFunc(std::shared_ptr<Card> temp2);
 
 #endif
