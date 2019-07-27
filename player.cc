@@ -153,7 +153,7 @@ void Player::useAbility(int index, bool testing)
     {
         this->minions.at((index - 1))->cast(make_shared<Player>(*this), 0);
     }
-    catch (string e) f
+    catch (string e)
     {
         if (testing)
             this->editMagic(tmp);
@@ -222,7 +222,7 @@ void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
     this->minions.at(index - 1)->editDefence(-1 * damage);
     if (this->minions.at(index - 1)->getDefence() <= 0)
     {
-        this->killMinion((index - 1));
+        this->killMinion((index));
         this->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
     }
     if (attackType == 0)
@@ -233,7 +233,7 @@ void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
 
 void Player::attack(int index, int damage, int enemyIndex, int attackType)
 {
-    this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, 0);
+    this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, attackType);
 } // against minion, the 3rd int indicates if the minion is actively attacking or counter-attack
 
 void Player::killMinion(int index)
@@ -281,12 +281,12 @@ void Player::checkTrigger(TriggerType type, std::shared_ptr<Player> player, int 
 
 void Player::summonCard(int count, string name)
 {
-    for (int i = 0; i < count; i++)
-    {
-        if (this->minions.size() == 5)
-            return;
-        this->minions.emplace_back(make_shared<Minion>(name, make_shared<Player>(*this)));
-    }
+        for (int i = 0; i < count; i++)
+        {
+            if (this->minions.size() == 5)
+                return;
+            this->minions.emplace_back(make_shared<Minion>(name, make_shared<Player>(*this)));
+        }
 }
 
 shared_ptr<Player> &Player::getOpponent()
@@ -306,7 +306,7 @@ void Player::addMagicCap()
 }
 
 void Player::unsummonCard(int index)
-{   
+{
     if (this->hand.size() < 5)
     {
         this->hand.emplace_back(this->minions.at(index - 1));
