@@ -48,9 +48,13 @@ int main(int argc, char *argv[]){
     shared_ptr<Player> player2 = make_shared<Player>(Player{deck2, ""});
     loadDeck(player1,deck1,"default.deck");
     deck1.emplace_back(make_shared<Minion>(Minion{"Air Elemental", player1}));//hard code
+    deck1.emplace_back(make_shared<Minion>(Minion{"Earth Elemental", player1}));//hard code
+    deck1.emplace_back(make_shared<Ritual>(Ritual{"Dark Ritual", player1}));//hard code
     player1->giveDeck(deck1);
     loadDeck(player2,deck2, "default.deck");
-    deck2.emplace_back(make_shared<Minion>(Minion{"Air Elemental", player2}));//hard code
+    deck2.emplace_back(make_shared<Enchantment>(Enchantment{"Giant Strength", player2}));//hard code
+    deck2.emplace_back(make_shared<Spell>(Spell{"Blizzard", player2}));//hard code
+    deck2.emplace_back(make_shared<Minion>(Minion{"Apprentice Summoner", player2}));//hard code
     player2->giveDeck(deck2);
     shared_ptr<Board> board = make_shared<Board>(Board{player1, player2});
     vector<string> preInitArguments;
@@ -100,8 +104,6 @@ int main(int argc, char *argv[]){
         } else if(start == 1){
             player2->giveName(preInitArguments.back());
             preInitArguments.pop_back();
-            player1->draw();
-            player2->draw();
             start++;
             continue;
         } else {
@@ -225,6 +227,10 @@ int main(int argc, char *argv[]){
             player2->giveName(cmd);
             start++;
             player1->draw();
+            player1->draw();
+            player1->draw();
+            player2->draw();
+            player2->draw();
             player2->draw();
             continue;
         }

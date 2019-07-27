@@ -7,7 +7,6 @@
 #include "ritual.h"
 #include <algorithm>
 #include <random>
-#include "cardprintmap.h"
 #include <map>
 
 class Card;
