@@ -260,7 +260,9 @@ void Player::checkTrigger(TriggerType type, std::shared_ptr<Player> player, int 
     {
         this->minions.at(i)->checkTrigger(type, player, index);
     }
-    this->ritual->checkTrigger(type, player, index);
+    if(this->ritual){
+        this->ritual->checkTrigger(type, player, index);
+    }
 }
 
 void Player::summonCard(int count, string name)
@@ -303,17 +305,24 @@ int Player::countMinions()
     return this->minions.size();
 }
 
-void Player::printCards(bool graphics, std::vector<std::shared_ptr<Card>> what){
+void Player::printCards(bool graphics, std::string w){
+    std::map<std::string, int> cardNameToFunc = whichFunc();
     vector<card_template_t> temp;
+    std::vector<std::shared_ptr<Card>> what;
+    if(w == "hand"){
+        what = hand;
+    } else {
+        what = minions;
+    }
     for(int i = 0; i<what.size(); i++){
         std::shared_ptr<Card> temp2 = what.at(i);
         switch (cardNameToFunc[what.at(i)->getName()]) {
-            case 0:
+            case 1:
                 temp.push_back(display_minion_activated_ability(temp2->getName(), temp2->getPlayCost(),
                                                                 temp2->getAttack(), temp2->getDefence(), temp2->getAbilityCost(),
                                                                 temp2->getDescription()));
                 break;
-            case 1:
+            case 0:
                 temp.push_back(display_minion_triggered_ability(temp2->getName(), temp2->getPlayCost(),
                                                                 temp2->getAttack(), temp2->getDefence(),
                                                                 temp2->getDescription()));
@@ -341,7 +350,7 @@ void Player::printCards(bool graphics, std::vector<std::shared_ptr<Card>> what){
     }
     for (int j = 0; j < temp.at(0).size(); ++j) {
         std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < temp.size(); ++i) {
             if (i < temp.size()) {
                 std::cout << temp.at(i).at(j);
             } else {
@@ -351,4 +360,31 @@ void Player::printCards(bool graphics, std::vector<std::shared_ptr<Card>> what){
         std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
         std::cout << std::endl;
     }
+}
+
+std::map<std::string, int> whichFunc(){
+    std::map<std::string, int> cardNameToFunc;
+    cardNameToFunc["Air Elemental"] = 0;
+    cardNameToFunc["Earth Elemental"] = 0;
+    cardNameToFunc["Bone Golem"] = 0;
+    cardNameToFunc["Fire Elemental"] = 0;
+    cardNameToFunc["Potion Seller"] = 0;
+    cardNameToFunc["Novice Pyromancer"] = 1;
+    cardNameToFunc["Apprentice Summoner"] = 1;
+    cardNameToFunc["Master Summoner"] = 1;
+    cardNameToFunc["Banish"] = 2;
+    cardNameToFunc["Unsummon"] = 2;
+    cardNameToFunc["Recharge"] = 2;
+    cardNameToFunc["Disenchant"] = 2;
+    cardNameToFunc["Raise Dead"] = 2;
+    cardNameToFunc["Blizzard"] = 2;
+    cardNameToFunc["Dark Ritual"] = 5;
+    cardNameToFunc["Aura of Power"] = 5;
+    cardNameToFunc["Standstill"] = 5;
+    cardNameToFunc["Giant Strength"] = 3;
+    cardNameToFunc["Enrage"] = 3;
+    cardNameToFunc["Haste"] = 4;
+    cardNameToFunc["Magic Fatigue"] = 4;
+    cardNameToFunc["Silence"] = 4;
+    return cardNameToFunc;
 }

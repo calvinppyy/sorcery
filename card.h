@@ -1,7 +1,6 @@
 #ifndef CARD_H
 #define CARD_H
 #include <iostream>
-#include "allCard.h"
 #include "rng.h"
 #include "trigger.h"
 #include <string>
@@ -29,7 +28,6 @@ public:
     virtual void clearEnchantment() = 0;
     virtual void cast(std::shared_ptr<Player>, int ) = 0;
     virtual void inspect(bool) = 0;
-    virtual void print(bool) = 0;
     virtual std::string getDescription() = 0;
     virtual int getDefence() = 0;
     virtual void editDefence(int) = 0;

@@ -7,6 +7,7 @@
 using namespace std;
 
 void loadDeck(shared_ptr<Player> player, vector<shared_ptr<Card>> &deck, std::string filename){
+    deck.clear();
     vector<shared_ptr<Card>> temp;
     ifstream deckfile {filename};
     string cardName;
@@ -45,17 +46,25 @@ int main(int argc, char *argv[]){
     vector<shared_ptr<Card>> deck2;
     shared_ptr<Player> player1 = make_shared<Player>(Player{deck1, ""});
     shared_ptr<Player> player2 = make_shared<Player>(Player{deck2, ""});
+    loadDeck(player1,deck1,"default.deck");
+    deck1.emplace_back(make_shared<Minion>(Minion{"Air Elemental", player1}));//hard code
+    player1->giveDeck(deck1);
+    loadDeck(player2,deck2, "default.deck");
+    deck2.emplace_back(make_shared<Minion>(Minion{"Air Elemental", player2}));//hard code
+    player2->giveDeck(deck2);
     shared_ptr<Board> board = make_shared<Board>(Board{player1, player2});
     vector<string> preInitArguments;
     for(int i = 1; i<argc; i++){
         if(argv[i] == "-deck1"){
             cout<<"Loading deck from: "<<argv[i+1]<<endl;
             loadDeck(player1, deck1, argv[i+1]);
+            player1->giveDeck(deck1);
             i++;
         }
         if(argv[i] == "-deck2"){
             cout<<"Loading deck from: "<<argv[i+1]<<endl;
             loadDeck(player2, deck2, argv[i+1]);
+            player2->giveDeck(deck2);
             i++;
         }
         if(argv[i] == "-init"){
@@ -91,10 +100,11 @@ int main(int argc, char *argv[]){
         } else if(start == 1){
             player2->giveName(preInitArguments.back());
             preInitArguments.pop_back();
+            player1->draw();
+            player2->draw();
             start++;
             continue;
         } else {
-            board->checkTrigger(TriggerType::startOfTurn);
             string cmd = preInitArguments.back();
             if(start == 0){
                 player1->giveName(cmd);
@@ -122,6 +132,7 @@ int main(int argc, char *argv[]){
                 board->checkTrigger(TriggerType::endOfTurn);
                 board->switchCurrentPlayer();
                 board->print();
+                board->checkTrigger(TriggerType::startOfTurn);
             } else if(cmd == "quit"){
                 cout<<"That's a TIE!"<<endl;
                 return 0;
@@ -213,9 +224,10 @@ int main(int argc, char *argv[]){
         } else if(start == 1){
             player2->giveName(cmd);
             start++;
+            player1->draw();
+            player2->draw();
             continue;
         }
-        board->checkTrigger(TriggerType::startOfTurn);
         if (cmd == "help") {
             cout << "Commands: help -- Display this message." << endl;
             cout << "          end  -- End the current player's turn." << endl;
@@ -233,6 +245,7 @@ int main(int argc, char *argv[]){
             board->checkTrigger(TriggerType::endOfTurn);
             board->switchCurrentPlayer();
             board->print();
+            board->checkTrigger(TriggerType::startOfTurn);
         } else if(cmd == "quit"){
             cout<<"That's a TIE!"<<endl;
             return 0;

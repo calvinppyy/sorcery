@@ -102,10 +102,7 @@ void Minion::cast(std::shared_ptr<Player> opponent, int index){
 }
      
 void Minion::inspect(bool graphicsEnabled){
-    print(!graphicsEnabled);
-    for(int i = 0; i<enchantments.size(); i++){
-        enchantments.at(i)->print(!graphicsEnabled);
-    }
+    
 }
      
 int Minion::getDefence(){

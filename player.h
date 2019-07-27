@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <random>
 #include "cardprintmap.h"
+#include <map>
 
 class Card;
 
@@ -52,7 +53,9 @@ public:
     void unsummonCard(int );
     void editRitualUsage(int );
     int countMinions();
-    void printCards(bool graphics, std::vector<std::shared_ptr<Card>> what);
+    void printCards(bool graphics, std::string w);
 };
+
+std::map<std::string, int> whichFunc();
 
 #endif

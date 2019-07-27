@@ -175,7 +175,7 @@ void Board::checkTrigger(TriggerType type) {
 }
 
 void Board::printHand(){
-    this->currentPlayer->printHand(graphics);
+    this->currentPlayer->printCards(graphics, "hand");
 }
 
 void Board::print(){
