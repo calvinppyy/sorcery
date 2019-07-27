@@ -21,7 +21,8 @@ void Spell::playCard(std::shared_ptr<Player> target, int index){
     } else if (name == "Raise Dead"){
         target->reviveMinion();
     } else if (name == "Blizzard"){
-        target->allEditDefence(-1);
+        target->allEditDefence(-2);
+        target->getOpponent()->allEditDefence(-2);
     }
 }
 

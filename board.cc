@@ -88,6 +88,9 @@ void Board::play(int cardIndex)
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
     }
+    catch( string e){
+        cerr<<e<<endl;
+    }
 }
 
 void Board::play(int cardIndex, shared_ptr<Player> targetPlayer, int targetCard)
@@ -99,6 +102,9 @@ void Board::play(int cardIndex, shared_ptr<Player> targetPlayer, int targetCard)
     catch (const out_of_range &e)
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
+    }
+    catch(string e){
+        cerr<<e<<endl;
     }
 }
 
@@ -133,8 +139,8 @@ void Board::draw()
         try {
             this->currentPlayer->draw();
         }
-        catch(string e) {
-            cout << e << endl;
+        catch(int e) {
+            throw e;
         }
         return;
     }

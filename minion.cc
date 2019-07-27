@@ -117,7 +117,7 @@ int Minion::getDefence(){
      
 void Minion::editDefence(int damage){
     int temp = damage;
-    for(int i = enchantments.size()-1; i>=enchantments.size(); i--){
+    for(int i = enchantments.size()-1; i>=0; i--){
         if(temp == 0) break;
         if(temp>=enchantments.at(i)->getDefence()){
             temp += enchantments.at(i)->getDefence();
@@ -128,7 +128,7 @@ void Minion::editDefence(int damage){
         }
     }
     if(temp!=0){
-        editDefence(temp);
+        defence+=temp;
     }
 }
      

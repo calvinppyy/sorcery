@@ -51,8 +51,9 @@ void Player::playCard(int index, bool testing)
     }
     else
     {
-        if (this->magic < this->hand.at((index - 1))->getPlayCost())
-            return;
+        if (this->magic < this->hand.at((index - 1))->getPlayCost()){
+            throw "Not Enough Magic!";
+        }
         else
             this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
     }
@@ -71,13 +72,16 @@ void Player::playCard(int index, bool testing)
         }
         else
         {
-            if (this->ritual == nullptr)
-                this->ritual = this->hand.at((index - 1));
+            this->ritual = this->hand.at((index - 1));
             this->hand.erase(this->hand.begin() + (index - 1));
         }
     }
-    else
+    else{
+        std::cout<<"asdasd"<<std::endl;
         this->hand.at((index - 1))->playCard(make_shared<Player>(*this), 0);
+        std::cout<<123123<<std::endl;
+        this->hand.erase(this->hand.begin() + (index - 1));
+    }
 } //bool is for testing mode
 
 void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, bool testing)
@@ -111,13 +115,14 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
         }
         else
         {
-            if (this->ritual == nullptr)
-                this->ritual = this->hand.at((index - 1));
+            this->ritual = this->hand.at((index - 1));
             this->hand.erase(this->hand.begin() + (index - 1));
         }
     }
-    else
+    else{
         this->hand.at((index - 1))->playCard(target, targetIndex);
+        this->hand.erase(this->hand.begin() + (index - 1));
+    }
 }
 
 void Player::useAbility(int index, bool testing){
@@ -177,7 +182,7 @@ void Player::useAbility(int index, shared_ptr<Player> target, int targetIndex, b
 void Player::draw()
 {
     if (this->notOut.empty())
-        throw "There is no more card in the deck";
+        throw 3;
     this->hand.emplace_back(this->notOut.back());
     this->notOut.pop_back();
 }
@@ -231,6 +236,7 @@ void Player::attack(int index, int damage, int enemyIndex, int attackType)
 
 void Player::killMinion(int index)
 {
+    minions.at(index-1)->editDefence(-1*minions.at(index-1)->getDefence());
     this->graveyard.emplace_back(this->minions.at(index - 1));
     this->minions.erase(this->minions.begin() + (index - 1));
 }
@@ -251,6 +257,10 @@ void Player::allEditDefence(int value)
     for (int i = 0; i < this->minions.size(); i++)
     {
         this->minions.at(i)->editDefence(value);
+        if(minions.at(i)->died()){
+            killMinion(i+1);
+            checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
+        }
     }
 }
 
@@ -283,8 +293,11 @@ shared_ptr<Player> &Player::getOpponent()
 void Player::editMagic(int value)
 {
     this->magic += value;
-    if (this->magic > this->magicCap)
-        this->magic = this->magicCap;
+}
+
+void Player::addMagicCap(){
+    magicCap++;
+    magic = magicCap;
 }
 
 void Player::unsummonCard(int index)

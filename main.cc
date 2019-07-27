@@ -262,8 +262,15 @@ int main(int argc, char *argv[]){
                 cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
             }
             cout<<endl;
-            board->checkTrigger(TriggerType::startOfTurn);
             current = current->getOpponent();
+            current->addMagicCap();
+            board->checkTrigger(TriggerType::startOfTurn);
+            try{
+                current->draw();
+            }
+            catch(int e){
+                cout<<"There is no more card in your deck!"<<endl;
+            }
         } else if(cmd == "quit"){
             cout<<"That's a TIE!"<<endl;
             return 0;
@@ -271,8 +278,8 @@ int main(int argc, char *argv[]){
             try{
                 board->draw();
             }
-            catch(InvalidCommandException e) {
-                e.prettyprint();
+            catch(int e) {
+                cout<<"There is no more card in your deck!"<<endl;
             }
         } else if(cmd == "hand"){
             board->printHand();
