@@ -35,10 +35,6 @@ void Spell::cast(std::shared_ptr<Player> opponent, int index){}
 
 void Spell::inspect(bool graphicsEnabled){}
 
-void Spell::print(bool graphicsEnabled){
-    
-}
-
 int Spell::getDefence(){return 0;}
 
 void Spell::editDefence(int defence){}
@@ -62,6 +58,10 @@ void Spell::editUsage(int){}
 int Spell::getAction(){return 0;}
 
 void Spell::editAction(int action){}
+
+int Spell::getUsageCap(){
+    return 0;
+}
 
 bool Spell::died(){return false;}
 

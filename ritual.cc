@@ -44,10 +44,6 @@ void Ritual::cast(std::shared_ptr<Player> opponent, int index){
 
 void Ritual::inspect(bool graphicsEnabled){}
 
-void Ritual::print(bool graphicsEnabled){
-    
-}
-
 int Ritual::getDefence(){return 0;}
 
 void Ritual::editDefence(int defence){}
@@ -70,6 +66,10 @@ void Ritual::editAbilityCost(int ac){}
 
 int Ritual::getUsage(){
     return usage;
+}
+
+int Ritual::getUsageCap(){
+    return usageCap;
 }
 
 void Ritual::editUsage(int uc){

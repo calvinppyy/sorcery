@@ -15,7 +15,6 @@ public:
     void clearEnchantment();
     void cast(std::shared_ptr<Player> opponent, int index);
     void inspect(bool graphicsEnabled);
-    void print(bool graphicsEnabled);
     std::string getDescription();
     int getDefence();
     void editDefence(int defence);
@@ -29,6 +28,7 @@ public:
     void editUsage(int); //for ritual
     int getAction();
     void editAction(int action);
+    int getUsageCap();
     bool died();
     void checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index);
     ~Ritual(){}

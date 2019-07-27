@@ -7,6 +7,7 @@
 #include "ritual.h"
 #include <algorithm>
 #include <random>
+#include "cardprintmap.h"
 
 class Card;
 
@@ -51,7 +52,7 @@ public:
     void unsummonCard(int );
     void editRitualUsage(int );
     int countMinions();
-    void printHand(bool);
+    void printCards(bool graphics, std::vector<std::shared_ptr<Card>> what);
 };
 
 #endif

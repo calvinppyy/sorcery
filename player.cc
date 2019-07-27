@@ -303,8 +303,52 @@ int Player::countMinions()
     return this->minions.size();
 }
 
-void Player::printHand(bool graphics){
-    for(int i = 0; i<hand.size(); i++){
-        hand[i]->print(graphics);
+void Player::printCards(bool graphics, std::vector<std::shared_ptr<Card>> what){
+    vector<card_template_t> temp;
+    for(int i = 0; i<what.size(); i++){
+        std::shared_ptr<Card> temp2 = what.at(i);
+        switch (cardNameToFunc[what.at(i)->getName()]) {
+            case 0:
+                temp.push_back(display_minion_activated_ability(temp2->getName(), temp2->getPlayCost(),
+                                                                temp2->getAttack(), temp2->getDefence(), temp2->getAbilityCost(),
+                                                                temp2->getDescription()));
+                break;
+            case 1:
+                temp.push_back(display_minion_triggered_ability(temp2->getName(), temp2->getPlayCost(),
+                                                                temp2->getAttack(), temp2->getDefence(),
+                                                                temp2->getDescription()));
+                break;
+            case 2:
+                temp.push_back(display_spell(temp2->getName(), temp2->getPlayCost(), temp2->getDescription()));
+                break;
+            case 3:
+                temp.push_back(display_ritual(temp2->getName(), temp2->getPlayCost(), temp2->getUsageCap(),
+                                              temp2->getDescription(), temp2->getUsage()));
+                break;
+            case 4:
+                if(name == "Giant Strength"){
+                    temp.push_back(display_enchantment_attack_defence(temp2->getName(), temp2->getPlayCost(), temp2->getDescription(),
+                                                                      "+2", "+2"));
+                } else {
+                    temp.push_back(display_enchantment_attack_defence(temp2->getName(), temp2->getPlayCost(), temp2->getDescription(),
+                                                                      "*2", "*2"));
+                }
+                break;
+            case 5:
+                temp.push_back(display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription()));
+                break;
+        }
+    }
+    for (int j = 0; j < temp.at(0).size(); ++j) {
+        std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+        for (int i = 0; i < 5; ++i) {
+            if (i < temp.size()) {
+                std::cout << temp.at(i).at(j);
+            } else {
+                std::cout << CARD_TEMPLATE_BORDER.at(j);
+            }
+        }
+        std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+        std::cout << std::endl;
     }
 }

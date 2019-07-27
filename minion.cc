@@ -108,10 +108,6 @@ void Minion::inspect(bool graphicsEnabled){
     }
 }
      
-void Minion::print(bool graphicsEnabled){
-    
-}
-     
 int Minion::getDefence(){
     int defence = this->defence;
     for(int i = 0; i<enchantments.size(); i++){
@@ -189,6 +185,10 @@ void Minion::editAction(int action){
 
 bool Minion::died(){
     return defence<=0;
+}
+
+int Minion::getUsageCap(){
+    return 0;
 }
 
 std::string Minion::getDescription(){

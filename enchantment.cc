@@ -69,10 +69,6 @@ void Enchantment::cast(std::shared_ptr<Player> opponent, int index){}
 
 void Enchantment::inspect(bool graphicsEnabled){}
 
-void Enchantment::print(bool graphicsEnabled){
-    
-}
-
 int Enchantment::getDefence(){
     return defense;
 }
@@ -111,6 +107,10 @@ void Enchantment::editUsage(int){}
 
 int Enchantment::getAction(){
     return action;
+}
+
+int Enchantment::getUsageCap(){
+    return 0;
 }
 
 void Enchantment::editAction(int action){
