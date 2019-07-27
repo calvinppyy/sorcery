@@ -13,8 +13,8 @@ void Board::init(std::string name1, std::string name2)
     this->player2->setOpponent(player1);
     if (!this->testing)
     {
-        this->player1->shuffle();
-        this->player2->shuffle();
+        this->player1->shuffleDeck();
+        this->player2->shuffleDeck();
     }
 }
 
@@ -49,7 +49,8 @@ void Board::attack(int myMinion, int enemy)
 {
     try
     {
-        this->currentPlayer->attack(myMinion, enemy，0);
+        int damage = this->currentPlayer->getIthMinion(myMinion)->getAttack();
+        this->currentPlayer->attack(myMinion, damage,enemy,0);
     }
     catch (const out_of_range &e)
     {
@@ -162,7 +163,7 @@ void Board::inspect(int cardIndex)
 }
 
 void Board::checkTrigger(TriggerType type) {
-    this->currentPlayer->checkTrigger(type);
+    this->currentPlayer->checkTrigger(type, this->currentPlayer, this->currentPlayer->countMinions());
 }
 
 Board::~Board() {}

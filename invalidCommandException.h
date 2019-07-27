@@ -1,6 +1,8 @@
 #ifndef INVALIDCOMMANDEXCEPTION_H
 #define INVALIDCOMMANDEXCEPTION_H
 
+#include <iostream>
+
 class InvalidCommandException {
     std::string name;
 public:

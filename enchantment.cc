@@ -53,9 +53,9 @@ void Enchantment::playCard(std::shared_ptr<Player> target, int index){
         attack = target->getIthMinion(index)->getAttack();
         defense = target->getIthMinion(index)->getDefence();
     } else if(name == "Silence"){
-        target->getIthMinion->silence(true);
+        target->getIthMinion(index)->silence(true);
     }
-    target->getIthMinion->addEnchantment(std::make_shared<Enchantment>(*this));
+    target->getIthMinion(index)->addEnchantment(std::make_shared<Enchantment>(*this));
     this->target = target->getIthMinion(index);
 }
 
@@ -105,7 +105,7 @@ void Enchantment::editAbilityCost(int ac){
     this->abilityCost+=ac;
 }
 
-int Enchantment::getUsage(){}
+int Enchantment::getUsage(){return 0;}
 
 void Enchantment::editUsage(int){}
 
@@ -117,14 +117,15 @@ void Enchantment::editAction(int action){
     this->action+=action;
 }
 
-bool Enchantment::died(){}
+bool Enchantment::died(){return false;}
 
 std::string Enchantment::getDescription() {
-    if (name == "Giant Strength") {return ""};
-    if (name == "Enrage") {return ""};
-    if (name == "Haste ") {return "Enchanted minion gains +1 action each turn"};
-    if (name == "Magic Fatigue") {return "Enchanted minion's activated ability costs 2 more"};
-    if (name == "Silence") {return "Enchanted minion cannot use abilities"};
+    if (name == "Giant Strength") {return "";}
+    if (name == "Enrage") {return "";}
+    if (name == "Haste ") {return "Enchanted minion gains +1 action each turn";}
+    if (name == "Magic Fatigue") {return "Enchanted minion's activated ability costs 2 more";}
+    if (name == "Silence") {return "Enchanted minion cannot use abilities";}
+    return "";
 }
 
 void Enchantment::checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index){}

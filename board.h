@@ -4,6 +4,7 @@
 #include <memory>
 #include "ascii_graphics.h"
 #include "invalidCommandException.h"
+#include <iostream>
 
 
 class Board {

@@ -36,6 +36,7 @@ public:
     void editAction(int action);
     bool died();
     void checkTrigger(TriggerType trigger,std::shared_ptr<Player> opponent, int index);
+    ~Minion(){}
 };
 
 #endif

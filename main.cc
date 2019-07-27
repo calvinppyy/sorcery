@@ -2,16 +2,17 @@
 #include <fstream>
 #include <sstream>
 #include "board.h"
-#include "allCards.h"
+#include "trigger.h"
+#include "allCard.h"
 
 using namespace std;
 
-void loadDeck(vector<shared_ptr<Card>> &deck, std::string filename){
+/*void loadDeck(shared_ptr<Player> player, vector<shared_ptr<Card>> &deck, std::string filename){
     ifstream deckfile {filename};
     string cardName;
     while (getline(deckfile, cardName)) {
         if(cardName == "Air Elemental") deck.push_back();
-        if(cardName == "Earth Elemental") deck.push_back({});
+        if(cardName == "Earth Elemental") deck.push_back();
         if(cardName == "Bone Golem") deck.push_back({});
         if(cardName == "Fire Elemental") deck.push_back({});
         if(cardName == "Potion Seller") deck.push_back({});
@@ -33,18 +34,19 @@ void loadDeck(vector<shared_ptr<Card>> &deck, std::string filename){
         if(cardName == "Aura of Power") deck.push_back({});
         if(cardName == "Standstill") deck.push_back({});
     }
-    return deck;
 }
-
+*/
 int main(int argc, char *argv[]){
-    shared_ptr<Player> player1 = make_shared<Player>();
-    shared_ptr<Player> player2 = make_shared<Player>();
-    shared_ptr<Board> board = make_shared<Board>();
+    vector<shared_ptr<Card>> deck1;
+    vector<shared_ptr<Card>> deck2;
+    shared_ptr<Player> player1 = make_shared<Player>(Player{deck1, "player1"});
+    shared_ptr<Player> player2 = make_shared<Player>(Player{deck2, "player2"});
+    shared_ptr<Board> board = make_shared<Board>(Board{player1, player2});
     vector<string> preInitArguments;
     for(int i = 1; i<argc; i++){
         if(argv[i] == "-deck1"){
             cout<<"Loading deck from: "<<argv[i+1]<<endl;
-            //player1->giveDeck(loadDeck(argv[i+1]), "notOut");
+            //loadDeck(player1, )
             cout<<argv[i]<<endl;
             i++;
         }

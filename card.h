@@ -3,9 +3,9 @@
 #include "allCard.h"
 #include "rng.h"
 #include "trigger.h"
-#include <memory>
 #include <string>
 #include <vector>
+#include "ascii_graphics.h"
 
 class Player;
 class Enchantment;
@@ -21,8 +21,8 @@ class Card{
 
 public:
     Card(std::string, std::shared_ptr<Player>);
-    virtual void silence(bool);
-    virtual void playCard(std::shared_ptr<Player> target, int index);
+    virtual void silence(bool) = 0;
+    virtual void playCard(std::shared_ptr<Player> target, int index) = 0;
     virtual void addEnchantment(std::shared_ptr<Enchantment>) = 0;
     virtual void popEnchantment() = 0;
     virtual void clearEnchantment() = 0;
@@ -44,6 +44,9 @@ public:
     virtual void editAction(int) = 0;
     virtual bool died() = 0;
     virtual void checkTrigger(TriggerType, std::shared_ptr<Player>, int) = 0;
+    virtual ~Card(){}
 };
+
+
 
 #endif

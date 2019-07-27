@@ -1,6 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "card.h"
+#include "minion.h"
+#include "spell.h"
+#include "enchantment.h"
+#include "ritual.h"
 #include <algorithm>
 #include <random>
 
@@ -24,7 +28,7 @@ public:
     void setOpponent(std::shared_ptr<Player> );
     void giveDeck(std::vector<std::shared_ptr<Card>> );
     bool died();
-    std::shared_ptr<Card> getIthMinion(int );
+    std::shared_ptr<Card> &getIthMinion(int );
     void playCard(int, bool); //bool is for testing mode
     void playCard(int, std::shared_ptr<Player>, int, bool);
     void useAbility(int, bool); //bool is for testing mode
@@ -32,7 +36,7 @@ public:
     void draw();
     void discard(int);
     void inspect(int,bool);
-    void shuffle();
+    void shuffleDeck();
     void takeAttack(int ); //agianst player
     void attack(int ); // against player
     void takeAttack(int ,int, int , int ); // against minion, attackType indicates if the minion is actively attacking or counter-attack
@@ -42,7 +46,7 @@ public:
     void allEditDefence(int );
     void checkTrigger(TriggerType, std::shared_ptr<Player>, int);
     void summonCard(int , std::string );
-    std::shared_ptr<Player> getOpponent();
+    std::shared_ptr<Player> &getOpponent();
     void editMagic(int );
     void unsummonCard(int );
     void editRitualUsage(int );

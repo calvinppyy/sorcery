@@ -33,7 +33,7 @@ bool Player::died()
     return this->health <= 0;
 }
 
-shared_ptr<Card> Player::getIthMinion(int index)
+shared_ptr<Card> &Player::getIthMinion(int index)
 {
     if (index == 6)
         return this->ritual;
@@ -120,11 +120,10 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
         this->hand.at((index - 1))->playCard(target, targetIndex);
 }
 
-void Player::useAbility(int index, bool testing)
-{
+void Player::useAbility(int index, bool testing){
+    int tmp;
     if (testing)
     {
-        int tmp;
         if (this->magic < this->hand.at((index - 1))->getPlayCost())
         {
             tmp = this->magic;
@@ -195,7 +194,7 @@ void Player::inspect(int index, bool testing)
     this->minions.at(index - 1)->inspect(testing);
 }
 
-void Player::shuffle()
+void Player::shuffleDeck()
 {
     auto rng = default_random_engine{};
     shuffle(this->notOut.begin(), this->notOut.end(), rng); //DELETE THE RNG CLASS IF THIS WORKS, USED <algorithm> && <random>, INCLUDED IN player.h
@@ -270,11 +269,11 @@ void Player::summonCard(int count, string name)
     {
         if (this->minions.size() == 5)
             return;
-        this->minions.emplace_back(make_shared<Minion>(name, this));
+        this->minions.emplace_back(make_shared<Minion>(name, make_shared<Player>(*this)));
     }
 }
 
-shared_ptr<Player> Player::getOpponent()
+shared_ptr<Player> &Player::getOpponent()
 {
     return this->opponent;
 }
