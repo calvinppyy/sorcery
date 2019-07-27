@@ -32,8 +32,6 @@ public:
     void discard(int);
     void inspect(int);
     void print();
-    void endRound();
-    void startRound();
     void checkTrigger(TriggerType );
     void printHand();
     ~Board();
