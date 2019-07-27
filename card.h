@@ -1,10 +1,10 @@
 #ifndef CARD_H
 #define CARD_H
 #include <iostream>
-#include "rng.h"
-#include "trigger.h"
+#include <memory>
 #include <string>
 #include <vector>
+#include "trigger.h"
 #include "ascii_graphics.h"
 
 class Player;

@@ -1,13 +1,15 @@
 #ifndef PLAYER_H
 #define PLAYER_H
+#include <algorithm>
+#include <random>
+#include <map>
+#include <memory>
 #include "card.h"
 #include "minion.h"
 #include "spell.h"
 #include "enchantment.h"
 #include "ritual.h"
-#include <algorithm>
-#include <random>
-#include <map>
+
 
 class Card;
 
