@@ -51,7 +51,8 @@ void Player::playCard(int index, bool testing)
     }
     else
     {
-        if (this->magic < this->hand.at((index - 1))->getPlayCost()){
+        if (this->magic < this->hand.at((index - 1))->getPlayCost())
+        {
             throw "Not Enough Magic!";
         }
         else
@@ -76,10 +77,9 @@ void Player::playCard(int index, bool testing)
             this->hand.erase(this->hand.begin() + (index - 1));
         }
     }
-    else{
-        std::cout<<"asdasd"<<std::endl;
+    else
+    {
         this->hand.at((index - 1))->playCard(make_shared<Player>(*this), 0);
-        std::cout<<123123<<std::endl;
         this->hand.erase(this->hand.begin() + (index - 1));
     }
 } //bool is for testing mode
@@ -96,7 +96,7 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
     else
     {
         if (this->magic < this->hand.at((index - 1))->getPlayCost())
-            return;
+            throw "Not Enough Magic!";
         else
             this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
     }
@@ -119,13 +119,15 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
             this->hand.erase(this->hand.begin() + (index - 1));
         }
     }
-    else{
+    else
+    {
         this->hand.at((index - 1))->playCard(target, targetIndex);
         this->hand.erase(this->hand.begin() + (index - 1));
     }
 }
 
-void Player::useAbility(int index, bool testing){
+void Player::useAbility(int index, bool testing)
+{
     int tmp;
     if (testing)
     {
@@ -143,7 +145,7 @@ void Player::useAbility(int index, bool testing){
     else
     {
         if (this->magic < this->hand.at((index - 1))->getPlayCost())
-            return;
+            throw "Not Enough Magic!";
         else
             this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
     }
@@ -151,7 +153,7 @@ void Player::useAbility(int index, bool testing){
     {
         this->minions.at((index - 1))->cast(make_shared<Player>(*this), 0);
     }
-    catch (string e)
+    catch (string e) f
     {
         if (testing)
             this->editMagic(tmp);
@@ -172,7 +174,7 @@ void Player::useAbility(int index, shared_ptr<Player> target, int targetIndex, b
     else
     {
         if (this->magic < this->hand.at((index - 1))->getPlayCost())
-            return;
+            throw "Not Enough Magic!";
         else
             this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
     }
@@ -236,7 +238,7 @@ void Player::attack(int index, int damage, int enemyIndex, int attackType)
 
 void Player::killMinion(int index)
 {
-    minions.at(index-1)->editDefence(-1*minions.at(index-1)->getDefence());
+    minions.at(index - 1)->editDefence(minion.at(index - 1)->getDefenceCap());
     this->graveyard.emplace_back(this->minions.at(index - 1));
     this->minions.erase(this->minions.begin() + (index - 1));
 }
@@ -257,8 +259,9 @@ void Player::allEditDefence(int value)
     for (int i = 0; i < this->minions.size(); i++)
     {
         this->minions.at(i)->editDefence(value);
-        if(minions.at(i)->died()){
-            killMinion(i+1);
+        if (minions.at(i)->died())
+        {
+            killMinion(i + 1);
             checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
         }
     }
@@ -270,7 +273,8 @@ void Player::checkTrigger(TriggerType type, std::shared_ptr<Player> player, int 
     {
         this->minions.at(i)->checkTrigger(type, player, index);
     }
-    if(this->ritual){
+    if (this->ritual)
+    {
         this->ritual->checkTrigger(type, player, index);
     }
 }
@@ -295,14 +299,19 @@ void Player::editMagic(int value)
     this->magic += value;
 }
 
-void Player::addMagicCap(){
+void Player::addMagicCap()
+{
     magicCap++;
     magic = magicCap;
 }
 
 void Player::unsummonCard(int index)
-{
-    this->hand.emplace_back(this->minions.at(index - 1));
+{   
+    if (this->hand.size() < 5)
+    {
+        this->hand.emplace_back(this->minions.at(index - 1));
+        this->hand.back()->editDefence(this->hand.back()->getDefenceCap());
+    }
     this->minions.erase(this->minions.begin() + (index - 1));
 }
 
@@ -318,80 +327,112 @@ int Player::countMinions()
     return this->minions.size();
 }
 
-void Player::printCards(bool graphics, std::string w){
-    if(!graphics){
+void Player::printCards(bool graphics, std::string w)
+{
+    if (!graphics)
+    {
         vector<card_template_t> temp;
         std::vector<std::shared_ptr<Card>> what;
-        if(w == "hand"){
+        if (w == "hand")
+        {
             what = hand;
-        } else {
+        }
+        else
+        {
             what = minions;
         }
-        for(int i = 0; i<what.size(); i++){
+        for (int i = 0; i < what.size(); i++)
+        {
             std::shared_ptr<Card> temp2 = what.at(i);
             temp.push_back(whichFunc(temp2));
         }
-        for (int j = 0; j < CARD_TEMPLATE_BORDER.size(); ++j) {
-            if(w!="hand") std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
-            for (int i = 0; i < 5; ++i) {
-                if (i < temp.size()) {
+        for (int j = 0; j < CARD_TEMPLATE_BORDER.size(); ++j)
+        {
+            if (w != "hand")
+                std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+            for (int i = 0; i < 5; ++i)
+            {
+                if (i < temp.size())
+                {
                     std::cout << temp.at(i).at(j);
-                } else {
+                }
+                else
+                {
                     std::cout << CARD_TEMPLATE_BORDER.at(j);
                 }
             }
-            if(w!="hand") std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
+            if (w != "hand")
+                std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
             std::cout << std::endl;
         }
-    } else {
-        
+    }
+    else
+    {
     }
 }
 
-std::string Player::getName(){
+std::string Player::getName()
+{
     return name;
 }
 
-
-void Player::printPlayer(bool graphics,bool current){
-    if(!graphics){
+void Player::printPlayer(bool graphics, bool current)
+{
+    if (!graphics)
+    {
         std::vector<card_template_t> temp;
-        if(ritual){
+        if (ritual)
+        {
             temp.push_back(display_ritual(ritual->getName(), ritual->getPlayCost(), ritual->getUsageCap(),
                                           ritual->getDescription(), ritual->getUsage()));
-        } else {
+        }
+        else
+        {
             temp.push_back(CARD_TEMPLATE_BORDER);
         }
         temp.push_back(CARD_TEMPLATE_EMPTY);
-        if(current){
+        if (current)
+        {
             temp.push_back(display_player_card(2, name, health, magic));
-        } else {
+        }
+        else
+        {
             temp.push_back(display_player_card(1, name, health, magic));
         }
         temp.push_back(CARD_TEMPLATE_EMPTY);
-        if(graveyard.size()>0){
+        if (graveyard.size() > 0)
+        {
             temp.push_back(whichFunc(graveyard.back()));
-        } else {
+        }
+        else
+        {
             temp.push_back(CARD_TEMPLATE_BORDER);
         }
-        for (int j = 0; j < CARD_TEMPLATE_BORDER.size(); ++j) {
+        for (int j = 0; j < CARD_TEMPLATE_BORDER.size(); ++j)
+        {
             std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
-            for (int i = 0; i < 5; ++i) {
-                if (i < temp.size()) {
+            for (int i = 0; i < 5; ++i)
+            {
+                if (i < temp.size())
+                {
                     std::cout << temp.at(i).at(j);
-                } else {
+                }
+                else
+                {
                     std::cout << CARD_TEMPLATE_BORDER.at(j);
                 }
             }
             std::cout << EXTERNAL_BORDER_CHAR_UP_DOWN;
             std::cout << std::endl;
         }
-    } else {
-        
+    }
+    else
+    {
     }
 }
 
-card_template_t whichFunc(std::shared_ptr<Card> temp2){
+card_template_t whichFunc(std::shared_ptr<Card> temp2)
+{
     std::map<std::string, card_template_t> cardNameToFunc;
     cardNameToFunc["Air Elemental"] = display_minion_triggered_ability(temp2->getName(), temp2->getPlayCost(),
                                                                        temp2->getAttack(), temp2->getDefence(),
@@ -430,8 +471,8 @@ card_template_t whichFunc(std::shared_ptr<Card> temp2){
     cardNameToFunc["Standstill"] = display_ritual(temp2->getName(), temp2->getPlayCost(), temp2->getUsageCap(),
                                                   temp2->getDescription(), temp2->getUsage());
     cardNameToFunc["Giant Strength"] = display_enchantment_attack_defence(temp2->getName(), temp2->getPlayCost(),
-                                                                          temp2->getDescription(),"+2", "+2");
-    cardNameToFunc["Enrage"] = display_enchantment_attack_defence(temp2->getName(), temp2->getPlayCost(), temp2->getDescription(),"*2", "*2");
+                                                                          temp2->getDescription(), "+2", "+2");
+    cardNameToFunc["Enrage"] = display_enchantment_attack_defence(temp2->getName(), temp2->getPlayCost(), temp2->getDescription(), "*2", "*2");
     cardNameToFunc["Haste"] = display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
     cardNameToFunc["Magic Fatigue"] = display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
     cardNameToFunc["Silence"] = display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());

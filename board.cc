@@ -2,8 +2,7 @@
 
 using namespace std;
 
-Board::Board(shared_ptr<Player> player1, shared_ptr<Player> player2):
-player1{player1}, player2{player2}, currentPlayer{player1}, testing{false}, graphics{false} {}
+Board::Board(shared_ptr<Player> player1, shared_ptr<Player> player2) : player1{player1}, player2{player2}, currentPlayer{player1}, testing{false}, graphics{false} {}
 
 void Board::init(std::string name1, std::string name2)
 {
@@ -23,10 +22,14 @@ void Board::setCurrentPlayer(shared_ptr<Player> nextPlayer)
     this->currentPlayer = nextPlayer;
 }
 
-void Board::switchCurrentPlayer(){
-    if(currentPlayer == player1){
+void Board::switchCurrentPlayer()
+{
+    if (currentPlayer == player1)
+    {
         currentPlayer = player2;
-    } else {
+    }
+    else
+    {
         currentPlayer = player1;
     }
 }
@@ -47,9 +50,11 @@ bool Board::isOver()
 }
 
 shared_ptr<Player> Board::winner()
-{   
-    if (!this->isOver()) return nullptr;
-    if (player1->died()) return this->player2;
+{
+    if (!this->isOver())
+        return nullptr;
+    if (player1->died())
+        return this->player2;
     return this->player1;
 }
 
@@ -58,7 +63,7 @@ void Board::attack(int myMinion, int enemy)
     try
     {
         int damage = this->currentPlayer->getIthMinion(myMinion)->getAttack();
-        this->currentPlayer->attack(myMinion, damage,enemy,0);
+        this->currentPlayer->attack(myMinion, damage, enemy, 0);
     }
     catch (const out_of_range &e)
     {
@@ -88,8 +93,9 @@ void Board::play(int cardIndex)
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
     }
-    catch( string e){
-        cerr<<e<<endl;
+    catch (string e)
+    {
+        cerr << e << endl;
     }
 }
 
@@ -103,8 +109,9 @@ void Board::play(int cardIndex, shared_ptr<Player> targetPlayer, int targetCard)
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
     }
-    catch(string e){
-        cerr<<e<<endl;
+    catch (string e)
+    {
+        cerr << e << endl;
     }
 }
 
@@ -118,6 +125,10 @@ void Board::useAbility(int cardIndex)
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
     }
+    catch (string e)
+    {
+        cerr << e << endl;
+    }
 }
 
 void Board::useAbility(int cardIndex, shared_ptr<Player> targetPlayer, int targetCard)
@@ -130,16 +141,22 @@ void Board::useAbility(int cardIndex, shared_ptr<Player> targetPlayer, int targe
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
     }
+    catch (string e)
+    {
+        cerr << e << endl;
+    }
 }
 
 void Board::draw()
 {
     if (this->testing)
     {
-        try {
+        try
+        {
             this->currentPlayer->draw();
         }
-        catch(int e) {
+        catch (int e)
+        {
             throw e;
         }
         return;
@@ -176,31 +193,37 @@ void Board::inspect(int cardIndex)
     }
 }
 
-void Board::checkTrigger(TriggerType type) {
+void Board::checkTrigger(TriggerType type)
+{
     this->currentPlayer->checkTrigger(type, this->currentPlayer, this->currentPlayer->countMinions());
 }
 
-void Board::printHand(){
+void Board::printHand()
+{
     this->currentPlayer->printCards(graphics, "hand");
 }
 
-void Board::print(){
+void Board::print()
+{
     std::shared_ptr<Player> working = currentPlayer->getOpponent();
-    std::cout<<EXTERNAL_BORDER_CHAR_TOP_LEFT;
-    for (int i = 0; i < (CENTRE_GRAPHIC.at(0).length()/EXTERNAL_BORDER_CHAR_LEFT_RIGHT.size())-2 ; ++i) {
+    std::cout << EXTERNAL_BORDER_CHAR_TOP_LEFT;
+    for (int i = 0; i < (CENTRE_GRAPHIC.at(0).length() / EXTERNAL_BORDER_CHAR_LEFT_RIGHT.size()) - 2; ++i)
+    {
         std::cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
     }
     std::cout << EXTERNAL_BORDER_CHAR_TOP_RIGHT << std::endl;
     working->printPlayer(graphics, false);
     working->printCards(graphics, "minion");
-    for (auto s: CENTRE_GRAPHIC){
+    for (auto s : CENTRE_GRAPHIC)
+    {
         std::cout << s << std::endl;
     }
     working = currentPlayer;
     working->printCards(graphics, "minion");
     working->printPlayer(graphics, true);
     std::cout << EXTERNAL_BORDER_CHAR_BOTTOM_LEFT;
-    for (int i = 0; i < (CENTRE_GRAPHIC.at(0).length()/EXTERNAL_BORDER_CHAR_LEFT_RIGHT.size())-2 ; ++i) {
+    for (int i = 0; i < (CENTRE_GRAPHIC.at(0).length() / EXTERNAL_BORDER_CHAR_LEFT_RIGHT.size()) - 2; ++i)
+    {
         std::cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
     }
     std::cout << EXTERNAL_BORDER_CHAR_BOTTOM_RIGHT << std::endl;
