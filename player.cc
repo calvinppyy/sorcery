@@ -80,7 +80,7 @@ void Player::playCard(int index, bool testing)
 	else
 	{
 		try {
-			this->hand.at((index - 1))->playCard(make_shared<Player>(*this), 0);
+			this->hand.at((index - 1))->playCard(getOpponent()->getOpponent(), 0);
 			this->hand.erase(this->hand.begin() + (index - 1));
 		}
 		catch (string e) {
@@ -293,7 +293,7 @@ void Player::attack(int index, int damage, int enemyIndex, int attackType)
 		minions.at(index - 1)->editAction(-1);
 	}
 	else {
-		throw "This Minion can not attack anymore this round";
+		throw 'a';
 	}
 } // against minion, the 3rd int indicates if the minion is actively attacking or counter-attack
 
@@ -306,13 +306,17 @@ void Player::killMinion(int index)
 
 void Player::reviveMinion()
 {
+    std::cout<<minions.size()<<"   "<<graveyard.size()<<std::endl;
 	if (this->minions.size() < 5)
 	{
+        std::cout<<"asd"<<std::endl;
 		this->minions.emplace_back(this->graveyard.back());
 		this->minions.back()->editDefence((-1) * this->minions.back()->getDefence());
 		this->minions.back()->editDefence(1);
+        std::cout<<"asd2"<<std::endl;
 	}
 	this->graveyard.pop_back();
+    std::cout<<minions.size()<<"   "<<graveyard.size()<<std::endl;
 }
 
 void Player::allEditDefence(int value)
