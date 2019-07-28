@@ -58,6 +58,7 @@ public:
 	void printPlayer(bool graphics, bool current);
 	void addMagicCap();
 	std::shared_ptr<Card> getRitual();
+	int countHand();
 };
 
 card_template_t whichFunc(std::shared_ptr<Card> temp2);

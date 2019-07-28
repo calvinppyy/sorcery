@@ -208,7 +208,8 @@ void Player::useAbility(int index, Player& target, int targetIndex, bool testing
 }
 
 void Player::draw()
-{
+{	
+	if (this->countHand() >= 5)  throw 1;
 	if (this->notOut.empty())
 		throw 3;
 	this->hand.emplace_back(this->notOut.back());
@@ -533,4 +534,8 @@ card_template_t whichFunc(std::shared_ptr<Card> temp2)
 
 shared_ptr<Card> Player::getRitual() {
 	return this->ritual;
+}
+
+int Player : countHand() {
+	return this->hand.size();
 }
