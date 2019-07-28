@@ -37,6 +37,7 @@ public:
     bool died();
     void checkTrigger(TriggerType trigger,Player& opponent, int index);
     int getDefenceCap();
+	int getActionCap();
     ~Minion(){}
 };
 

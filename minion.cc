@@ -256,3 +256,7 @@ void Minion::checkTrigger(TriggerType trigger,Player& opponent, int index){
 int Minion::getDefenceCap(){
     return defenceCap;
 }
+
+int Minion::getActionCap() {
+	return actionCap;
+}

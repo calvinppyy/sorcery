@@ -67,7 +67,7 @@ void Player::playCard(int index, bool testing)
 			{
 				this->minions.emplace_back(this->hand.at((index - 1)));
 				this->hand.erase(this->hand.begin() + (index - 1));
-                this->checkTrigger(TriggerType::allyEnter, *this, this->minions.size());
+				this->checkTrigger(TriggerType::allyEnter, *this, this->minions.size());
 				this->opponent->checkTrigger(TriggerType::enemyEnter, *this, this->minions.size());
 			}
 		}
@@ -100,11 +100,11 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
 		else
 			this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
 	}
-	if (dynamic_pointer_cast<Enchantment>(this->hand.at((index - 1))) == nullptr && 
+	if (dynamic_pointer_cast<Enchantment>(this->hand.at((index - 1))) == nullptr &&
 		dynamic_pointer_cast<Spell>(this->hand.at((index - 1))) == nullptr)
-	{ 
+	{
 		if (dynamic_pointer_cast<Ritual>(this->hand.at((index - 1))) == nullptr)
-		{ 
+		{
 			if (this->minions.size() < 5)
 			{
 				this->minions.emplace_back(this->hand.at((index - 1)));
@@ -142,11 +142,12 @@ void Player::useAbility(int index, bool testing)
 		}
 	}
 	else {
-        if (this->magic < this->minions.at((index - 1))->getAbilityCost()){
+		if (this->magic < this->minions.at((index - 1))->getAbilityCost()) {
 			throw 'a';
-        } else {
+		}
+		else {
 			this->editMagic(-1 * this->minions.at((index - 1))->getAbilityCost());
-        }
+		}
 	}
 	try
 	{
@@ -159,17 +160,17 @@ void Player::useAbility(int index, bool testing)
 		else {
 			this->editMagic(this->minions.at((index - 1))->getAbilityCost());
 		}
-        std::cerr<<"You are out of spots!"<<std::endl;
+		std::cerr << "You are out of spots!" << std::endl;
 	}
-    catch(int e){
-        if (testing)
-            this->editMagic(tmp);
-        else {
-            this->editMagic(this->minions.at((index - 1))->getAbilityCost());
-        }
-        if(e == 9) std::cerr<<"The minion is silenced"<<std::endl;
-        else std::cerr<<"Each minion can only move once a game."<<std::endl;
-    }
+	catch (int e) {
+		if (testing)
+			this->editMagic(tmp);
+		else {
+			this->editMagic(this->minions.at((index - 1))->getAbilityCost());
+		}
+		if (e == 9) std::cerr << "The minion is silenced" << std::endl;
+		else std::cerr << "Each minion can only move once a game." << std::endl;
+	}
 } //bool is for testing mode
 
 void Player::useAbility(int index, Player& target, int targetIndex, bool testing)
@@ -188,12 +189,12 @@ void Player::useAbility(int index, Player& target, int targetIndex, bool testing
 		else
 			this->editMagic(-1 * this->minions.at((index - 1))->getPlayCost());
 	}
-    try{
-        this->minions.at((index - 1))->cast(target, targetIndex);
-    }
-    catch(int e){
-        std::cerr<<"Each minion can only move once a game."<<std::endl;
-    }
+	try {
+		this->minions.at((index - 1))->cast(target, targetIndex);
+	}
+	catch (int e) {
+		std::cerr << "Each minion can only move once a game." << std::endl;
+	}
 }
 
 void Player::draw()
@@ -229,12 +230,13 @@ void Player::takeAttack(int damage)
 
 void Player::attack(int index)
 {
-    if(minions.at(index-1)->getAction()!=0){
-        this->opponent->takeAttack(this->minions.at(index - 1)->getAttack());
-        minions.at(index-1)->editAction(-1);
-    } else {
-        throw 1;
-    }
+	if (minions.at(index - 1)->getAction() < minions.at(index - 1)->getActionCap()) {
+		this->opponent->takeAttack(this->minions.at(index - 1)->getAttack());
+		minions.at(index - 1)->editAction(1);
+	}
+	else {
+		throw "This Minion can not attack anymore this round";
+	}
 } // against player
 
 void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
@@ -253,12 +255,13 @@ void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
 
 void Player::attack(int index, int damage, int enemyIndex, int attackType)
 {
-    if(minions.at(index-1)->getAction()!=0){
-        this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, attackType);
-        minions.at(index-1)->editAction(-1);
-    } else {
-        throw 1;
-    }
+	if (minions.at(index - 1)->getAction() < minions.at(index - 1)->getActionCap()) {
+		this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, attackType);
+		minions.at(index - 1)->editAction(1);
+	}
+	else {
+		throw "This Minion can not attack anymore this round";
+	}
 } // against minion, the 3rd int indicates if the minion is actively attacking or counter-attack
 
 void Player::killMinion(int index)
@@ -334,7 +337,7 @@ void Player::addMagicCap()
 
 void Player::unsummonCard(int index)
 {
-    minions.at(index-1)->clearEnchantment();
+	minions.at(index - 1)->clearEnchantment();
 	if (this->hand.size() < 5)
 	{
 		this->hand.emplace_back(this->minions.at(index - 1));
