@@ -96,7 +96,10 @@ void Ritual::checkTrigger(TriggerType trigger, Player& opponent, int index){
     if(trigger == triggerType){
         cast(opponent,index);
     }
-	if (usage == 0) throw "The ritual has used up its usage cap";
+    if (usage == 0) {
+        std::string e = "The ritual has used up its usage cap";
+        throw e;
+    }
 }
 
 void Ritual::setAction(int action){
