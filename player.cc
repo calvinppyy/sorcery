@@ -193,12 +193,17 @@ void Player::useAbility(int index, bool testing)
 
 void Player::useAbility(int index, Player& target, int targetIndex, bool testing)
 {
-	if (testing)
-	{
-		if (this->magic < this->minions.at((index - 1))->getPlayCost())
+	if (testing) {
+		if (this->magic < this->minions.at((index - 1))->getAbilityCost())
+		{
+			tmp = this->magic;
 			this->editMagic(0);
+		}
 		else
-			this->editMagic(-1 * this->minions.at((index - 1))->getPlayCost());
+		{
+			tmp = this->minions.at((index - 1))->getAbilityCost();
+			this->editMagic(-1 * this->minions.at((index - 1))->getAbilityCost());
+		}
 	}
 	else
 	{
@@ -224,7 +229,7 @@ void Player::useAbility(int index, Player& target, int targetIndex, bool testing
 }
 
 void Player::draw()
-{	
+{
 	if (this->countHand() >= 5)  throw 1;
 	if (this->notOut.empty())
 		throw 3;
@@ -552,6 +557,6 @@ shared_ptr<Card> Player::getRitual() {
 	return this->ritual;
 }
 
-int Player :: countHand() {
+int Player::countHand() {
 	return this->hand.size();
 }
