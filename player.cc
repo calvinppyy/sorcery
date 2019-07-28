@@ -181,6 +181,14 @@ void Player::useAbility(int index, bool testing)
 		if (e == 9) std::cerr << "The minion is silenced" << std::endl;
 		else std::cerr << "Each minion can only move once a game." << std::endl;
 	}
+	catch (string e) {
+		if (testing)
+			this->editMagic(tmp);
+		else {
+			this->editMagic(this->minions.at((index - 1))->getAbilityCost());
+		}
+		cerr << e << endl;
+	}
 } //bool is for testing mode
 
 void Player::useAbility(int index, Player& target, int targetIndex, bool testing)
@@ -204,6 +212,14 @@ void Player::useAbility(int index, Player& target, int targetIndex, bool testing
 	}
 	catch (int e) {
 		std::cerr << "Each minion can only move once a game." << std::endl;
+	}
+	catch (string e) {
+		if (testing)
+			this->editMagic(tmp);
+		else {
+			this->editMagic(this->minions.at((index - 1))->getAbilityCost());
+		}
+		cerr << e << endl;
 	}
 }
 

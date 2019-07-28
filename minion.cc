@@ -101,6 +101,7 @@ void Minion::silence(bool silenced){
 }
 
 void Minion::cast(Player& opponent, int index){
+	if (name == "Air Elemental" || name == "Earth Elemental") throw "The minion has no ability to use";
     if(silenced) throw 9;
     if(action == 0) throw 8;
     if(name == "Novice Pyromancer"){
