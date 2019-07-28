@@ -67,8 +67,8 @@ void Player::playCard(int index, bool testing)
 			{
 				this->minions.emplace_back(this->hand.at((index - 1)));
 				this->hand.erase(this->hand.begin() + (index - 1));
-                this->checkTrigger(TriggerType::allyEnter, make_shared<Player>(*this), this->minions.size());
-				this->opponent->checkTrigger(TriggerType::enemyEnter, make_shared<Player>(*this), this->minions.size());
+                this->checkTrigger(TriggerType::allyEnter, *this, this->minions.size());
+				this->opponent->checkTrigger(TriggerType::enemyEnter, *this, this->minions.size());
 			}
 		}
 		else
@@ -109,8 +109,8 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
 			{
 				this->minions.emplace_back(this->hand.at((index - 1)));
 				this->minions.erase(this->minions.begin() + (index - 1));
-				this->checkTrigger(TriggerType::allyEnter, make_shared<Player>(*this), this->minions.size());
-				this->opponent->checkTrigger(TriggerType::enemyEnter, make_shared<Player>(*this), this->minions.size());
+				this->checkTrigger(TriggerType::allyEnter, *this, this->minions.size());
+				this->opponent->checkTrigger(TriggerType::enemyEnter, *this, this->minions.size());
 			}
 		}
 		else
@@ -163,7 +163,7 @@ void Player::useAbility(int index, bool testing)
 	}
 } //bool is for testing mode
 
-void Player::useAbility(int index, shared_ptr<Player> target, int targetIndex, bool testing)
+void Player::useAbility(int index, Player& target, int targetIndex, bool testing)
 {
 	if (testing)
 	{
@@ -179,7 +179,7 @@ void Player::useAbility(int index, shared_ptr<Player> target, int targetIndex, b
 		else
 			this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
 	}
-	this->minions.at((index - 1))->cast(*target, targetIndex);
+	this->minions.at((index - 1))->cast(target, targetIndex);
 }
 
 void Player::draw()
@@ -228,7 +228,7 @@ void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
 	if (this->minions.at(index - 1)->getDefence() <= 0)
 	{
 		this->killMinion((index));
-		this->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
+		this->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
 	}
 } // against minion, attackType indicates if the minion is actively attacking or counter-attack
 
@@ -263,20 +263,20 @@ void Player::allEditDefence(int value)
 		if (minions.at(i)->died())
 		{
 			killMinion(i + 1);
-			checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
+			checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
 		}
 	}
 }
 
-void Player::checkTrigger(TriggerType type, std::shared_ptr<Player> player, int index)
+void Player::checkTrigger(TriggerType type, Player& player, int index)
 {
 	for (int i = 0; i < this->minions.size(); i++)
 	{
-		this->minions.at(i)->checkTrigger(type, *player, index);
+		this->minions.at(i)->checkTrigger(type, player, index);
 	}
 	if (this->ritual)
 	{
-		this->ritual->checkTrigger(type, *player, index);
+		this->ritual->checkTrigger(type, player, index);
 	}
 }
 
@@ -287,8 +287,8 @@ void Player::summonCard(int count, string name)
 		if (this->minions.size() == 5)
 			return;
 		this->minions.emplace_back(make_shared<Minion>(name, make_shared<Player>(*this)));
-		this->checkTrigger(TriggerType::allyEnter, make_shared<Player>(*this), this->minions.size());
-		this->opponent->checkTrigger(TriggerType::enemyEnter, make_shared<Player>(*this), this->minions.size());
+		this->checkTrigger(TriggerType::allyEnter, *this, this->minions.size());
+		this->opponent->checkTrigger(TriggerType::enemyEnter, *this, this->minions.size());
 	}
 }
 
@@ -316,8 +316,8 @@ void Player::unsummonCard(int index)
 		this->hand.back()->editDefence(this->hand.back()->getDefenceCap());
 	}
 	this->minions.erase(this->minions.begin() + (index - 1));
-	this->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
-	this->opponent->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
+	this->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+	this->opponent->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
 }
 
 void Player::editRitualUsage(int value)

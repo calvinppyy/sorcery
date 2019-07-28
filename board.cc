@@ -128,7 +128,7 @@ void Board::useAbility(int cardIndex, shared_ptr<Player> targetPlayer, int targe
 {
     try
     {
-        this->currentPlayer->useAbility(cardIndex, targetPlayer, targetCard, this->testing);
+        this->currentPlayer->useAbility(cardIndex, *targetPlayer, targetCard, this->testing);
     }
     catch (const out_of_range &e)
     {
@@ -188,7 +188,7 @@ void Board::inspect(int cardIndex)
 
 void Board::checkTrigger(TriggerType type)
 {
-    this->currentPlayer->checkTrigger(type, this->currentPlayer, this->currentPlayer->countMinions());
+    this->currentPlayer->checkTrigger(type, *currentPlayer, this->currentPlayer->countMinions());
 }
 
 void Board::printHand()

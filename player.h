@@ -35,7 +35,7 @@ public:
 	void playCard(int, bool); //bool is for testing mode
 	void playCard(int, std::shared_ptr<Player>, int, bool);
 	void useAbility(int, bool); //bool is for testing mode
-	void useAbility(int, std::shared_ptr<Player>, int, bool);
+	void useAbility(int, Player&, int, bool);
 	void draw();
 	void discard(int);
 	void inspect(int, bool);
@@ -47,7 +47,7 @@ public:
 	void killMinion(int);
 	void reviveMinion();
 	void allEditDefence(int);
-	void checkTrigger(TriggerType, std::shared_ptr<Player>, int);
+	void checkTrigger(TriggerType, Player&, int);
 	void summonCard(int, std::string);
 	std::shared_ptr<Player>& getOpponent();
 	void editMagic(int);
