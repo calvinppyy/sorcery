@@ -129,57 +129,71 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
 void Player::useAbility(int index, bool testing)
 {
 	int tmp;
-	if (testing)
-	{
-		if (this->magic < this->hand.at((index - 1))->getPlayCost())
+	if (testing) {
+		if (this->magic < this->minions.at((index - 1))->getAbilityCost())
 		{
 			tmp = this->magic;
 			this->editMagic(0);
 		}
 		else
 		{
-			tmp = this->hand.at((index - 1))->getPlayCost();
-			this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
+			tmp = this->minions.at((index - 1))->getAbilityCost();
+			this->editMagic(-1 * this->minions.at((index - 1))->getAbilityCost());
 		}
 	}
-	else
-	{
-		if (this->magic < this->hand.at((index - 1))->getPlayCost())
-			throw "Not Enough Magic!";
-		else
-			this->editMagic(-1 * this->minions.at((index - 1))->getPlayCost());
+	else {
+        if (this->magic < this->minions.at((index - 1))->getAbilityCost()){
+			throw 'a';
+        } else {
+			this->editMagic(-1 * this->minions.at((index - 1))->getAbilityCost());
+        }
 	}
 	try
 	{
 		this->minions.at((index - 1))->cast(*this, 0);
 	}
-	catch (string e)
+	catch (char e)
 	{
 		if (testing)
 			this->editMagic(tmp);
 		else {
-			this->editMagic(this->hand.at((index - 1))->getPlayCost());
+			this->editMagic(this->minions.at((index - 1))->getAbilityCost());
 		}
+        std::cerr<<"You are out of spots!"<<std::endl;
 	}
+    catch(int e){
+        if (testing)
+            this->editMagic(tmp);
+        else {
+            this->editMagic(this->minions.at((index - 1))->getAbilityCost());
+        }
+        if(e == 9) std::cerr<<"The minion is silenced"<<std::endl;
+        else std::cerr<<"Each minion can only move once a game."<<std::endl;
+    }
 } //bool is for testing mode
 
 void Player::useAbility(int index, Player& target, int targetIndex, bool testing)
 {
 	if (testing)
 	{
-		if (this->magic < this->hand.at((index - 1))->getPlayCost())
+		if (this->magic < this->minions.at((index - 1))->getPlayCost())
 			this->editMagic(0);
 		else
-			this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
+			this->editMagic(-1 * this->minions.at((index - 1))->getPlayCost());
 	}
 	else
 	{
-		if (this->magic < this->hand.at((index - 1))->getPlayCost())
-			throw "Not Enough Magic!";
+		if (this->magic < this->minions.at((index - 1))->getPlayCost())
+			throw 'a';
 		else
-			this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
+			this->editMagic(-1 * this->minions.at((index - 1))->getPlayCost());
 	}
-	this->minions.at((index - 1))->cast(target, targetIndex);
+    try{
+        this->minions.at((index - 1))->cast(target, targetIndex);
+    }
+    catch(int e){
+        std::cerr<<"Each minion can only move once a game."<<std::endl;
+    }
 }
 
 void Player::draw()
@@ -215,7 +229,12 @@ void Player::takeAttack(int damage)
 
 void Player::attack(int index)
 {
-	this->opponent->takeAttack(this->minions.at(index - 1)->getAttack());
+    if(minions.at(index-1)->getAction()!=0){
+        this->opponent->takeAttack(this->minions.at(index - 1)->getAttack());
+        minions.at(index-1)->editAction(-1);
+    } else {
+        throw 1;
+    }
 } // against player
 
 void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
@@ -234,7 +253,12 @@ void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
 
 void Player::attack(int index, int damage, int enemyIndex, int attackType)
 {
-	this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, attackType);
+    if(minions.at(index-1)->getAction()!=0){
+        this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, attackType);
+        minions.at(index-1)->editAction(-1);
+    } else {
+        throw 1;
+    }
 } // against minion, the 3rd int indicates if the minion is actively attacking or counter-attack
 
 void Player::killMinion(int index)
@@ -310,7 +334,7 @@ void Player::addMagicCap()
 
 void Player::unsummonCard(int index)
 {
-    minions.at(index)->clearEnchantment();
+    minions.at(index-1)->clearEnchantment();
 	if (this->hand.size() < 5)
 	{
 		this->hand.emplace_back(this->minions.at(index - 1));

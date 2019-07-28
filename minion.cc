@@ -6,7 +6,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         defence = 1;
         playCost = 0;
         abilityCost = 0;
-        action = 0;
+        action = 1;
         actionCap = 1;
         defenceCap = 1;
         silenced = false;
@@ -15,7 +15,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         defence = 4;
         playCost = 3;
         abilityCost = 0;
-        action = 0;
+        action = 1;
         actionCap = 1;
         defenceCap = 4;
         silenced = false;
@@ -25,7 +25,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         defence = 3;
         playCost = 2;
         abilityCost = 0;
-        action = 0;
+        action = 1;
         actionCap = 1;
         defenceCap = 3;
         silenced = false;
@@ -35,7 +35,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         defence = 2;
         playCost = 2;
         abilityCost = 0;
-        action = 0;
+        action = 1;
         actionCap = 1;
         defenceCap = 2;
         silenced = false;
@@ -45,7 +45,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         defence = 3;
         playCost = 2;
         abilityCost = 0;
-        action = 0;
+        action = 1;
         actionCap = 1;
         defenceCap = 3;
         silenced = false;
@@ -54,7 +54,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         defence = 1;
         playCost = 1;
         abilityCost = 1;
-        action = 0;
+        action = 1;
         actionCap = 1;
         defenceCap = 1;
         silenced = false;
@@ -63,7 +63,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         defence = 1;
         playCost = 1;
         abilityCost = 1;
-        action = 0;
+        action = 1;
         actionCap = 1;
         defenceCap = 1;
         silenced = false;
@@ -72,7 +72,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         defence = 3;
         playCost = 3;
         abilityCost = 2;
-        action = 0;
+        action = 1;
         actionCap = 1;
         defenceCap = 3;
         silenced = false;
@@ -86,7 +86,10 @@ void Minion::addEnchantment(std::shared_ptr<Enchantment> enchantment){
 }
      
 void Minion::popEnchantment(){
-    enchantments.pop_back();
+    if(enchantments.size()!=0){
+        if(enchantments.back()->getName() == "Silence"){silenced = false;}
+        enchantments.pop_back();
+    }
 }
 
 void Minion::clearEnchantment(){
@@ -98,17 +101,20 @@ void Minion::silence(bool silenced){
 }
 
 void Minion::cast(Player& opponent, int index){
+    if(silenced) throw 9;
+    if(action == 0) throw 8;
     if(name == "Novice Pyromancer"){
         opponent.takeAttack(1,1, index, 1);
     } else if(name == "Apprentice Summoner"){
-        if (opponent.countMinions() == 5) throw "no minion spot"; // when there are already 5 minions
+        if (opponent.countMinions() == 5) throw 'a'; // when there are already 5 minions
         opponent.summonCard(1, "Air Elemental");
     } else if(name == "Master Summoner"){
-        if (opponent.countMinions() == 5) throw "no minion spot"; //when there are already 5 minions
+        if (opponent.countMinions() == 5) throw 'a'; //when there are already 5 minions
         opponent.summonCard(3, "Air Elemental");
     } else if(name == "Fire Elemental"){
         opponent.takeAttack(1, 1, index, 1);
     }
+    action--;
 }
      
 void Minion::inspect(bool graphicsEnabled){
@@ -207,7 +213,18 @@ int Minion::getAction(){
 }
 
 void Minion::editAction(int action){
-    this->action += action;
+    int temp = action;
+    for(int i = enchantments.size()-1; i>=0; i--){
+        if(temp == 0) break;
+        if(enchantments.at(i)->getAction()==0){
+            continue;
+        }
+        enchantments.at(i)->editAction(temp);
+        temp = 0;
+    }
+    if(temp!=0){
+        action+=temp;
+    }
 }
 
 bool Minion::died(){
@@ -229,8 +246,10 @@ std::string Minion::getDescription(){
 }
 
 void Minion::checkTrigger(TriggerType trigger,Player& opponent, int index){
-    if(trigger == triggerType){
-        cast(opponent,index);
+    if(!silenced){
+        if(trigger == triggerType){
+            cast(opponent,index);
+        }
     }
 }
 

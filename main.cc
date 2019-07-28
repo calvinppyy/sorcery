@@ -45,9 +45,13 @@ int main(int argc, char *argv[]){
     vector<shared_ptr<Card>> deck2;
     shared_ptr<Player> player1 = make_shared<Player>(Player{deck1, ""});
     shared_ptr<Player> player2 = make_shared<Player>(Player{deck2, ""});
-    loadDeck(player1,deck1,"default.deck");
+    deck1.push_back(make_shared<Minion>(Minion{"Master Summoner", player1}));
+    deck1.push_back(make_shared<Spell>(Spell{"Disenchant", player1}));
+    deck1.push_back(make_shared<Ritual>(Ritual{"Dark Ritual", player1}));
     player1->giveDeck(deck1);
-    loadDeck(player2,deck2, "default.deck");
+    deck2.push_back(make_shared<Enchantment>(Enchantment{"Silence", player2}));
+    deck2.push_back(make_shared<Spell>(Spell{"Raise Dead", player2}));
+    deck2.push_back(make_shared<Ritual>(Ritual{"Dark Ritual", player2}));
     player2->giveDeck(deck2);
     shared_ptr<Board> board = make_shared<Board>(Board{player1, player2});
     player1->setOpponent(player2);
@@ -311,6 +315,10 @@ int main(int argc, char *argv[]){
                     cerr<<"Invalid number/type of Commands. Type \"-help\" for more help on Commands"<<endl;
                 } else {
                     board->attack(attacker);
+                    if(current->getOpponent()->died()){
+                        cout<<"Congratulation, "<< current->getName()<<" ! You have defeated your opponent!"<<std::endl;
+                        return 0;
+                    }
                 }
             } else if(temp == "play"){
                 int cardNum = 0, playerNum = 0, targetNum = 0;

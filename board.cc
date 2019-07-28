@@ -60,7 +60,10 @@ void Board::attack(int myMinion, int enemy)
     }
     catch (const out_of_range &e)
     {
-        cerr << "Index exceeds the amount of minions the active player holds" << endl;
+        cerr << "Index exceeds the amount of minions the active player holds4" << endl;
+    }
+    catch(int e){
+        cerr << "Each Minion can only move once." << endl;
     }
 }
 
@@ -72,7 +75,10 @@ void Board::attack(int myMinion)
     }
     catch (const out_of_range &e)
     {
-        cerr << "Index exceeds the amount of cards the active player holds" << endl;
+        cerr << "Index exceeds the amount of cards the active player holds5" << endl;
+    }
+    catch(int e){
+        cerr << "Each Minion can only move once." << endl;
     }
 }
 
@@ -84,7 +90,7 @@ void Board::play(int cardIndex)
     }
     catch (const out_of_range &e)
     {
-        cerr << "Index exceeds the amount of cards the active player holds" << endl;
+        cerr << "Index exceeds the amount of cards the active player holds6" << endl;
     }
     catch (int e)
     {
@@ -100,7 +106,7 @@ void Board::play(int cardIndex, shared_ptr<Player> targetPlayer, int targetCard)
     }
     catch (const out_of_range &e)
     {
-        cerr << "Index exceeds the amount of cards the active player holds" << endl;
+        cerr << "Index exceeds the amount of cards the active player holds7" << endl;
     }
     catch (string e)
     {
@@ -116,11 +122,11 @@ void Board::useAbility(int cardIndex)
     }
     catch (const out_of_range &e)
     {
-        cerr << "Index exceeds the amount of cards the active player holds" << endl;
+        cerr << "Index exceeds the amount of cards the active player holds8" << endl;
     }
-    catch (string e)
+    catch (char a)
     {
-        cerr << e << endl;
+        cerr << "Not enough magic!" << endl;
     }
 }
 
@@ -132,11 +138,11 @@ void Board::useAbility(int cardIndex, shared_ptr<Player> targetPlayer, int targe
     }
     catch (const out_of_range &e)
     {
-        cerr << "Index exceeds the amount of cards the active player holds" << endl;
+        cerr << "Index exceeds the amount of cards the active player holds1" << endl;
     }
-    catch (string e)
+    catch (char e)
     {
-        cerr << e << endl;
+        cerr << "Not enough magic!" << endl;
     }
 }
 
@@ -167,7 +173,7 @@ void Board::discard(int cardIndex)
         }
         catch (const out_of_range &e)
         {
-            cerr << "Index exceeds the amount of cards the active player holds" << endl;
+            cerr << "Index exceeds the amount of cards the active player holds2" << endl;
         }
         return;
     }
@@ -182,7 +188,7 @@ void Board::inspect(int cardIndex)
     }
     catch (const out_of_range &e)
     {
-        cerr << "Index exceeds the amount of minions the active player holds" << endl;
+        cerr << "Index exceeds the amount of minions the active player holds3" << endl;
     }
 }
 
