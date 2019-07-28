@@ -329,7 +329,8 @@ void Player::allEditDefence(int value)
 		{
 			killMinion(i + 1);
             i--;
-			checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+			getOpponent()->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+            checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
 		}
 	}
 }
