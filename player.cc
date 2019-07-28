@@ -321,6 +321,8 @@ void Player::reviveMinion()
 		this->minions.emplace_back(this->graveyard.back());
 		this->minions.back()->editDefence((-1) * this->minions.back()->getDefence());
 		this->minions.back()->editDefence(1);
+        checkTrigger(TriggerType::allyEnter, *this, minions.size());
+        getOpponent()->checkTrigger(TriggerType::enemyEnter, *this, minions.size());
 	}
 	this->graveyard.pop_back();
 }
