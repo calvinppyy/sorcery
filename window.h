@@ -13,7 +13,7 @@ class Xwindow {
 	int width, height;
 
 	public:
-	Xwindow(int width=1500, int height=1000);  // Constructor; displays the window.
+	Xwindow(int width=1400, int height=900);  // Constructor; displays the window.
 	~Xwindow();                              // Destructor; destroys the window.
 
 	enum { White = 0, Black, Red, Green, Blue, Cyan, Yellow, Magenta,
