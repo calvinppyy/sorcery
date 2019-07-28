@@ -46,14 +46,8 @@ int main(int argc, char *argv[]){
     shared_ptr<Player> player1 = make_shared<Player>(Player{deck1, ""});
     shared_ptr<Player> player2 = make_shared<Player>(Player{deck2, ""});
     loadDeck(player1,deck1,"default.deck");
-    deck1.emplace_back(make_shared<Minion>(Minion{"Air Elemental", player1}));//hard code
-    deck1.emplace_back(make_shared<Minion>(Minion{"Earth Elemental", player1}));//hard code
-    deck1.emplace_back(make_shared<Ritual>(Ritual{"Dark Ritual", player1}));//hard code
     player1->giveDeck(deck1);
     loadDeck(player2,deck2, "default.deck");
-    deck2.emplace_back(make_shared<Enchantment>(Enchantment{"Giant Strength", player2}));//hard code
-    deck2.emplace_back(make_shared<Spell>(Spell{"Blizzard", player2}));//hard code
-    deck2.emplace_back(make_shared<Minion>(Minion{"Apprentice Summoner", player2}));//hard code
     player2->giveDeck(deck2);
     shared_ptr<Board> board = make_shared<Board>(Board{player1, player2});
     player1->setOpponent(player2);
@@ -61,19 +55,20 @@ int main(int argc, char *argv[]){
     shared_ptr<Player> current = player1;
     vector<string> preInitArguments;
     for(int i = 1; i<argc; i++){
-        if(argv[i] == "-deck1"){
+        string cmd = argv[i];
+        if(cmd == "-deck1"){
             cout<<"Loading deck from: "<<argv[i+1]<<endl;
             loadDeck(player1, deck1, argv[i+1]);
             player1->giveDeck(deck1);
             i++;
         }
-        if(argv[i] == "-deck2"){
+        if(cmd == "-deck2"){
             cout<<"Loading deck from: "<<argv[i+1]<<endl;
             loadDeck(player2, deck2, argv[i+1]);
             player2->giveDeck(deck2);
             i++;
         }
-        if(argv[i] == "-init"){
+        if(cmd == "-init"){
             string source = argv[i+1];
             cout<<"Initializing from: "<<source<<endl;
             string cmd;
@@ -88,13 +83,15 @@ int main(int argc, char *argv[]){
             }
             i++;
         }
-        if(argv[i] == "-testing"){
+        if(cmd == "-testing"){
             board->enterTesting();
         }
-        if(argv[i] == "-graphics"){
+        if(cmd == "-graphics"){
             board->enterGraphics();
         }
     }
+    player1->shuffleDeck();
+    player2->shuffleDeck();
     string cmd;
     int start = 0;
     board->setCurrentPlayer(player1);
@@ -146,7 +143,7 @@ int main(int argc, char *argv[]){
                 cout<<"There is no more card in your deck!"<<endl;
             }
         } else if(cmd == "quit"){
-            cout<<"That's a TIE!"<<endl;
+            cout<<"GG!"<<endl;
             return 0;
         } else if(cmd == "draw"){
             try{
@@ -180,7 +177,6 @@ int main(int argc, char *argv[]){
                 iss>>cardNum;
                 iss>>playerNum;
                 iss>>targetNum;
-                cout<<playerNum<<targetNum<<endl;
                 if(playerNum&&targetNum){
                     try{
                         if(playerNum == 1){
@@ -321,7 +317,6 @@ int main(int argc, char *argv[]){
                 iss>>cardNum;
                 iss>>playerNum;
                 iss>>targetNum;
-                cout<<playerNum<<targetNum<<endl;
                 if(playerNum&&targetNum){
                     try{
                         if(playerNum == 1){
