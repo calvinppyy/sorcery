@@ -106,6 +106,8 @@ void Minion::cast(Player& opponent, int index){
     } else if(name == "Master Summoner"){
         if (opponent.countMinions() == 5) throw "no minion spot"; //when there are already 5 minions
         opponent.summonCard(3, "Air Elemental");
+    } else if(name == "Fire Elemental"){
+        opponent.takeAttack(1, 1, index, 1);
     }
 }
      
