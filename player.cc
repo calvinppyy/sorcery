@@ -310,6 +310,7 @@ void Player::addMagicCap()
 
 void Player::unsummonCard(int index)
 {
+    minions.at(index)->clearEnchantment();
 	if (this->hand.size() < 5)
 	{
 		this->hand.emplace_back(this->minions.at(index - 1));
