@@ -7,7 +7,6 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         playCost = 0;
         abilityCost = 0;
         action = 1;
-        actionCap = 1;
         defenceCap = 1;
         silenced = false;
     } else if(name == "Earth Elemental"){
@@ -16,7 +15,6 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         playCost = 3;
         abilityCost = 0;
         action = 1;
-        actionCap = 1;
         defenceCap = 4;
         silenced = false;
     } else if(name == "Bone Golem"){
@@ -26,7 +24,6 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         playCost = 2;
         abilityCost = 0;
         action = 1;
-        actionCap = 1;
         defenceCap = 3;
         silenced = false;
     } else if(name == "Fire Elemental"){
@@ -36,7 +33,6 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         playCost = 2;
         abilityCost = 0;
         action = 1;
-        actionCap = 1;
         defenceCap = 2;
         silenced = false;
     } else if(name == "Potion Seller"){
@@ -46,7 +42,6 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         playCost = 2;
         abilityCost = 0;
         action = 1;
-        actionCap = 1;
         defenceCap = 3;
         silenced = false;
     } else if(name == "Novice Pyromancer"){
@@ -55,7 +50,6 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         playCost = 1;
         abilityCost = 1;
         action = 1;
-        actionCap = 1;
         defenceCap = 1;
         silenced = false;
     } else if(name == "Apprentice Summoner"){
@@ -64,7 +58,6 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         playCost = 1;
         abilityCost = 1;
         action = 1;
-        actionCap = 1;
         defenceCap = 1;
         silenced = false;
     } else if(name == "Master Summoner"){
@@ -73,7 +66,6 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         playCost = 3;
         abilityCost = 2;
         action = 1;
-        actionCap = 1;
         defenceCap = 3;
         silenced = false;
     }

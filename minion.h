@@ -7,7 +7,7 @@
 class Enchantment;
 
 class Minion : public Card{
-    int attack, defence,defenceCap, playCost, abilityCost, action, actionCap;
+    int attack, defence,defenceCap, playCost, abilityCost, action;
     bool silenced;
     std::vector<std::shared_ptr<Enchantment>> enchantments;
     
@@ -37,7 +37,6 @@ public:
     bool died();
     void checkTrigger(TriggerType trigger,Player& opponent, int index);
     int getDefenceCap();
-	int getActionCap();
     ~Minion(){}
 };
 
