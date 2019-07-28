@@ -30,7 +30,7 @@ Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         defenceCap = 3;
         silenced = false;
     } else if(name == "Fire Elemental"){
-        triggerType = TriggerType::minionEnter;
+        triggerType = TriggerType::enemyEnter;
         attack = 2;
         defence = 2;
         playCost = 2;

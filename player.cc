@@ -67,8 +67,8 @@ void Player::playCard(int index, bool testing)
 			{
 				this->minions.emplace_back(this->hand.at((index - 1)));
 				this->hand.erase(this->hand.begin() + (index - 1));
-				this->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
-				this->opponent->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
+                this->checkTrigger(TriggerType::allyEnter, make_shared<Player>(*this), this->minions.size());
+				this->opponent->checkTrigger(TriggerType::enemyEnter, make_shared<Player>(*this), this->minions.size());
 			}
 		}
 		else
@@ -109,8 +109,8 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
 			{
 				this->minions.emplace_back(this->hand.at((index - 1)));
 				this->minions.erase(this->minions.begin() + (index - 1));
-				this->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
-				this->opponent->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
+				this->checkTrigger(TriggerType::allyEnter, make_shared<Player>(*this), this->minions.size());
+				this->opponent->checkTrigger(TriggerType::enemyEnter, make_shared<Player>(*this), this->minions.size());
 			}
 		}
 		else
@@ -287,8 +287,8 @@ void Player::summonCard(int count, string name)
 		if (this->minions.size() == 5)
 			return;
 		this->minions.emplace_back(make_shared<Minion>(name, make_shared<Player>(*this)));
-		this->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
-		this->opponent->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
+		this->checkTrigger(TriggerType::allyEnter, make_shared<Player>(*this), this->minions.size());
+		this->opponent->checkTrigger(TriggerType::enemyEnter, make_shared<Player>(*this), this->minions.size());
 	}
 }
 
@@ -317,7 +317,7 @@ void Player::unsummonCard(int index)
 	}
 	this->minions.erase(this->minions.begin() + (index - 1));
 	this->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
-	this->opponent->checkTrigger(TriggerType::enemyLeave, make_shared<Player>(*this), this->minions.size());
+	this->opponent->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
 }
 
 void Player::editRitualUsage(int value)

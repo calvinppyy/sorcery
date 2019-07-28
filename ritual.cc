@@ -9,12 +9,12 @@ Ritual::Ritual(std::string name, std::shared_ptr<Player> owner):Card{name,owner}
         playCost = 1;
         usage = 4;
         usageCap = 1;
-        triggerType = TriggerType::minionEnter;
+        triggerType = TriggerType::allyEnter;
     } else if(name == "Standstill"){
         playCost = 3;
         usage = 4;
         usageCap = 2;
-        triggerType = TriggerType::minionEnter;
+        triggerType = TriggerType::noTrigger;
     }
 }
 
@@ -90,6 +90,9 @@ std::string Ritual::getDescription() {
 }
 
 void Ritual::checkTrigger(TriggerType trigger, Player& opponent, int index){
+    if(name == "Standstill" && (trigger == TriggerType::allyEnter || trigger == TriggerType::enemyEnter)){
+        cast(opponent,index);
+    }
     if(trigger == triggerType){
         cast(opponent,index);
     }

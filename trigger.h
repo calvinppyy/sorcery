@@ -1,6 +1,6 @@
 #ifndef TRIGGER_H
 #define TRIGGER_H
 
-enum class TriggerType { noTrigger, startOfTurn, endOfTurn, minionEnter, minionLeave, enemyEnter, enemyLeave };
+enum class TriggerType { noTrigger, startOfTurn, endOfTurn, allyEnter, minionLeave, enemyEnter};
 
 #endif
