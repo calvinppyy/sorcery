@@ -552,6 +552,6 @@ shared_ptr<Card> Player::getRitual() {
 	return this->ritual;
 }
 
-int Player : countHand() {
+int Player :: countHand() {
 	return this->hand.size();
 }
