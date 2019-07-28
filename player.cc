@@ -313,7 +313,15 @@ void Player::checkTrigger(TriggerType type, Player& player, int index)
 	}
 	if (this->ritual)
 	{
-		this->ritual->checkTrigger(type, player, index);
+		try {
+			this->ritual->checkTrigger(type, player, index);
+		}
+		catch (string e) {
+			if (e == "The ritual has used up its usage cap") {
+				cerr << e << endl;
+				this->ritual = nullptr;
+			}
+		}
 	}
 }
 
