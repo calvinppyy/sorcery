@@ -306,17 +306,17 @@ void Player::killMinion(int index)
 
 void Player::reviveMinion()
 {
-    std::cout<<minions.size()<<"   "<<graveyard.size()<<std::endl;
+    if (this->graveyard.size() == 0) {
+        string temp = "There is nothing in the graveyard!";
+        throw temp;
+    }
 	if (this->minions.size() < 5)
 	{
-        std::cout<<"asd"<<std::endl;
 		this->minions.emplace_back(this->graveyard.back());
 		this->minions.back()->editDefence((-1) * this->minions.back()->getDefence());
 		this->minions.back()->editDefence(1);
-        std::cout<<"asd2"<<std::endl;
 	}
 	this->graveyard.pop_back();
-    std::cout<<minions.size()<<"   "<<graveyard.size()<<std::endl;
 }
 
 void Player::allEditDefence(int value)
