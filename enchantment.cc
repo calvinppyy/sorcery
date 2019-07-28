@@ -60,7 +60,7 @@ void Enchantment::playCard(std::shared_ptr<Player> target, int index) {
 	else if (name == "Silence") {
 		target->getIthMinion(index)->silence(true);
 	}
-	if (name == "Magic Fatigue" || target->getRitual() == nullptr)
+	if (name == "Magic Fatigue" && (target->getName() == "Air Elemental" || target->getName() == "Earth Elemental"))
 		throw "You do not have a ritual on board to apply Recharge";
 	target->getIthMinion(index)->addEnchantment(std::make_shared<Enchantment>(*this));
 	this->target = target->getIthMinion(index);
