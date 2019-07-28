@@ -283,6 +283,7 @@ void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
 	{
 		this->killMinion((index));
 		this->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+        this->getOpponent()->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
 	}
 } // against minion, attackType indicates if the minion is actively attacking or counter-attack
 
