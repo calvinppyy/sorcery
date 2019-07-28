@@ -29,6 +29,8 @@ void Spell::playCard(std::shared_ptr<Player> target, int index){
     } else if (name == "Blizzard"){
         target->allEditDefence(-2);
         target->getOpponent()->allEditDefence(-2);
+    } else if(name == "Banish"){
+        target->killMinion(index);
     }
 }
 

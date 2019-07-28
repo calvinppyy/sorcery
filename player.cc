@@ -301,6 +301,10 @@ void Player::attack(int index, int damage, int enemyIndex, int attackType)
 
 void Player::killMinion(int index)
 {
+    if(index == 6){
+        ritual = nullptr;
+        return;
+    }
 	minions.at(index - 1)->editDefence(-1 * minions.at(index - 1)->getDefence() + minions.at(index - 1)->getDefenceCap());
 	this->graveyard.emplace_back(this->minions.at(index - 1));
 	this->minions.erase(this->minions.begin() + (index - 1));
