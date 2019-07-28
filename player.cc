@@ -305,7 +305,6 @@ void Player::killMinion(int index)
         ritual = nullptr;
         return;
     }
-	minions.at(index - 1)->editDefence(-1 * minions.at(index - 1)->getDefence() + minions.at(index - 1)->getDefenceCap());
 	this->graveyard.emplace_back(this->minions.at(index - 1));
 	this->minions.erase(this->minions.begin() + (index - 1));
 }
@@ -356,7 +355,6 @@ void Player::checkTrigger(TriggerType type, Player& player, int index)
 		catch (string e) {
 			if (e == "The ritual has used up its usage cap") {
 				cerr << e << endl;
-				this->ritual = nullptr;
 			}
 		}
 	}
@@ -396,7 +394,6 @@ void Player::unsummonCard(int index)
 	if (this->hand.size() < 5)
 	{
 		this->hand.emplace_back(this->minions.at(index - 1));
-		this->hand.back()->editDefence(this->hand.back()->getDefenceCap());
 	}
 	this->minions.erase(this->minions.begin() + (index - 1));
 	this->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());

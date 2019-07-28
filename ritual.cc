@@ -97,7 +97,7 @@ void Ritual::checkTrigger(TriggerType trigger, Player& opponent, int index){
         cast(opponent,index);
     }
     if (usage == 0) {
-        std::string e = "The ritual has used up its usage cap";
+        std::string e = "The ritual has used up its usage";
         throw e;
     }
 }
