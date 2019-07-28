@@ -230,9 +230,9 @@ void Player::takeAttack(int damage)
 
 void Player::attack(int index)
 {
-	if (minions.at(index - 1)->getAction() < minions.at(index - 1)->getActionCap()) {
+	if (minions.at(index - 1)->getAction() > 0) {
 		this->opponent->takeAttack(this->minions.at(index - 1)->getAttack());
-		minions.at(index - 1)->editAction(1);
+		minions.at(index - 1)->editAction(-1);
 	}
 	else {
 		throw "This Minion can not attack anymore this round";
@@ -255,9 +255,9 @@ void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
 
 void Player::attack(int index, int damage, int enemyIndex, int attackType)
 {
-	if (minions.at(index - 1)->getAction() < minions.at(index - 1)->getActionCap()) {
+	if (minions.at(index - 1)->getAction() > 0) {
 		this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, attackType);
-		minions.at(index - 1)->editAction(1);
+		minions.at(index - 1)->editAction(-1);
 	}
 	else {
 		throw "This Minion can not attack anymore this round";
