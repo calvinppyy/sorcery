@@ -57,6 +57,7 @@ public:
 	void printCards(bool graphics, std::string w);
 	void printPlayer(bool graphics, bool current);
 	void addMagicCap();
+	std::shared_ptr<Card> getRitual();
 };
 
 card_template_t whichFunc(std::shared_ptr<Card> temp2);

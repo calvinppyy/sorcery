@@ -79,8 +79,13 @@ void Player::playCard(int index, bool testing)
 	}
 	else
 	{
-		this->hand.at((index - 1))->playCard(make_shared<Player>(*this), 0);
-		this->hand.erase(this->hand.begin() + (index - 1));
+		try {
+			this->hand.at((index - 1))->playCard(make_shared<Player>(*this), 0);
+			this->hand.erase(this->hand.begin() + (index - 1));
+		}
+		catch (string e) {
+			cerr << e << endl;
+		}
 	}
 } //bool is for testing mode
 
@@ -121,8 +126,13 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
 	}
 	else
 	{
-		this->hand.at((index - 1))->playCard(target, targetIndex);
-		this->hand.erase(this->hand.begin() + (index - 1));
+		try {
+			this->hand.at((index - 1))->playCard(target, targetIndex);
+			this->hand.erase(this->hand.begin() + (index - 1));
+		}
+		catch (string e) {
+			cerr << e << endl;
+		}
 	}
 }
 
@@ -401,7 +411,7 @@ void Player::printCards(bool graphics, std::string w)
 	}
 	else
 	{
-        
+
 	}
 }
 
@@ -511,4 +521,8 @@ card_template_t whichFunc(std::shared_ptr<Card> temp2)
 	cardNameToFunc["Magic Fatigue"] = display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
 	cardNameToFunc["Silence"] = display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
 	return cardNameToFunc[temp2->getName()];
+}
+
+shared_ptr<Card> Player::getRitual() {
+	return this->ritual;
 }

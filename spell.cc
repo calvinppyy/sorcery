@@ -13,6 +13,7 @@ void Spell::silence(bool silence){}
 
 void Spell::playCard(std::shared_ptr<Player> target, int index){
     if (name == "Recharge"){
+		if (target->getRitual() == nullptr) throw "You do not have a ritual on board";
         target->getIthMinion(6)->editUsage(3);
     } else if (name =="Disenchant"){
         target->getIthMinion(index)->popEnchantment();
