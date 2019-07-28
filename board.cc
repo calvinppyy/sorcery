@@ -62,8 +62,8 @@ void Board::attack(int myMinion, int enemy)
     {
         cerr << "Index exceeds the amount of minions the active player holds4" << endl;
     }
-    catch(int e){
-        cerr << "Each Minion can only move once." << endl;
+    catch(string e){
+        cerr << e << endl;
     }
 }
 
@@ -77,8 +77,8 @@ void Board::attack(int myMinion)
     {
         cerr << "Index exceeds the amount of cards the active player holds5" << endl;
     }
-    catch(int e){
-        cerr << "Each Minion can only move once." << endl;
+    catch(string e){
+        cerr << e << endl;
     }
 }
 

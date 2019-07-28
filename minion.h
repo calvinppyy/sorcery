@@ -7,7 +7,7 @@
 class Enchantment;
 
 class Minion : public Card{
-    int attack, defence,defenceCap, playCost, abilityCost, action, actionCap;
+    int attack, defence,defenceCap, playCost, abilityCost, action;
     bool silenced;
     std::vector<std::shared_ptr<Enchantment>> enchantments;
     
