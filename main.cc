@@ -138,6 +138,7 @@ int main(int argc, char* argv[]) {
 				cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
 			}
 			cout << endl;
+            current->resumeAction();
 			current = current->getOpponent();
 			current->addMagicCap();
 			board->checkTrigger(TriggerType::startOfTurn);
@@ -307,6 +308,7 @@ int main(int argc, char* argv[]) {
 				cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
 			}
 			cout << endl;
+            current->resumeAction();
 			current = current->getOpponent();
 			current->addMagicCap();
 			board->checkTrigger(TriggerType::startOfTurn);

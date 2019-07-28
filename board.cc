@@ -63,7 +63,7 @@ void Board::attack(int myMinion, int enemy)
         cerr << "Index exceeds the amount of minions the active player holds4" << endl;
     }
     catch(char e){
-        cerr << "This Minion can not attack anymore this round" << endl;
+        cerr << "This Minion can not attack/use ability anymore this round" << endl;
     }
 }
 
