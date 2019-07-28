@@ -268,7 +268,8 @@ void Player::attack(int index)
 		minions.at(index - 1)->editAction(-1);
 	}
 	else {
-		throw "This Minion can not attack anymore this round";
+        std::string e = "This Minion can not attack anymore this round";
+		throw e;
 	}
 } // against player
 
