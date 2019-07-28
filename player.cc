@@ -179,7 +179,7 @@ void Player::useAbility(int index, bool testing)
 			this->editMagic(this->minions.at((index - 1))->getAbilityCost());
 		}
 		if (e == 9) std::cerr << "The minion is silenced" << std::endl;
-		else std::cerr << "Each minion can only move once a game." << std::endl;
+		else std::cerr << "This Minion can not attack/use ability anymore this round" << std::endl;
 	}
 	catch (string e) {
 		if (testing)
@@ -217,7 +217,7 @@ void Player::useAbility(int index, Player& target, int targetIndex, bool testing
 		this->minions.at((index - 1))->cast(target, targetIndex);
 	}
 	catch (int e) {
-		std::cerr << "Each minion can only move once a game." << std::endl;
+		std::cerr << "This Minion can not attack/use ability anymore this round" << std::endl;
 	}
 	catch (string e) {
 		if (testing)
