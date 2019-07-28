@@ -327,6 +327,7 @@ void Player::allEditDefence(int value)
 		if (minions.at(i)->died())
 		{
 			killMinion(i + 1);
+            i--;
 			checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
 		}
 	}
