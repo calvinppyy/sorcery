@@ -306,7 +306,10 @@ void Player::killMinion(int index)
 
 void Player::reviveMinion()
 {
-	if (this->graveyard.size() == 0) throw "There is nothing in the graveyard!";
+    if (this->graveyard.size() == 0) {
+        string temp = "There is nothing in the graveyard!";
+        throw temp;
+    }
 	if (this->minions.size() < 5)
 	{
 		this->minions.emplace_back(this->graveyard.back());

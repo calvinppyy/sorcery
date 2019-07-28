@@ -23,7 +23,7 @@ void Spell::playCard(std::shared_ptr<Player> target, int index){
 		try {
 			target->reviveMinion();
 		}
-		catch (string e) {
+        catch (std::string e) {
 			throw e;
 		}
     } else if (name == "Blizzard"){

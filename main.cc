@@ -52,6 +52,7 @@ int main(int argc, char* argv[]) {
 	deck2.push_back(make_shared<Minion>(Minion{ "Potion Seller", player2 }));
 	deck2.push_back(make_shared<Minion>(Minion{ "Bone Golem", player2 }));
 	deck2.push_back(make_shared<Spell>(Spell{ "Raise Dead", player2 }));
+    deck2.push_back(make_shared<Ritual>(Ritual{ "Standstill", player2 }));
 	player2->giveDeck(deck2);
 	shared_ptr<Board> board = make_shared<Board>(Board{ player1, player2 });
 	player1->setOpponent(player2);
