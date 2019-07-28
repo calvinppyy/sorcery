@@ -6,8 +6,6 @@
 #include "ascii_graphics.h"
 #include "invalidCommandException.h"
 
-
-
 class Board {
     std::shared_ptr<Player> player1;
     std::shared_ptr<Player> player2;
@@ -35,6 +33,7 @@ public:
     void print();
     void checkTrigger(TriggerType );
     void printHand();
+    bool isGraphics();
     ~Board();
 };
 

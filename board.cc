@@ -204,28 +204,36 @@ void Board::printHand()
 
 void Board::print()
 {
-    std::shared_ptr<Player> working = currentPlayer->getOpponent();
-    std::cout << EXTERNAL_BORDER_CHAR_TOP_LEFT;
-    for (int i = 0; i < (CENTRE_GRAPHIC.at(0).length() / EXTERNAL_BORDER_CHAR_LEFT_RIGHT.size()) - 2; ++i)
-    {
-        std::cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
+    if(!graphics){
+        std::shared_ptr<Player> working = currentPlayer->getOpponent();
+        std::cout << EXTERNAL_BORDER_CHAR_TOP_LEFT;
+        for (int i = 0; i < (CENTRE_GRAPHIC.at(0).length() / EXTERNAL_BORDER_CHAR_LEFT_RIGHT.size()) - 2; ++i)
+        {
+            std::cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
+        }
+        std::cout << EXTERNAL_BORDER_CHAR_TOP_RIGHT << std::endl;
+        working->printPlayer(graphics, false);
+        working->printCards(graphics, "minion");
+        for (auto s : CENTRE_GRAPHIC)
+        {
+            std::cout << s << std::endl;
+        }
+        working = currentPlayer;
+        working->printCards(graphics, "minion");
+        working->printPlayer(graphics, true);
+        std::cout << EXTERNAL_BORDER_CHAR_BOTTOM_LEFT;
+        for (int i = 0; i < (CENTRE_GRAPHIC.at(0).length() / EXTERNAL_BORDER_CHAR_LEFT_RIGHT.size()) - 2; ++i)
+        {
+            std::cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
+        }
+        std::cout << EXTERNAL_BORDER_CHAR_BOTTOM_RIGHT << std::endl;
+    } else {
+        
     }
-    std::cout << EXTERNAL_BORDER_CHAR_TOP_RIGHT << std::endl;
-    working->printPlayer(graphics, false);
-    working->printCards(graphics, "minion");
-    for (auto s : CENTRE_GRAPHIC)
-    {
-        std::cout << s << std::endl;
-    }
-    working = currentPlayer;
-    working->printCards(graphics, "minion");
-    working->printPlayer(graphics, true);
-    std::cout << EXTERNAL_BORDER_CHAR_BOTTOM_LEFT;
-    for (int i = 0; i < (CENTRE_GRAPHIC.at(0).length() / EXTERNAL_BORDER_CHAR_LEFT_RIGHT.size()) - 2; ++i)
-    {
-        std::cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
-    }
-    std::cout << EXTERNAL_BORDER_CHAR_BOTTOM_RIGHT << std::endl;
+}
+
+bool Board::isGraphics(){
+    return graphics;
 }
 
 Board::~Board() {}

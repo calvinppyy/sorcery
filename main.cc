@@ -256,8 +256,10 @@ int main(int argc, char *argv[]){
         player2->draw();
     }
     cout<<player1->getName()<< ": ";
+    bool graphics = board->isGraphics();
     while(getline(cin,cmd)){
         if (cmd == "help") {
+            if(!graphics){
             cout << "Commands: help -- Display this message." << endl;
             cout << "          end  -- End the current player's turn." << endl;
             cout << "          quit -- End the game." << endl;
@@ -270,6 +272,9 @@ int main(int argc, char *argv[]){
             cout << "          inspect minion -- View a minion's card and all enchantments on that minion" << endl;
             cout << "          hand -- Describe all cards in your hand." << endl;
             cout << "          board -- Describe all cards on the board." << endl;
+            } else {
+                drawString
+            }
         }else if(cmd == "end"){
             board->checkTrigger(TriggerType::endOfTurn);
             board->switchCurrentPlayer();

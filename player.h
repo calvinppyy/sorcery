@@ -9,7 +9,7 @@
 #include "spell.h"
 #include "enchantment.h"
 #include "ritual.h"
-
+#include "window.h"
 
 class Card;
 
