@@ -134,7 +134,7 @@ bool Enchantment::died() { return false; }
 std::string Enchantment::getDescription() {
 	if (name == "Giant Strength") { return ""; }
 	if (name == "Enrage") { return ""; }
-	if (name == "Haste ") { return "Enchanted minion gains +1 action each turn"; }
+	if (name == "Haste") { return "Enchanted minion gains +1 action each turn"; }
 	if (name == "Magic Fatigue") { return "Enchanted minion's activated ability costs 2 more"; }
 	if (name == "Silence") { return "Enchanted minion cannot use abilities"; }
 	return "";
