@@ -100,11 +100,11 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
 		else
 			this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
 	}
-	if (dynamic_pointer_cast<Enchantment>(this->hand.at((index - 1))) == nullptr && //'shared_ptr<Enchantment> is not a reference or pointer
+	if (dynamic_pointer_cast<Enchantment>(this->hand.at((index - 1))) == nullptr && 
 		dynamic_pointer_cast<Spell>(this->hand.at((index - 1))) == nullptr)
-	{ //same as above
+	{ 
 		if (dynamic_pointer_cast<Ritual>(this->hand.at((index - 1))) == nullptr)
-		{ //same as above
+		{ 
 			if (this->minions.size() < 5)
 			{
 				this->minions.emplace_back(this->hand.at((index - 1)));
@@ -287,6 +287,8 @@ void Player::summonCard(int count, string name)
 		if (this->minions.size() == 5)
 			return;
 		this->minions.emplace_back(make_shared<Minion>(name, make_shared<Player>(*this)));
+		this->checkTrigger(TriggerType::minionEnter, make_shared<Player>(*this), this->minions.size());
+		this->opponent->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
 	}
 }
 
@@ -314,6 +316,8 @@ void Player::unsummonCard(int index)
 		this->hand.back()->editDefence(this->hand.back()->getDefenceCap());
 	}
 	this->minions.erase(this->minions.begin() + (index - 1));
+	this->checkTrigger(TriggerType::minionLeave, make_shared<Player>(*this), this->minions.size());
+	this->opponent->checkTrigger(TriggerType::enemyLeave, make_shared<Player>(*this), this->minions.size());
 }
 
 void Player::editRitualUsage(int value)
