@@ -45,8 +45,8 @@ int main(int argc, char *argv[]){
     vector<shared_ptr<Card>> deck2;
     shared_ptr<Player> player1 = make_shared<Player>(Player{deck1, ""});
     shared_ptr<Player> player2 = make_shared<Player>(Player{deck2, ""});
-    deck1.push_back(make_shared<Minion>(Minion{"Master Summoner", player1}));
-    deck1.push_back(make_shared<Spell>(Spell{"Disenchant", player1}));
+    deck1.push_back(make_shared<Minion>(Minion{"Air Elemental", player1}));
+    deck1.push_back(make_shared<Enchantment>(Enchantment{"Giant Strength", player1}));
     deck1.push_back(make_shared<Ritual>(Ritual{"Dark Ritual", player1}));
     player1->giveDeck(deck1);
     deck2.push_back(make_shared<Enchantment>(Enchantment{"Silence", player2}));
@@ -259,7 +259,6 @@ int main(int argc, char *argv[]){
     bool graphics = board->isGraphics();
     while(getline(cin,cmd)){
         if (cmd == "help") {
-            if(!graphics){
             cout << "Commands: help -- Display this message." << endl;
             cout << "          end  -- End the current player's turn." << endl;
             cout << "          quit -- End the game." << endl;
@@ -272,9 +271,6 @@ int main(int argc, char *argv[]){
             cout << "          inspect minion -- View a minion's card and all enchantments on that minion" << endl;
             cout << "          hand -- Describe all cards in your hand." << endl;
             cout << "          board -- Describe all cards on the board." << endl;
-            } else {
-                drawString
-            }
         }else if(cmd == "end"){
             board->checkTrigger(TriggerType::endOfTurn);
             board->switchCurrentPlayer();
