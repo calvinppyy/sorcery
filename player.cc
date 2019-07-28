@@ -204,8 +204,9 @@ void Player::inspect(int index, bool testing)
 
 void Player::shuffleDeck()
 {
-    auto rng = default_random_engine{};
-    shuffle(this->notOut.begin(), this->notOut.end(), rng); //DELETE THE RNG CLASS IF THIS WORKS, USED <algorithm> && <random>, INCLUDED IN player.h
+	random_shuffle(this->notOut.begin(), this->notOut.end());
+    //auto rng = default_random_engine{};
+    //shuffle(this->notOut.begin(), this->notOut.end(), rng); //DELETE THE RNG CLASS IF THIS WORKS, USED <algorithm> && <random>, INCLUDED IN player.h
 }
 
 void Player::takeAttack(int damage)
