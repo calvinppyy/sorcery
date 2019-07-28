@@ -59,6 +59,7 @@ public:
 	void addMagicCap();
 	std::shared_ptr<Card> getRitual();
 	int countHand();
+    void resumeAction();
 };
 
 card_template_t whichFunc(std::shared_ptr<Card> temp2);

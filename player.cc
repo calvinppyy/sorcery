@@ -101,7 +101,7 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
 	else
 	{
 		if (this->magic < this->hand.at((index - 1))->getPlayCost())
-			throw "Not Enough Magic!";
+			throw 'a';
 		else
 			this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
 	}
@@ -193,6 +193,7 @@ void Player::useAbility(int index, bool testing)
 
 void Player::useAbility(int index, Player& target, int targetIndex, bool testing)
 {
+    int tmp;
 	if (testing) {
 		if (this->magic < this->minions.at((index - 1))->getAbilityCost())
 		{
@@ -559,4 +560,10 @@ shared_ptr<Card> Player::getRitual() {
 
 int Player::countHand() {
 	return this->hand.size();
+}
+
+void Player::resumeAction(){
+    for(int i = 0; i<minions.size();i++){
+        minions.at(i)->setAction(minions.at(i)->getActionCap());
+    }
 }

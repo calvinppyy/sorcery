@@ -33,6 +33,9 @@ public:
     int getDefenceCap();
     bool died();
     void checkTrigger(TriggerType trigger,Player& opponent, int index);
+    void setAction(int action);
+    void editActionCap(int action);
+    int getActionCap();
     ~Spell(){}
 };
 

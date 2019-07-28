@@ -88,6 +88,7 @@ void Minion::addEnchantment(std::shared_ptr<Enchantment> enchantment){
 void Minion::popEnchantment(){
     if(enchantments.size()!=0){
         if(enchantments.back()->getName() == "Silence"){silenced = false;}
+        if(enchantments.back()->getName() == "Haste"){actionCap--;}
         enchantments.pop_back();
     }
 }
@@ -106,16 +107,25 @@ void Minion::cast(Player& opponent, int index){
     if(action == 0) throw 8;
     if(name == "Novice Pyromancer"){
         opponent.takeAttack(1,1, index, 1);
+        action--;
     } else if(name == "Apprentice Summoner"){
         if (opponent.countMinions() == 5) throw 'a'; // when there are already 5 minions
         opponent.summonCard(1, "Air Elemental");
+        action--;
     } else if(name == "Master Summoner"){
         if (opponent.countMinions() == 5) throw 'a'; //when there are already 5 minions
         opponent.summonCard(3, "Air Elemental");
+        action--;
     } else if(name == "Fire Elemental"){
         opponent.takeAttack(1, 1, index, 1);
+    } else if(name == "Potion Seller"){
+        opponent.allEditDefence(1);
+    } else if(name == "Bone Golem"){
+        attack++;
+        defence++;
+    } else if(name == "Fire Elemental"){
+        opponent.takeAttack(0, 1, index, 1);
     }
-    action--;
 }
      
 void Minion::inspect(bool graphicsEnabled){
@@ -228,6 +238,23 @@ void Minion::editAction(int action){
     }
 }
 
+void Minion::setAction(int action){
+    if(action>0){
+        for(int i = enchantments.size()-1; i>=0;i--){
+            if(action == 0) return;
+            if(enchantments.at(i)->getName() == "Haste"){
+                enchantments.at(i)->editAction(1);
+                action--;
+            }
+        }
+    }
+    this->action = action;
+}
+
+void Minion::editActionCap(int action){
+    actionCap+=action;
+}
+
 bool Minion::died(){
     return defence<=0;
 }
@@ -256,4 +283,8 @@ void Minion::checkTrigger(TriggerType trigger,Player& opponent, int index){
 
 int Minion::getDefenceCap(){
     return defenceCap;
+}
+
+int Minion::getActionCap(){
+    return actionCap;
 }

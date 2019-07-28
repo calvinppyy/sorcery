@@ -99,6 +99,16 @@ void Ritual::checkTrigger(TriggerType trigger, Player& opponent, int index){
 	if (usage == 0) throw "The ritual has used up its usage cap";
 }
 
+void Ritual::setAction(int action){
+}
+
+void Ritual::editActionCap(int action){
+}
+
 int Ritual::getDefenceCap(){
+    return 0;
+}
+
+int Ritual::getActionCap(){
     return 0;
 }

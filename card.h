@@ -46,6 +46,9 @@ public:
     virtual void checkTrigger(TriggerType, Player&, int) = 0;
     virtual int getDefenceCap() = 0;
     virtual ~Card(){}
+    virtual void setAction(int action) = 0;
+    virtual void editActionCap(int action) = 0;
+    virtual int getActionCap() = 0;
     std::string getName();
 };
 

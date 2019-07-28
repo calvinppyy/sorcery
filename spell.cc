@@ -77,6 +77,14 @@ std::string Spell::getDescription() {
     else return "";
 }
 
+void Spell::setAction(int action){
+}
+
+void Spell::editActionCap(int action){
+}
+
 void Spell::checkTrigger(TriggerType trigger,Player& opponent, int index){}
 
 int Spell::getDefenceCap(){return 0;}
+
+int Spell::getActionCap(){return 0;}

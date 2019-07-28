@@ -108,9 +108,9 @@ void Board::play(int cardIndex, shared_ptr<Player> targetPlayer, int targetCard)
     {
         cerr << "Index exceeds the amount of cards the active player holds7" << endl;
     }
-    catch (string e)
+    catch (char e)
     {
-        cerr << e << endl;
+        cerr << "Not Enough Magic!" << endl;
     }
 }
 

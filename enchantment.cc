@@ -59,10 +59,13 @@ void Enchantment::playCard(std::shared_ptr<Player> target, int index) {
 	}
 	else if (name == "Silence") {
 		target->getIthMinion(index)->silence(true);
-	}
-	if (name == "Magic Fatigue" &&
-		(target->getIthMinion(index)->getName() == "Air Elemental" || target->getIthMinion(index)->getName() == "Earth Elemental"))
+	} else if (name == "Magic Fatigue" &&
+               (target->getIthMinion(index)->getName() == "Air Elemental" ||
+                target->getIthMinion(index)->getName() == "Earth Elemental")){
 		throw "You do not have a ritual on board to apply Recharge";
+    } else if(name == "Haste"){
+        target->getIthMinion(index)->editActionCap(1);
+    }
 	target->getIthMinion(index)->addEnchantment(std::make_shared<Enchantment>(*this));
 	this->target = target->getIthMinion(index);
 }
@@ -137,8 +140,18 @@ std::string Enchantment::getDescription() {
 	return "";
 }
 
+void Enchantment::setAction(int action){
+}
+
+void Enchantment::editActionCap(int action){
+}
+
 void Enchantment::checkTrigger(TriggerType trigger, Player& opponent, int index) {}
 
 int Enchantment::getDefenceCap() {
 	return 0;
+}
+
+int Enchantment::getActionCap(){
+    return 0;
 }
