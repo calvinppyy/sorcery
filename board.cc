@@ -86,9 +86,9 @@ void Board::play(int cardIndex)
     {
         cerr << "Index exceeds the amount of cards the active player holds" << endl;
     }
-    catch (string e)
+    catch (int e)
     {
-        cerr << e << endl;
+        cerr << "Not Enough Magic!" << endl;
     }
 }
 

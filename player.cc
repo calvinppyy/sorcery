@@ -53,7 +53,7 @@ void Player::playCard(int index, bool testing)
     {
         if (this->magic < this->hand.at((index - 1))->getPlayCost())
         {
-            throw "Not Enough Magic!";
+            throw 1;
         }
         else
             this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
