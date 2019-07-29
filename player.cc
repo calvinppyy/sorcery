@@ -291,8 +291,8 @@ void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
 void Player::attack(int index, int damage, int enemyIndex, int attackType)
 {
     if (minions.at(index - 1)->getAction() > 0) {
-        this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, attackType);
         minions.at(index - 1)->editAction(-1);
+        this->opponent->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, attackType);
     }
     else {
         throw 'a';

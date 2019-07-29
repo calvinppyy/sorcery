@@ -90,15 +90,15 @@ std::string Ritual::getDescription() {
 }
 
 void Ritual::checkTrigger(TriggerType trigger, Player& opponent, int index){
+    if (usage == 0) {
+        std::string e = "The ritual has used up its usage";
+        throw e;
+    }
     if(name == "Standstill" && (trigger == TriggerType::allyEnter || trigger == TriggerType::enemyEnter)){
         cast(opponent,index);
     }
     if(trigger == triggerType){
         cast(opponent,index);
-    }
-    if (usage == 0) {
-        std::string e = "The ritual has used up its usage";
-        throw e;
     }
 }
 

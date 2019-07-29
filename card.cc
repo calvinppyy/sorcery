@@ -61,9 +61,9 @@ void printCard(Xwindow &temp, std::shared_ptr<Card> card, int x,int y, int colou
         temp.drawString(x+13, y+52, std::to_string(active));
         for(int i = 0; i*26 < description.length(); i++){
             if(description.length()-i*26>26){
-                temp.drawString(x+8, y+52+i*12, description.substr(i*26,26));
+                temp.drawString(x+40, y+52+i*12, description.substr(i*26,26));
             } else {
-                temp.drawString(x+8, y+52+i*12, description.substr(i*26,description.length()-i*26));
+                temp.drawString(x+40, y+52+i*12, description.substr(i*26,description.length()-i*26));
             }
         }
     } else if(name == "Giant Strength" || name == "Enrage"){
@@ -89,7 +89,7 @@ void printCard(Xwindow &temp, std::shared_ptr<Card> card, int x,int y, int colou
             temp.drawString(x+179, y+112, "*2");
         }
         temp.drawString(x+179, y+12, std::to_string(cost));
-    } else if(name == "Bone Golem"||name == "Fire Elemental"||"Potion Seller"){
+    } else if(name == "Bone Golem"||name == "Fire Elemental"||name == "Potion Seller"){
         int attack = card->getAttack();
         int defence = card->getDefence();
         int cost = card->getPlayCost();
@@ -157,9 +157,9 @@ void printCard(Xwindow &temp, std::shared_ptr<Card> card, int x,int y, int colou
         temp.drawString(x+13, y+52, std::to_string(cap));
         for(int i = 0; i*26 < description.length(); i++){
             if(description.length()-i*26>26){
-                temp.drawString(x+8, y+52+i*12, description.substr(i*26,26));
+                temp.drawString(x+40, y+52+i*12, description.substr(i*26,26));
             } else {
-                temp.drawString(x+8, y+52+i*12, description.substr(i*26,description.length()-i*26));
+                temp.drawString(x+40, y+52+i*12, description.substr(i*26,description.length()-i*26));
             }
         }
     } else {
