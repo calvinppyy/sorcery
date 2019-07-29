@@ -583,11 +583,17 @@ void Player::printMinions(Xwindow &window, int x, int y){
     for(int i = 0; i<minions.size(); i++){
         printCard(window, minions.at(i), x+252*i, y, 8);
     }
+    for(int i = minions.size(); i<5;i++){
+        window.fillRectangle(x+252*i, y , 201, 120, 8);
+    }
 }
 
 void Player::printHand(Xwindow &window, int x, int y){
     for(int i = 0; i<hand.size(); i++){
-        printCard(window, minions.at(i), x+252*i, y, 7);
+        printCard(window, hand.at(i), x+252*i, y, 7);
+    }
+    for(int i = hand.size(); i<5;i++){
+        window.fillRectangle(x+252*i, y , 201, 120, 7);
     }
 }
 
@@ -599,20 +605,20 @@ void Player::printGraphics(Xwindow &window, int x, int y, bool iscurrent){
     }
     if(iscurrent){
         window.fillRectangle(x+504, y , 201, 120, 8);
-        window.drawLine(x+504, y+20, x+200, y+20);
-        window.drawString(x+504+179, y+112, std::to_string(magic));
-        
-        window.drawLine(x+504, y+60, x+35, y+60);
-        window.drawLine(x+504+35, y+40, x+35, y+60);
-        window.drawString(x+504+13, y+52, std::to_string(health));
+        window.drawLine(x+504, y+20, x+704, y+20);
+        window.drawLine(x+504+170, y, x+504+170, y+20);
+        window.drawLine(x+504+35, y, x+504+35, y+20);
+        window.drawString(x+504+179, y+11, std::to_string(magic));
+        window.drawString(x+504+15, y+11, std::to_string(health));
+        window.drawString(x+504+90, y+85, name);
     } else {
-    window.fillRectangle(x+504, y , 201, 120, 8);
-        window.drawLine(x+504, y+20, x+200, y+20);
-    window.drawString(x+179+504, y+112, std::to_string(magic));
-    
-    window.drawLine(x+504, y+60, x+35, y+60);
-    window.drawLine(x+504+35, y+40, x+35, y+60);
-    window.drawString(x+504+13, y+52, std::to_string(health));
+        window.fillRectangle(x+504, y , 201, 120, 8);
+        window.drawLine(x+504, y+100, x+704, y+100);
+        window.drawLine(x+504+170, y+100, x+504+170, y+119);
+        window.drawLine(x+504+35, y+100, x+504+35, y+119);
+        window.drawString(x+504+179, y+111, std::to_string(magic));
+        window.drawString(x+504+15, y+111, std::to_string(health));
+        window.drawString(x+504+90, y+25, name);
     }
     if(graveyard.size()>0){
         printCard(window, graveyard.back(), x+4*252, y,8);
