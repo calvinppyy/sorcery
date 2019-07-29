@@ -84,8 +84,14 @@ void Player::playCard(int index, bool testing)
     else
     {
         try {
-            this->hand.at((index - 1))->playCard(getOpponent()->getOpponent(), 0);
-            this->hand.erase(this->hand.begin() + (index - 1));
+            int i = 0;
+            try{
+            this->hand.at((index - 1))->playCard(getOpponent()->getOpponent(), index);
+            }
+            catch(int e){
+                if (e == 345) i = 1;
+            }
+            if(i!=1) this->hand.erase(this->hand.begin() + (index - 1));
         }
         catch (string e) {
             cerr << e << endl;
@@ -644,9 +650,11 @@ std::vector<std::shared_ptr<Card>> Player::returnHand(){
     return hand;
 }
 
-void Player::switchHand(){
+void Player::switchHand(int index){
+    hand.erase(hand.begin()+index-1);
     std::vector<std::shared_ptr<Card>> temp = hand;
     giveDeck(getOpponent()->returnHand(), "hand");
     getOpponent()->giveDeck(temp, "hand");
+    throw 345;
 }
 

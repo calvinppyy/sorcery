@@ -33,6 +33,7 @@ void loadDeck(shared_ptr<Player> player, vector<shared_ptr<Card>>& deck, std::st
         if (cardName == "Aura of Power") temp.emplace_back(make_shared<Ritual>(Ritual{ "Aura of Power", player }));
         if (cardName == "Standstill") temp.emplace_back(make_shared<Ritual>(Ritual{ "Standstill", player }));
         if (cardName == "Steal") temp.emplace_back(make_shared<Spell>(Spell{"Steal", player}));
+        if (cardName == "Switch Hand") temp.emplace_back(make_shared<Spell>(Spell{"Switch Hand", player}));
     }
     while (!temp.empty()) {
         deck.emplace_back(temp.back());

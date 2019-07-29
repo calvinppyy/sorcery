@@ -36,7 +36,7 @@ void Spell::playCard(std::shared_ptr<Player> target, int index){
     } else if(name == "Steal"){
         target->stolenMinion(index);
     } else if(name == "Switch Hand"){
-        target->switchHand();
+        target->switchHand(index);
     }
 }
 

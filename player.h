@@ -65,7 +65,7 @@ public:
     void printGraphics(Xwindow &window, int x, int y, bool iscurrent);
     void stealMinion(std::shared_ptr<Card> card);
     void stolenMinion(int index);
-    void switchHand();
+    void switchHand(int index);
     std::vector<std::shared_ptr<Card>> returnHand();
 };
 
