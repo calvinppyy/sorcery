@@ -10,7 +10,6 @@ void loadDeck(shared_ptr<Player> player, vector<shared_ptr<Card>>& deck, std::st
     ifstream deckfile{ filename };
     string cardName;
     while (getline(deckfile, cardName)) {
-        cardName.pop_back();
         if (cardName == "Air Elemental") temp.emplace_back(make_shared<Minion>(Minion{ "Air Elemental", player }));
         if (cardName == "Earth Elemental") temp.emplace_back(make_shared<Minion>(Minion{ "Earth Elemental", player }));
         if (cardName == "Bone Golem") temp.emplace_back(make_shared<Minion>(Minion{ "Bone Golem", player }));
@@ -33,6 +32,7 @@ void loadDeck(shared_ptr<Player> player, vector<shared_ptr<Card>>& deck, std::st
         if (cardName == "Dark Ritual") temp.emplace_back(make_shared<Ritual>(Ritual{ "Dark Ritual", player }));
         if (cardName == "Aura of Power") temp.emplace_back(make_shared<Ritual>(Ritual{ "Aura of Power", player }));
         if (cardName == "Standstill") temp.emplace_back(make_shared<Ritual>(Ritual{ "Standstill", player }));
+        if (cardName == "Steal") temp.emplace_back(make_shared<Spell>(Spell{"Steal", player}));
     }
     while (!temp.empty()) {
         deck.emplace_back(temp.back());
@@ -106,9 +106,9 @@ void dowork(int &start, shared_ptr<Player> &player1, shared_ptr<Player> &player2
                 cout << "You already have 5 cards in your hand!" << endl;
             }
         }
-		catch (InvalidCommandException &e) {
-			e.prettyprint();
-		}
+        catch (InvalidCommandException &e) {
+            e.prettyprint();
+        }
     }
     else if (cmd == "hand") {
         board->printHand();
@@ -210,17 +210,9 @@ int main(int argc, char* argv[]) {
     vector<shared_ptr<Card>> deck2;
     shared_ptr<Player> player1 = make_shared<Player>(Player{ deck1, "" });
     shared_ptr<Player> player2 = make_shared<Player>(Player{ deck2, "" });
-    deck1.push_back(make_shared<Ritual>(Ritual{ "Aura of Power", player1 }));
-    deck1.push_back(make_shared<Minion>(Minion{ "Bone Golem", player1 }));
-    deck1.push_back(make_shared<Minion>(Minion{ "Fire Elemental", player1 }));
-    deck1.push_back(make_shared<Spell>(Spell{ "Blizzard", player1 }));
+    loadDeck(player1, deck1, "default.deck");
+    loadDeck(player2, deck2, "default.deck");
     player1->giveDeck(deck1);
-    deck2.push_back(make_shared<Minion>(Minion{ "Bone Golem", player2 }));
-    deck2.push_back(make_shared<Spell>(Spell{ "Unsummon", player2 }));
-    deck2.push_back(make_shared<Spell>(Spell{ "Raise Dead", player2 }));
-    deck2.push_back(make_shared<Enchantment>(Enchantment{ "Haste", player2 }));
-    deck2.push_back(make_shared<Enchantment>(Enchantment{ "Silence", player2 }));
-    deck2.push_back(make_shared<Spell>(Spell{ "Raise Dead", player2 }));
     player2->giveDeck(deck2);
     shared_ptr<Board> board = make_shared<Board>(Board{ player1, player2 });
     player1->setOpponent(player2);
@@ -300,12 +292,12 @@ int main(int argc, char* argv[]) {
         }
         cout << player1->getName() << ": ";
         while (getline(cin, cmd)) {
-            cout<<current->getName()<<": ";
             if (cmd == "quit") {
                 cout << "GG!" << endl;
                 return 0;
             }
             dowork(start, player1, player2,cmd, board,current);
+            cout<<current->getName() << ": ";
         }
     } else {
         Xwindow window{1400,900};
@@ -340,13 +332,13 @@ int main(int argc, char* argv[]) {
         }
         cout << player1->getName() << ": ";
         while (getline(cin, cmd)) {
-            cout<<current->getName()<<": ";
             if (cmd == "quit") {
                 cout << "GG!" << endl;
                 return 0;
             }
             dowork(start, player1, player2,cmd, board,current);
             board->printGraphics(window);
+            cout<<current->getName() << ": ";
         }
     }
 }

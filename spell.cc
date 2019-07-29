@@ -7,30 +7,33 @@ Spell::Spell(std::string name, std::shared_ptr<Player> owner):Card{name,owner}{
     else if (name =="Disenchant") {playCost = 1;}
     else if (name == "Raise Dead") {playCost = 1;}
     else if (name == "Blizzard") {playCost = 3;}
+    else if (name == "Steal") {playCost = 2;}
 }
 
 void Spell::silence(bool silence){}
 
 void Spell::playCard(std::shared_ptr<Player> target, int index){
     if (name == "Recharge"){
-		if (target->getRitual() == nullptr) throw "You do not have a ritual on board";
+        if (target->getRitual() == nullptr) throw "You do not have a ritual on board";
         target->getIthMinion(6)->editUsage(3);
     } else if (name =="Disenchant"){
         target->getIthMinion(index)->popEnchantment();
     } else if(name == "Unsummon"){
         target->unsummonCard(index);
     } else if (name == "Raise Dead"){
-		try {
-			target->reviveMinion();
-		}
+        try {
+            target->reviveMinion();
+        }
         catch (std::string e) {
-			throw e;
-		}
+            throw e;
+        }
     } else if (name == "Blizzard"){
         target->allEditDefence(-2);
         target->getOpponent()->allEditDefence(-2);
     } else if(name == "Banish"){
         target->killMinion(index);
+    } else if(name == "Steal"){
+        target->stolenMinion(index);
     }
 }
 
@@ -81,6 +84,7 @@ std::string Spell::getDescription() {
     if (name =="Disenchant") {return "Distroy the top enchantment on target minion";}
     if (name == "Raise Dead") {return "Resurrect the top minion in your graveyard and set its defence to 1";}
     if (name == "Blizzard") {return "Deal 2 damages to all minions";}
+    if (name == "Steal") {return "Steal an enemy minion and take control of it";}
     else return "";
 }
 
