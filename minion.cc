@@ -223,8 +223,8 @@ int Minion::getAction(){
     return action;
 }
 
-void Minion::editAction(int action){
-    int temp = action;
+void Minion::editAction(int ac){
+    int temp = ac;
     for(int i = enchantments.size()-1; i>=0; i--){
         if(temp == 0) break;
         if(enchantments.at(i)->getAction()==0){
