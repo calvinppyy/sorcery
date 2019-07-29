@@ -578,3 +578,37 @@ void Player::resumeAction(){
         minions.at(i)->setAction(minions.at(i)->getActionCap());
     }
 }
+
+void Player::printMinions(Xwindow &window, int x, int y){
+    for(int i = 0; i<minions.size(); i++){
+        printCard(window, minions.at(i), x+252*i, y, 8);
+    }
+}
+
+void Player::printHand(Xwindow &window, int x, int y){
+    for(int i = 0; i<hand.size(); i++){
+        printCard(window, minions.at(i), x+252*i, y, 7);
+    }
+}
+
+void Player::printGraphics(Xwindow &window, int x, int y, bool iscurrent){
+    printCard(window, ritual, x, y, 8);
+    if(iscurrent){
+        window.fillRectangle(x, y , 201, 120, 8);
+        window.drawLine(x, y+20, x+200, y+20);
+        window.drawString(x+179, y+112, std::to_string(magic));
+        
+        window.drawLine(x, y+60, x+35, y+60);
+        window.drawLine(x+35, y+40, x+35, y+60);
+        window.drawString(x+13, y+52, std::to_string(health));
+    } else {
+    window.fillRectangle(x, y , 201, 120, 8);
+        window.drawLine(x, y+20, x+200, y+20);
+    window.drawString(x+179, y+112, std::to_string(magic));
+    
+    window.drawLine(x, y+60, x+35, y+60);
+    window.drawLine(x+35, y+40, x+35, y+60);
+    window.drawString(x+13, y+52, std::to_string(health));
+    }
+    printCard(window, graveyard.back(), x+4*252, y,8);
+}

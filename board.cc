@@ -227,8 +227,6 @@ void Board::print()
             std::cout << EXTERNAL_BORDER_CHAR_LEFT_RIGHT;
         }
         std::cout << EXTERNAL_BORDER_CHAR_BOTTOM_RIGHT << std::endl;
-    } else {
-        
     }
 }
 
@@ -237,3 +235,14 @@ bool Board::isGraphics(){
 }
 
 Board::~Board() {}
+
+void Board::printGraphics(Xwindow &window){
+    if(graphics){
+        window.drawBigString(500, 370, "Sorcery");
+        currentPlayer->getOpponent()->printGraphics(window, 71,41,false);
+        currentPlayer->getOpponent()->printMinions(window, 71,166);
+        currentPlayer->printMinions(window,71, 406);
+        currentPlayer->printGraphics(window,71,531,true);
+        currentPlayer->printHand(window, 71, 655);
+    }
+}

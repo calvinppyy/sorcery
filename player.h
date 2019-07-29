@@ -1,7 +1,6 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include <algorithm>
-#include <random>
 #include <map>
 #include <memory>
 #include "card.h"
@@ -9,6 +8,7 @@
 #include "spell.h"
 #include "enchantment.h"
 #include "ritual.h"
+
 
 class Card;
 
@@ -60,6 +60,9 @@ public:
 	std::shared_ptr<Card> getRitual();
 	int countHand();
     void resumeAction();
+    void printMinions(Xwindow &window, int x,int y);
+    void printHand(Xwindow &window, int x,int y);
+    void printGraphics(Xwindow &window, int x, int y, bool iscurrent);
 };
 
 card_template_t whichFunc(std::shared_ptr<Card> temp2);

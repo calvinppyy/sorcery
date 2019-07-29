@@ -6,6 +6,7 @@
 #include <vector>
 #include "trigger.h"
 #include "ascii_graphics.h"
+#include "window.h"
 
 class Player;
 class Enchantment;
@@ -52,6 +53,6 @@ public:
     std::string getName();
 };
 
-
+void printCard(Xwindow &temp, std::shared_ptr<Card> card, int x,int y,int colour);
 
 #endif

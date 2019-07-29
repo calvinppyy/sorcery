@@ -1,7 +1,6 @@
 #include <fstream>
 #include <sstream>
 #include "board.h"
-#include "trigger.h"
 
 using namespace std;
 
@@ -48,7 +47,6 @@ int main(int argc, char* argv[]) {
 	deck1.push_back(make_shared<Ritual>(Ritual{ "Aura of Power", player1 }));
 	deck1.push_back(make_shared<Minion>(Minion{ "Bone Golem", player1 }));
     deck1.push_back(make_shared<Minion>(Minion{ "Fire Elemental", player1 }));
-    
     deck1.push_back(make_shared<Spell>(Spell{ "Blizzard", player1 }));
 	player1->giveDeck(deck1);
 	deck2.push_back(make_shared<Minion>(Minion{ "Bone Golem", player2 }));
@@ -63,6 +61,7 @@ int main(int argc, char* argv[]) {
 	player2->setOpponent(player1);
 	shared_ptr<Player> current = player1;
 	vector<string> preInitArguments;
+    shared_ptr<Xwindow> window = nullptr;
 	for (int i = 1; i < argc; i++) {
 		string cmd = argv[i];
 		if (cmd == "-deck1") {
@@ -97,9 +96,10 @@ int main(int argc, char* argv[]) {
 		}
 		if (cmd == "-graphics") {
 			board->enterGraphics();
+            window = new Xwindow{};
 		}
 	}
-	player1->shuffleDeck();
+    player1->shuffleDeck();
 	player2->shuffleDeck();
 	string cmd;
 	int start = 0;
@@ -146,6 +146,7 @@ int main(int argc, char* argv[]) {
 			current = current->getOpponent();
 			current->addMagicCap();
 			board->checkTrigger(TriggerType::startOfTurn);
+            board->printGraphics(window);
 			try {
 				current->draw();
 			}
@@ -180,6 +181,7 @@ int main(int argc, char* argv[]) {
 		}
 		else if (cmd == "board") {
 			board->print();
+            board->printGraphics(window);
 		}
 		else {
 			istringstream iss{ cmd };
@@ -199,6 +201,7 @@ int main(int argc, char* argv[]) {
 				else {
 					board->attack(attacker);
 				}
+                board->printGraphics(window);
 			}
 			else if (temp == "play") {
 				int cardNum = 0, playerNum = 0, targetNum = 0;
@@ -229,6 +232,7 @@ int main(int argc, char* argv[]) {
 						e.prettyprint();
 					}
 				}
+                board->printGraphics(window);
 			}
 			else if (temp == "use") {
 				int cardNum = 0, playerNum = 0, targetNum = 0;
@@ -249,6 +253,7 @@ int main(int argc, char* argv[]) {
 				else {
 					board->useAbility(cardNum);
 				}
+                board->printGraphics(window);
 			}
 			else if (temp == "inspect") {
 				int cardNum;
@@ -264,6 +269,7 @@ int main(int argc, char* argv[]) {
 				catch (InvalidCommandException e) {
 					e.prettyprint();
 				}
+                board->printGraphics(window);
 			}
 			else {
 				cerr << "Invalid command, too see command help page please type \"help\"" << endl;
@@ -327,6 +333,7 @@ int main(int argc, char* argv[]) {
 					cout << "You already have 5 cards in your hand!" << endl;
 				}
 			}
+            board->printGraphics(window);
 		}
 		else if (cmd == "quit") {
 			cout << "That's a TIE!" << endl;
@@ -344,12 +351,14 @@ int main(int argc, char* argv[]) {
 					cout << "You already have 5 cards in your hand!" << endl;
 				}
 			}
+            board->printGraphics(window);
 		}
 		else if (cmd == "hand") {
 			board->printHand();
 		}
 		else if (cmd == "board") {
 			board->print();
+            board->printGraphics(window);
 		}
 		else {
 			istringstream iss{ cmd };
@@ -373,6 +382,7 @@ int main(int argc, char* argv[]) {
 						return 0;
 					}
 				}
+                board->printGraphics(window);
 			}
 			else if (temp == "play") {
 				int cardNum = 0, playerNum = 0, targetNum = 0;
@@ -403,6 +413,7 @@ int main(int argc, char* argv[]) {
 						e.prettyprint();
 					}
 				}
+                board->printGraphics(window);
 			}
 			else if (temp == "use") {
 				int cardNum = 0, playerNum = 0, targetNum = 0;
@@ -423,6 +434,7 @@ int main(int argc, char* argv[]) {
 				else {
 					board->useAbility(cardNum);
 				}
+                board->printGraphics(window);
 			}
 			else if (temp == "inspect") {
 				int cardNum;
@@ -438,6 +450,7 @@ int main(int argc, char* argv[]) {
 				catch (InvalidCommandException e) {
 					e.prettyprint();
 				}
+                board->printGraphics(window);
 			}
 			else {
 				cerr << "Invalid command, too see command help page please type \"help\"" << endl;

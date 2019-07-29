@@ -34,6 +34,7 @@ public:
     void checkTrigger(TriggerType );
     void printHand();
     bool isGraphics();
+    void printGraphics(Xwindow &window);
     ~Board();
 };
 

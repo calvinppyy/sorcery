@@ -3,8 +3,6 @@
 #include <memory>
 #include <string>
 #include "window.h"
-#include "card.h"
 
-void printCard(Xwindow &temp, std::string name, int x,int y,int colour);
 
 #endif
