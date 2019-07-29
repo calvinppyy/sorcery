@@ -38,6 +38,8 @@ void Ritual::cast(Player& opponent, int index){
         usage-=usageCap;
     } else if(name == "Standstill"){
         opponent.killMinion(index);
+        opponent.checkTrigger(TriggerType::minionLeave, opponent, index);
+        opponent.getOpponent()->checkTrigger(TriggerType::minionLeave, opponent, index);
         usage-=usageCap;
         throw 456;
     }
