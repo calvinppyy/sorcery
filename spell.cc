@@ -8,6 +8,7 @@ Spell::Spell(std::string name, std::shared_ptr<Player> owner):Card{name,owner}{
     else if (name == "Raise Dead") {playCost = 1;}
     else if (name == "Blizzard") {playCost = 3;}
     else if (name == "Steal") {playCost = 2;}
+    else if (name == "Switch Hand") {playCost = 1;};
 }
 
 void Spell::silence(bool silence){}
@@ -34,6 +35,8 @@ void Spell::playCard(std::shared_ptr<Player> target, int index){
         target->killMinion(index);
     } else if(name == "Steal"){
         target->stolenMinion(index);
+    } else if(name == "Switch Hand"){
+        target->switchHand();
     }
 }
 
@@ -85,6 +88,7 @@ std::string Spell::getDescription() {
     if (name == "Raise Dead") {return "Resurrect the top minion in your graveyard and set its defence to 1";}
     if (name == "Blizzard") {return "Deal 2 damages to all minions";}
     if (name == "Steal") {return "Steal an enemy minion and take control of it";}
+    if (name == "Switch Hand") {return "I like your hand more. Please give them to me";}
     else return "";
 }
 

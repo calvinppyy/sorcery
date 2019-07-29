@@ -23,9 +23,13 @@ void Player::setOpponent(shared_ptr<Player> opponent)
     this->opponent = opponent;
 }
 
-void Player::giveDeck(vector<shared_ptr<Card>> deck)
+void Player::giveDeck(vector<shared_ptr<Card>> deck, string what)
 {
-    this->notOut = deck;
+    if(what == "hand"){
+        hand = deck;
+    } else {
+        this->notOut = deck;
+    }
 }
 
 bool Player::died()
@@ -559,6 +563,7 @@ card_template_t whichFunc(std::shared_ptr<Card> temp2)
     cardNameToFunc["Magic Fatigue"] = display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
     cardNameToFunc["Silence"] = display_enchantment(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
     cardNameToFunc["Steal"] = display_spell(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
+    cardNameToFunc["Switch Hand"] = display_spell(temp2->getName(), temp2->getPlayCost(), temp2->getDescription());
     return cardNameToFunc[temp2->getName()];
 }
 
@@ -634,3 +639,14 @@ void Player::stolenMinion(int index){
     getOpponent()->stealMinion(minions.at(index-1));
     minions.erase(minions.begin()+index-1);
 }
+
+std::vector<std::shared_ptr<Card>> Player::returnHand(){
+    return hand;
+}
+
+void Player::switchHand(){
+    std::vector<std::shared_ptr<Card>> temp = hand;
+    giveDeck(getOpponent()->returnHand(), "hand");
+    getOpponent()->giveDeck(temp, "hand");
+}
+

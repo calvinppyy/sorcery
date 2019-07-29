@@ -28,7 +28,7 @@ public:
     ~Player();
     void giveName(std::string);
     void setOpponent(std::shared_ptr<Player>);
-    void giveDeck(std::vector<std::shared_ptr<Card>>);
+    void giveDeck(std::vector<std::shared_ptr<Card>> , std::string what = "notOut");
     bool died();
     std::shared_ptr<Card>& getIthMinion(int);
     void playCard(int, bool); //bool is for testing mode
@@ -65,6 +65,8 @@ public:
     void printGraphics(Xwindow &window, int x, int y, bool iscurrent);
     void stealMinion(std::shared_ptr<Card> card);
     void stolenMinion(int index);
+    void switchHand();
+    std::vector<std::shared_ptr<Card>> returnHand();
 };
 
 card_template_t whichFunc(std::shared_ptr<Card> temp2);
