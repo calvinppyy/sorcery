@@ -73,6 +73,8 @@ void Player::playCard(int index, bool testing)
                 this->hand.erase(this->hand.begin() + (index - 1));
                 this->checkTrigger(TriggerType::allyEnter, *this, this->minions.size());
                 this->opponent->checkTrigger(TriggerType::enemyEnter, *this, this->minions.size());
+            } else {
+                std::cerr << "You already have five minions!"<<std::endl;
             }
         }
         else
@@ -126,6 +128,9 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
                 this->minions.erase(this->minions.begin() + (index - 1));
                 this->checkTrigger(TriggerType::allyEnter, *this, this->minions.size());
                 this->opponent->checkTrigger(TriggerType::enemyEnter, *this, this->minions.size());
+            }
+            else {
+                std::cerr << "You already have five minions!"<<std::endl;
             }
         }
         else
@@ -293,8 +298,29 @@ void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
     if (this->minions.at(index - 1)->getDefence() <= 0)
     {
         this->killMinion((index));
-        this->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
-        this->getOpponent()->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+        int temp = 0;
+        try{
+            this->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+        }
+        catch(int e){if(e==456) temp = 1;}
+        if(temp != 0){
+            this->getOpponent()->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+        } else {
+            try{
+                this->getOpponent()->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+            }
+            catch(int e){
+                if(e == 456){
+                    getOpponent()->getRitual()->editUsage(2);
+                    try{
+                        this->minions.emplace_back(graveyard.back());
+                        graveyard.pop_back();
+                    }
+                    catch(const out_of_range &e){}
+                    catch(int &e){}
+                }
+            }
+        }
     }
 } // against minion, attackType indicates if the minion is actively attacking or counter-attack
 
@@ -345,8 +371,29 @@ void Player::allEditDefence(int value)
         {
             killMinion(i + 1);
             i--;
-            getOpponent()->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
-            checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+            int temp = 0;
+            try{
+                this->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+            }
+            catch(int e){if(e==456) temp = 1;}
+            if(temp != 0){
+                this->getOpponent()->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+            } else {
+                try{
+                    this->getOpponent()->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+                }
+                catch(int e){
+                    if(e == 456){
+                        getOpponent()->getRitual()->editUsage(2);
+                        try{
+                            this->minions.emplace_back(graveyard.back());
+                            graveyard.pop_back();
+                        }
+                        catch(const out_of_range &e){}
+                        catch(int &e){}
+                    }
+                }
+            }
         }
     }
 }
@@ -406,8 +453,29 @@ void Player::unsummonCard(int index)
         this->hand.emplace_back(this->minions.at(index - 1));
     }
     this->minions.erase(this->minions.begin() + (index - 1));
-    this->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
-    this->opponent->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+    int temp = 0;
+    try{
+        this->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+    }
+    catch(int e){if(e==456) temp = 1;}
+    if(temp != 0){
+        this->getOpponent()->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+    } else {
+        try{
+            this->getOpponent()->checkTrigger(TriggerType::minionLeave, *this, this->minions.size());
+        }
+        catch(int e){
+            if(e == 456){
+                getOpponent()->getRitual()->editUsage(2);
+                try{
+                    this->minions.emplace_back(graveyard.back());
+                    graveyard.pop_back();
+                }
+                catch(const out_of_range &e){}
+                catch(int &e){}
+            }
+        }
+    }
 }
 
 void Player::editRitualUsage(int value)

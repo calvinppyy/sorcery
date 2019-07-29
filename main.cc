@@ -134,6 +134,11 @@ void dowork(int &start, shared_ptr<Player> &player1, shared_ptr<Player> &player2
             }
             else {
                 board->attack(attacker);
+                if(current->died()){
+                    throw 'c';
+                } else if(current->getOpponent()->died()){
+                    throw 'o';
+                }
             }
         }
         else if (temp == "play") {
@@ -272,7 +277,20 @@ int main(int argc, char* argv[]) {
                 cout << "GG!" << endl;
                 return 0;
             }
-            dowork(start, player1, player2,cmd, board,current);
+            try{
+                dowork(start, player1, player2,cmd, board,current);
+            }
+            catch(char e){
+                if(e == 'c'){
+                    cout<<"Congratulations! "<<current->getOpponent()->getName();
+                    cout<<"! You have defeated your opponent!"<<endl;
+                    return 0;
+                } else {
+                    cout<<"Congratulations! "<<current->getName();
+                    cout<<"! You have defeated your opponent!"<<endl;
+                    return 0;
+                }
+            }
         }
         if (start == 0) {
             cout << "please enter player1's name: ";
@@ -297,7 +315,20 @@ int main(int argc, char* argv[]) {
                 cout << "GG!" << endl;
                 return 0;
             }
-            dowork(start, player1, player2,cmd, board,current);
+            try{
+                dowork(start, player1, player2,cmd, board,current);
+            }
+            catch(char e){
+                if(e == 'c'){
+                    cout<<"Congratulations! "<<current->getOpponent()->getName();
+                    cout<<"! You have defeated your opponent!"<<endl;
+                    return 0;
+                } else {
+                    cout<<"Congratulations! "<<current->getName();
+                    cout<<"! You have defeated your opponent!"<<endl;
+                    return 0;
+                }
+            }
             cout<<current->getName() << ": ";
         }
     } else {
@@ -310,7 +341,20 @@ int main(int argc, char* argv[]) {
                 cout << "GG!" << endl;
                 return 0;
             }
-            dowork(start, player1, player2,cmd, board,current);
+            try{
+                dowork(start, player1, player2,cmd, board,current);
+            }
+            catch(char e){
+                if(e == 'c'){
+                    cout<<"Congratulations! "<<current->getOpponent()->getName();
+                    cout<<"! You have defeated your opponent!"<<endl;
+                    return 0;
+                } else {
+                    cout<<"Congratulations! "<<current->getName();
+                    cout<<"! You have defeated your opponent!"<<endl;
+                    return 0;
+                }
+            }
             board->printGraphics(window);
         }
         if (start == 0) {
@@ -337,7 +381,20 @@ int main(int argc, char* argv[]) {
                 cout << "GG!" << endl;
                 return 0;
             }
-            dowork(start, player1, player2,cmd, board,current);
+            try{
+                dowork(start, player1, player2,cmd, board,current);
+            }
+            catch(char e){
+                if(e == 'c'){
+                    cout<<"Congratulations! "<<current->getOpponent()->getName();
+                    cout<<"! You have defeated your opponent!"<<endl;
+                    return 0;
+                } else {
+                    cout<<"Congratulations! "<<current->getName();
+                    cout<<"! You have defeated your opponent!"<<endl;
+                    return 0;
+                }
+            }
             board->printGraphics(window);
             cout<<current->getName() << ": ";
         }

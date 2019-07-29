@@ -39,6 +39,7 @@ void Ritual::cast(Player& opponent, int index){
     } else if(name == "Standstill"){
         opponent.killMinion(index);
         usage-=usageCap;
+        throw 456;
     }
 }
 

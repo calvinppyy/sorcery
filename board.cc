@@ -94,7 +94,7 @@ void Board::play(int cardIndex)
     }
     catch (int e)
     {
-        cerr << "Not Enough Magic!" << endl;
+        if(e == 1) cerr << "Not Enough Magic!" << endl;
     }
 }
 
