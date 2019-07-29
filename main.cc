@@ -61,6 +61,7 @@ int main(int argc, char* argv[]) {
 	player2->setOpponent(player1);
 	shared_ptr<Player> current = player1;
 	vector<string> preInitArguments;
+    bool graphic = false;
     shared_ptr<Xwindow> window = nullptr;
 	for (int i = 1; i < argc; i++) {
 		string cmd = argv[i];
@@ -96,7 +97,7 @@ int main(int argc, char* argv[]) {
 		}
 		if (cmd == "-graphics") {
 			board->enterGraphics();
-            window = new Xwindow{};
+            graphic = true;
 		}
 	}
     player1->shuffleDeck();
@@ -119,6 +120,10 @@ int main(int argc, char* argv[]) {
 			player1->draw();
 			player2->draw();
 			player2->draw();
+            if(graphic){
+                window = make_shared<Xwindow>(Xwindow{1400,900});
+                board->printGraphics(*window);
+            }
 			continue;
 		}
 		if (cmd == "help") {
@@ -146,7 +151,7 @@ int main(int argc, char* argv[]) {
 			current = current->getOpponent();
 			current->addMagicCap();
 			board->checkTrigger(TriggerType::startOfTurn);
-            board->printGraphics(window);
+            board->printGraphics(*window);
 			try {
 				current->draw();
 			}
@@ -181,7 +186,7 @@ int main(int argc, char* argv[]) {
 		}
 		else if (cmd == "board") {
 			board->print();
-            board->printGraphics(window);
+            board->printGraphics(*window);
 		}
 		else {
 			istringstream iss{ cmd };
@@ -201,7 +206,7 @@ int main(int argc, char* argv[]) {
 				else {
 					board->attack(attacker);
 				}
-                board->printGraphics(window);
+                board->printGraphics(*window);
 			}
 			else if (temp == "play") {
 				int cardNum = 0, playerNum = 0, targetNum = 0;
@@ -232,7 +237,7 @@ int main(int argc, char* argv[]) {
 						e.prettyprint();
 					}
 				}
-                board->printGraphics(window);
+                board->printGraphics(*window);
 			}
 			else if (temp == "use") {
 				int cardNum = 0, playerNum = 0, targetNum = 0;
@@ -253,7 +258,7 @@ int main(int argc, char* argv[]) {
 				else {
 					board->useAbility(cardNum);
 				}
-                board->printGraphics(window);
+                board->printGraphics(*window);
 			}
 			else if (temp == "inspect") {
 				int cardNum;
@@ -269,7 +274,7 @@ int main(int argc, char* argv[]) {
 				catch (InvalidCommandException e) {
 					e.prettyprint();
 				}
-                board->printGraphics(window);
+                board->printGraphics(*window);
 			}
 			else {
 				cerr << "Invalid command, too see command help page please type \"help\"" << endl;
@@ -293,6 +298,10 @@ int main(int argc, char* argv[]) {
 		player1->draw();
 		player2->draw();
 		player2->draw();
+        if(graphic){
+            window = make_shared<Xwindow>(Xwindow{1400,900});
+            board->printGraphics(*window);
+        }
 	}
 	cout << player1->getName() << ": ";
 	bool graphics = board->isGraphics();
@@ -333,10 +342,10 @@ int main(int argc, char* argv[]) {
 					cout << "You already have 5 cards in your hand!" << endl;
 				}
 			}
-            board->printGraphics(window);
+            board->printGraphics(*window);
 		}
 		else if (cmd == "quit") {
-			cout << "That's a TIE!" << endl;
+			cout << "GG!" << endl;
 			return 0;
 		}
 		else if (cmd == "draw") {
@@ -351,14 +360,14 @@ int main(int argc, char* argv[]) {
 					cout << "You already have 5 cards in your hand!" << endl;
 				}
 			}
-            board->printGraphics(window);
+            board->printGraphics(*window);
 		}
 		else if (cmd == "hand") {
 			board->printHand();
 		}
 		else if (cmd == "board") {
 			board->print();
-            board->printGraphics(window);
+            board->printGraphics(*window);
 		}
 		else {
 			istringstream iss{ cmd };
@@ -382,7 +391,7 @@ int main(int argc, char* argv[]) {
 						return 0;
 					}
 				}
-                board->printGraphics(window);
+                board->printGraphics(*window);
 			}
 			else if (temp == "play") {
 				int cardNum = 0, playerNum = 0, targetNum = 0;
@@ -413,7 +422,7 @@ int main(int argc, char* argv[]) {
 						e.prettyprint();
 					}
 				}
-                board->printGraphics(window);
+                board->printGraphics(*window);
 			}
 			else if (temp == "use") {
 				int cardNum = 0, playerNum = 0, targetNum = 0;
@@ -434,7 +443,7 @@ int main(int argc, char* argv[]) {
 				else {
 					board->useAbility(cardNum);
 				}
-                board->printGraphics(window);
+                board->printGraphics(*window);
 			}
 			else if (temp == "inspect") {
 				int cardNum;
@@ -450,7 +459,7 @@ int main(int argc, char* argv[]) {
 				catch (InvalidCommandException e) {
 					e.prettyprint();
 				}
-                board->printGraphics(window);
+                board->printGraphics(*window);
 			}
 			else {
 				cerr << "Invalid command, too see command help page please type \"help\"" << endl;
