@@ -45,7 +45,7 @@ void Player::playCard(int index, bool testing)
 	if (testing)
 	{
 		if (this->magic < this->hand.at((index - 1))->getPlayCost())
-			this->editMagic(0);
+			this->editMagic(-1*this->magic);
 		else
 			this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
 	}
@@ -94,7 +94,7 @@ void Player::playCard(int index, shared_ptr<Player> target, int targetIndex, boo
 	if (testing)
 	{
 		if (this->magic < this->hand.at((index - 1))->getPlayCost())
-			this->editMagic(0);
+			this->editMagic(-1 * this->magic);
 		else
 			this->editMagic(-1 * this->hand.at((index - 1))->getPlayCost());
 	}
@@ -143,7 +143,7 @@ void Player::useAbility(int index, bool testing)
 		if (this->magic < this->minions.at((index - 1))->getAbilityCost())
 		{
 			tmp = this->magic;
-			this->editMagic(0);
+			this->editMagic(-1 * this->magic);
 		}
 		else
 		{
@@ -198,7 +198,7 @@ void Player::useAbility(int index, Player& target, int targetIndex, bool testing
 		if (this->magic < this->minions.at((index - 1))->getAbilityCost())
 		{
 			tmp = this->magic;
-			this->editMagic(0);
+			this->editMagic(-1 * this->magic);
 		}
 		else
 		{
@@ -592,23 +592,31 @@ void Player::printHand(Xwindow &window, int x, int y){
 }
 
 void Player::printGraphics(Xwindow &window, int x, int y, bool iscurrent){
-    printCard(window, ritual, x, y, 8);
-    if(iscurrent){
-        window.fillRectangle(x, y , 201, 120, 8);
-        window.drawLine(x, y+20, x+200, y+20);
-        window.drawString(x+179, y+112, std::to_string(magic));
-        
-        window.drawLine(x, y+60, x+35, y+60);
-        window.drawLine(x+35, y+40, x+35, y+60);
-        window.drawString(x+13, y+52, std::to_string(health));
+    if(ritual){
+        printCard(window, ritual, x, y, 8);
     } else {
-    window.fillRectangle(x, y , 201, 120, 8);
-        window.drawLine(x, y+20, x+200, y+20);
-    window.drawString(x+179, y+112, std::to_string(magic));
-    
-    window.drawLine(x, y+60, x+35, y+60);
-    window.drawLine(x+35, y+40, x+35, y+60);
-    window.drawString(x+13, y+52, std::to_string(health));
+        window.fillRectangle(x, y , 201, 120, 8);
     }
-    printCard(window, graveyard.back(), x+4*252, y,8);
+    if(iscurrent){
+        window.fillRectangle(x+504, y , 201, 120, 8);
+        window.drawLine(x+504, y+20, x+200, y+20);
+        window.drawString(x+504+179, y+112, std::to_string(magic));
+        
+        window.drawLine(x+504, y+60, x+35, y+60);
+        window.drawLine(x+504+35, y+40, x+35, y+60);
+        window.drawString(x+504+13, y+52, std::to_string(health));
+    } else {
+    window.fillRectangle(x+504, y , 201, 120, 8);
+        window.drawLine(x+504, y+20, x+200, y+20);
+    window.drawString(x+179+504, y+112, std::to_string(magic));
+    
+    window.drawLine(x+504, y+60, x+35, y+60);
+    window.drawLine(x+504+35, y+40, x+35, y+60);
+    window.drawString(x+504+13, y+52, std::to_string(health));
+    }
+    if(graveyard.size()>0){
+        printCard(window, graveyard.back(), x+4*252, y,8);
+    } else {
+        window.fillRectangle(x+1008, y , 201, 120, 8);
+    }
 }

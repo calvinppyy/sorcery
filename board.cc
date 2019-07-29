@@ -238,7 +238,6 @@ Board::~Board() {}
 
 void Board::printGraphics(Xwindow &window){
     if(graphics){
-        window.drawBigString(500, 370, "Sorcery");
         currentPlayer->getOpponent()->printGraphics(window, 71,41,false);
         currentPlayer->getOpponent()->printMinions(window, 71,166);
         currentPlayer->printMinions(window,71, 406);
