@@ -12,7 +12,7 @@ class Minion : public Card{
     std::vector<std::shared_ptr<Enchantment>> enchantments;
     
 public:
-    Minion(std::string name, std::weak_ptr<Player> owner);
+    Minion(std::string name);
     void silence(bool);
     void playCard(std::shared_ptr<Player> target, int index);
     void addEnchantment(std::shared_ptr<Enchantment> echantment);

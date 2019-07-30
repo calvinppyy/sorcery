@@ -18,10 +18,9 @@ class Card{
     protected:
     std::string name;
     TriggerType triggerType;
-    std::weak_ptr<Player> owner;
 
 public:
-    Card(std::string, std::weak_ptr<Player>);
+    Card(std::string);
     virtual void silence(bool) = 0;
     virtual void playCard(std::shared_ptr<Player> target, int index) = 0;
     virtual void addEnchantment(std::shared_ptr<Enchantment>) = 0;

@@ -48,7 +48,7 @@ public:
     void allEditDefence(int);
     void checkTrigger(TriggerType, Player&, int);
     void summonCard(int, std::string);
-    std::shared_ptr<Player>& getOpponent();
+    std::shared_ptr<Player> getOpponent();
     void editMagic(int);
     void unsummonCard(int);
     void editRitualUsage(int);

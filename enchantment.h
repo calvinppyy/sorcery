@@ -12,7 +12,7 @@ class Enchantment : public Card{
     int playCost;
     std::shared_ptr<Card> target;
 public:
-    Enchantment(std::string name, std::weak_ptr<Player> owner);
+    Enchantment(std::string name);
     void silence(bool);
     void playCard(std::shared_ptr<Player> target, int index);
     void addEnchantment(std::shared_ptr<Enchantment> echantment);

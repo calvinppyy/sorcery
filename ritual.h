@@ -7,7 +7,7 @@ class Ritual: public Card{
     int playCost, usage, usageCap;
     TriggerType triggerType;
 public:
-    Ritual(std::string name, std::weak_ptr<Player> owner);
+    Ritual(std::string name);
     void silence(bool);
     void playCard(std::shared_ptr<Player> target, int index);
     void addEnchantment(std::shared_ptr<Enchantment> echantment);

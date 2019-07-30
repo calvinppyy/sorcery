@@ -407,7 +407,7 @@ void Player::summonCard(int count, string name)
     {
         if (this->minions.size() == 5)
             return;
-        this->minions.emplace_back(make_shared<Minion>(name, make_shared<Player>(*this)));
+        this->minions.emplace_back(make_shared<Minion>(name));
         int k = 0;
         try{
             this->checkTrigger(TriggerType::allyEnter, *this, this->minions.size());
@@ -419,7 +419,7 @@ void Player::summonCard(int count, string name)
     }
 }
 
-shared_ptr<Player>& Player::getOpponent()
+shared_ptr<Player> Player::getOpponent()
 {
     std::shared_ptr<Player> temp = this->opponent.lock();
     return temp;

@@ -4,36 +4,36 @@
 
 using namespace std;
 
-void loadDeck(weak_ptr<Player> player, vector<shared_ptr<Card>>& deck, std::string filename) {
+void loadDeck(vector<shared_ptr<Card>>& deck, std::string filename) {
     deck.clear();
     vector<shared_ptr<Card>> temp;
     ifstream deckfile{ filename };
     string cardName;
     while (getline(deckfile, cardName)) {
-        if (cardName == "Air Elemental") temp.emplace_back(make_shared<Minion>(Minion{ "Air Elemental", player }));
-        if (cardName == "Earth Elemental") temp.emplace_back(make_shared<Minion>(Minion{ "Earth Elemental", player }));
-        if (cardName == "Bone Golem") temp.emplace_back(make_shared<Minion>(Minion{ "Bone Golem", player }));
-        if (cardName == "Fire Elemental") temp.emplace_back(make_shared<Minion>(Minion{ "Fire Elemental", player }));
-        if (cardName == "Potion Seller") temp.emplace_back(make_shared<Minion>(Minion{ "Potion Seller", player }));
-        if (cardName == "Novice Pyromancer") temp.emplace_back(make_shared<Minion>(Minion{ "Novice Pyromancer", player }));
-        if (cardName == "Apprentice Summoner") temp.emplace_back(make_shared<Minion>(Minion{ "Apprentice Summoner", player }));
-        if (cardName == "Master Summoner") temp.emplace_back(make_shared<Minion>(Minion{ "Master Summoner", player }));
-        if (cardName == "Banish") temp.emplace_back(make_shared<Spell>(Spell{ "Banish", player }));
-        if (cardName == "Unsummon") temp.emplace_back(make_shared<Spell>(Spell{ "Unsummon", player }));
-        if (cardName == "Recharge") temp.emplace_back(make_shared<Spell>(Spell{ "Recharge", player }));
-        if (cardName == "Disenchant") temp.emplace_back(make_shared<Spell>(Spell{ "Disenchant", player }));
-        if (cardName == "Raise Dead") temp.emplace_back(make_shared<Spell>(Spell{ "Raise Dead", player }));
-        if (cardName == "Blizzard") temp.emplace_back(make_shared<Spell>(Spell{ "Blizzard", player }));
-        if (cardName == "Giant Strength") temp.emplace_back(make_shared<Enchantment>(Enchantment{ "Giant Strength", player }));
-        if (cardName == "Enrage") temp.emplace_back(make_shared<Enchantment>(Enchantment{ "Enrage", player }));
-        if (cardName == "Haste") temp.emplace_back(make_shared<Enchantment>(Enchantment{ "Haste", player }));
-        if (cardName == "Magic Fatigue") temp.emplace_back(make_shared<Enchantment>(Enchantment{ "Magic Fatigue", player }));
-        if (cardName == "Silence") temp.emplace_back(make_shared<Enchantment>(Enchantment{ "Silence", player }));
-        if (cardName == "Dark Ritual") temp.emplace_back(make_shared<Ritual>(Ritual{ "Dark Ritual", player }));
-        if (cardName == "Aura of Power") temp.emplace_back(make_shared<Ritual>(Ritual{ "Aura of Power", player }));
-        if (cardName == "Standstill") temp.emplace_back(make_shared<Ritual>(Ritual{ "Standstill", player }));
-        if (cardName == "Steal") temp.emplace_back(make_shared<Spell>(Spell{"Steal", player}));
-        if (cardName == "Switch Hand") temp.emplace_back(make_shared<Spell>(Spell{"Switch Hand", player}));
+        if (cardName == "Air Elemental") temp.emplace_back(make_shared<Minion>(Minion{ "Air Elemental"}));
+        if (cardName == "Earth Elemental") temp.emplace_back(make_shared<Minion>(Minion{ "Earth Elemental"}));
+        if (cardName == "Bone Golem") temp.emplace_back(make_shared<Minion>(Minion{ "Bone Golem"}));
+        if (cardName == "Fire Elemental") temp.emplace_back(make_shared<Minion>(Minion{ "Fire Elemental"}));
+        if (cardName == "Potion Seller") temp.emplace_back(make_shared<Minion>(Minion{ "Potion Seller"}));
+        if (cardName == "Novice Pyromancer") temp.emplace_back(make_shared<Minion>(Minion{ "Novice Pyromancer"}));
+        if (cardName == "Apprentice Summoner") temp.emplace_back(make_shared<Minion>(Minion{ "Apprentice Summoner"}));
+        if (cardName == "Master Summoner") temp.emplace_back(make_shared<Minion>(Minion{ "Master Summoner"}));
+        if (cardName == "Banish") temp.emplace_back(make_shared<Spell>(Spell{ "Banish"}));
+        if (cardName == "Unsummon") temp.emplace_back(make_shared<Spell>(Spell{ "Unsummon"}));
+        if (cardName == "Recharge") temp.emplace_back(make_shared<Spell>(Spell{ "Recharge"}));
+        if (cardName == "Disenchant") temp.emplace_back(make_shared<Spell>(Spell{ "Disenchant"}));
+        if (cardName == "Raise Dead") temp.emplace_back(make_shared<Spell>(Spell{ "Raise Dead"}));
+        if (cardName == "Blizzard") temp.emplace_back(make_shared<Spell>(Spell{ "Blizzard"}));
+        if (cardName == "Giant Strength") temp.emplace_back(make_shared<Enchantment>(Enchantment{ "Giant Strength"}));
+        if (cardName == "Enrage") temp.emplace_back(make_shared<Enchantment>(Enchantment{ "Enrage"}));
+        if (cardName == "Haste") temp.emplace_back(make_shared<Enchantment>(Enchantment{ "Haste"}));
+        if (cardName == "Magic Fatigue") temp.emplace_back(make_shared<Enchantment>(Enchantment{ "Magic Fatigue"}));
+        if (cardName == "Silence") temp.emplace_back(make_shared<Enchantment>(Enchantment{ "Silence"}));
+        if (cardName == "Dark Ritual") temp.emplace_back(make_shared<Ritual>(Ritual{ "Dark Ritual"}));
+        if (cardName == "Aura of Power") temp.emplace_back(make_shared<Ritual>(Ritual{ "Aura of Power"}));
+        if (cardName == "Standstill") temp.emplace_back(make_shared<Ritual>(Ritual{ "Standstill"}));
+        if (cardName == "Steal") temp.emplace_back(make_shared<Spell>(Spell{"Steal"}));
+        if (cardName == "Switch Hand") temp.emplace_back(make_shared<Spell>(Spell{"Switch Hand"}));
     }
     while (!temp.empty()) {
         deck.emplace_back(temp.back());
@@ -217,8 +217,8 @@ int main(int argc, char* argv[]) {
     vector<shared_ptr<Card>> deck2;
     shared_ptr<Player> player1 = make_shared<Player>(Player{ deck1, "" });
     shared_ptr<Player> player2 = make_shared<Player>(Player{ deck2, "" });
-    loadDeck(player1, deck1, "default.deck");
-    loadDeck(player2, deck2, "default.deck");
+    loadDeck(deck1, "default.deck");
+    loadDeck(deck2, "default.deck");
     player1->giveDeck(deck1);
     player2->giveDeck(deck2);
     shared_ptr<Board> board = make_shared<Board>(Board{ player1, player2 });
@@ -232,13 +232,13 @@ int main(int argc, char* argv[]) {
         string cmd = argv[i];
         if (cmd == "-deck1") {
             cout << "Loading deck from: " << argv[i + 1] << endl;
-            loadDeck(player1, deck1, argv[i + 1]);
+            loadDeck(deck1, argv[i + 1]);
             player1->giveDeck(deck1);
             i++;
         }
         if (cmd == "-deck2") {
             cout << "Loading deck from: " << argv[i + 1] << endl;
-            loadDeck(player2, deck2, argv[i + 1]);
+            loadDeck(deck2, argv[i + 1]);
             player2->giveDeck(deck2);
             i++;
         }
@@ -265,8 +265,8 @@ int main(int argc, char* argv[]) {
             graphic = true;
         }
     }
-    //player1->shuffleDeck();
-    //player2->shuffleDeck();
+    player1->shuffleDeck();
+    player2->shuffleDeck();
     string cmd;
     int start = 0;
     board->setCurrentPlayer(player1);
