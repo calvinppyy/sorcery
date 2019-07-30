@@ -321,7 +321,9 @@ void Player::takeAttack(int enemyIndex, int damage, int index, int attackType)
 void Player::attack(int index, int damage, int enemyIndex, int attackType)
 {
     if (minions.at(index - 1)->getAction() > 0) {
-        minions.at(index - 1)->editAction(-1);
+        if(attackType == 0){
+            minions.at(index - 1)->editAction(-1);
+        }
         this->getOpponent()->takeAttack(index, this->minions.at(index - 1)->getAttack(), enemyIndex, attackType);
     }
     else {
@@ -419,7 +421,8 @@ void Player::summonCard(int count, string name)
 
 shared_ptr<Player>& Player::getOpponent()
 {
-    return this->opponent;
+    std::shared_ptr<Player> temp = this->opponent.lock();
+    return temp;
 }
 
 void Player::editMagic(int value)

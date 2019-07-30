@@ -1,6 +1,6 @@
 #include "minion.h"
 
-Minion::Minion(std::string name, std::shared_ptr<Player> owner):Card{name,owner}{
+Minion::Minion(std::string name, std::weak_ptr<Player> owner):Card{name,owner}{
     if(name == "Air Elemental"){
         attack = 1;
         defence = 1;

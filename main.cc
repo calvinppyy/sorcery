@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void loadDeck(shared_ptr<Player> player, vector<shared_ptr<Card>>& deck, std::string filename) {
+void loadDeck(weak_ptr<Player> player, vector<shared_ptr<Card>>& deck, std::string filename) {
     deck.clear();
     vector<shared_ptr<Card>> temp;
     ifstream deckfile{ filename };
@@ -211,6 +211,7 @@ void dowork(int &start, shared_ptr<Player> &player1, shared_ptr<Player> &player2
         }
     }
 }
+
 int main(int argc, char* argv[]) {
     vector<shared_ptr<Card>> deck1;
     vector<shared_ptr<Card>> deck2;
@@ -264,8 +265,8 @@ int main(int argc, char* argv[]) {
             graphic = true;
         }
     }
-    player1->shuffleDeck();
-    player2->shuffleDeck();
+    //player1->shuffleDeck();
+    //player2->shuffleDeck();
     string cmd;
     int start = 0;
     board->setCurrentPlayer(player1);

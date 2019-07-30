@@ -1,6 +1,6 @@
 #include "spell.h"
 
-Spell::Spell(std::string name, std::shared_ptr<Player> owner):Card{name,owner}{
+Spell::Spell(std::string name, std::weak_ptr<Player> owner):Card{name,owner}{
     if (name == "Banish") {playCost = 2;}
     else if (name == "Unsummon") {playCost = 1;}
     else if (name == "Recharge") {playCost = 1;}

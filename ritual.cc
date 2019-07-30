@@ -1,5 +1,5 @@
 #include "ritual.h"
-Ritual::Ritual(std::string name, std::shared_ptr<Player> owner):Card{name,owner}{
+Ritual::Ritual(std::string name, std::weak_ptr<Player> owner):Card{name,owner}{
     if(name == "Dark Ritual"){
         playCost = 0;
         usage = 5;

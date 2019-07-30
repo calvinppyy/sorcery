@@ -1,6 +1,6 @@
 #include "enchantment.h"
 
-Enchantment::Enchantment(std::string name, std::shared_ptr<Player> owner) :Card{ name,owner } {
+Enchantment::Enchantment(std::string name, std::weak_ptr<Player> owner) :Card{ name,owner } {
 	if (name == "Giant Strength") {
 		attack = 2;
 		defense = 2;

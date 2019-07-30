@@ -14,7 +14,7 @@ class Card;
 
 class Player {
     std::string name;
-    std::shared_ptr<Player> opponent;
+    std::weak_ptr<Player> opponent;
     std::vector<std::shared_ptr<Card>> hand;
     std::vector<std::shared_ptr<Card>> minions;
     std::shared_ptr<Card> ritual;
