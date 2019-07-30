@@ -51,11 +51,16 @@ void dowork(int &start, shared_ptr<Player> &player1, shared_ptr<Player> &player2
     if (start == 1) {
         player2->giveName(cmd);
         start++;
-        player1->draw();
-        player1->draw();
-        player1->draw();
-        player2->draw();
-        player2->draw();
+        try{
+            player1->draw();
+            player1->draw();
+            player1->draw();
+            player2->draw();
+            player2->draw();
+        }
+        catch(int e){
+            cerr<<"The deck is empty, please restart the program or give a new deck."<<endl;
+        }
         return;
     }
     if (cmd == "help") {
@@ -304,11 +309,16 @@ int main(int argc, char* argv[]) {
             getline(cin, cmd);
             player2->giveName(cmd);
             start++;
-            player1->draw();
-            player1->draw();
-            player1->draw();
-            player2->draw();
-            player2->draw();
+            try{
+                player1->draw();
+                player1->draw();
+                player1->draw();
+                player2->draw();
+                player2->draw();
+            }
+            catch(int e){
+                cerr<<"The deck is empty, please restart the program or give a new deck."<<endl;
+            }
         }
         cout << player1->getName() << ": ";
         while (getline(cin, cmd)) {
@@ -369,11 +379,16 @@ int main(int argc, char* argv[]) {
             getline(cin, cmd);
             player2->giveName(cmd);
             start++;
-            player1->draw();
-            player1->draw();
-            player1->draw();
-            player2->draw();
-            player2->draw();
+            try{
+                player1->draw();
+                player1->draw();
+                player1->draw();
+                player2->draw();
+                player2->draw();
+            }
+            catch(int e){
+                cerr<<"The deck is empty, please restart the program or give a new deck."<<endl;
+            }
             board->printGraphics(window);
         }
         cout << player1->getName() << ": ";

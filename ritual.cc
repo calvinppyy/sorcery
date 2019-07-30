@@ -93,7 +93,7 @@ std::string Ritual::getDescription() {
 }
 
 void Ritual::checkTrigger(TriggerType trigger, Player& opponent, int index){
-    if (usage == 0) {
+    if (usage < usageCap) {
         std::string e = "The ritual has used up its usage";
         throw e;
     }
